@@ -1,0 +1,58 @@
+.icon-csv{
+	background:url('icons/csv.png') no-repeat center center;
+}
+
+
+.icon-magic{
+	background:url('icons/magic.png') no-repeat center center;
+}
+
+.icon-play{
+	background:url('icons/play.png') no-repeat center center;
+}
+
+.icon-down{
+	background:url('icons/drop-down-arrow.png') no-repeat center center;
+}
+.icon-up{
+	background:url('icons/drop-up-arrow.png') no-repeat center center;
+}
+.tree-folder {
+	background: url('icons/more.png') no-repeat;
+}
+.tree-folder-open {
+	background: url('icons/minus.png') no-repeat;
+}
+.tree-file {
+	background: url('icons/menu.png') no-repeat;
+  }
+.datebox .combo-arrow {
+	background-image: url('icons/combo_arrow.png');
+	background-position: center center;
+  } 
+.messager-question {
+  background: url('icons/question.png') no-repeat scroll;
+} 
+
+.icon-combo{
+	background:url('icons/combo_arrow.png') no-repeat center center;
+}
+
+.prop-expanded,
+.prop-collapsed
+ {
+  display: inline-block;
+  width: 16px;
+  height: 18px;
+  vertical-align: top;
+  overflow: hidden;
+}
+
+.prop-expanded {
+	background: url('icons/minus.png') no-repeat center center;
+}
+
+
+.prop-collapsed {
+	background: url('icons/ellipsis.png') no-repeat center center;
+}

@@ -1,0 +1,20 @@
+java -jar /home/efim/NodeJsProject/HelloWord/dist/js/compiler.jar --strict_mode_input=false --js_output_file=build.js  ../easyui/locale/easyui-lang-ru.js ../easyui/datagrid-filter.js jscolor.js editors_bu.js finder_bu.js editors_po.js  
+
+
+java -jar /home/efim/NodeJsProject/HelloWord/dist/js/compiler.jar --compilation_level=WHITESPACE_ONLY --js_output_file=core.js ../easyui/jquery.min.js ../easyui/jquery.easyui.min.js
+
+
+cat  ../theme/easyui.css  ../theme/icon.css  ../theme/add.css > ../theme/build.css
+
+https://ru.piliapp.com/minify/yui-compressor/
+
+
+
+    <script type="text/javascript" src="easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="easyui/datagrid-filter.js"></script>
+    <script type="text/javascript" src="easyui/locale/easyui-lang-ru.js"></script>
+    <script type="text/javascript" src="js/jscolor.js"></script>
+    <script type="text/javascript" src="js/editors_bu.js"></script>
+    <script type="text/javascript" src="js/finder_bu.js"></script>
+    <script type="text/javascript" src="js/editors_po.js"></script>
