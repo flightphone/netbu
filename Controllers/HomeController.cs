@@ -372,30 +372,35 @@ namespace netbu.Controllers
         [Route("/pg/getid/{table_name}")]
         public JsonResult getid(string table_name)
         {
-            var sql = "select column_default, udt_name  from information_schema.columns  where table_name = @table_name and ordinal_position = 1";
-            var cnstr = Program.AppConfig["cns"];
-            var da = new NpgsqlDataAdapter(sql, cnstr);
-            da.SelectCommand.Parameters.AddWithValue("@table_name", table_name);
-            var rec = new DataTable();
-            da.Fill(rec);
+            if (Program.isPostgres)
+            {
+                var sql = "select column_default, udt_name  from information_schema.columns  where table_name = @table_name and ordinal_position = 1";
+                var cnstr = Program.AppConfig["cns"];
+                var da = new NpgsqlDataAdapter(sql, cnstr);
+                da.SelectCommand.Parameters.AddWithValue("@table_name", table_name);
+                var rec = new DataTable();
+                da.Fill(rec);
 
 
-            if (rec.Rows.Count == 0)
-            {
-                return Json(new { id = "" });
-            };
-            if (rec.Rows[0]["column_default"].ToString() == "" && rec.Rows[0]["udt_name"].ToString() != "uuid")
-            {
-                return Json(new { id = "" });
-            };
-            var c_default = rec.Rows[0]["column_default"].ToString();
-            if (rec.Rows[0]["udt_name"].ToString() == "uuid")
-                c_default = "uuid_generate_v1()";
-            sql = "select " + c_default + " id";
-            da = new NpgsqlDataAdapter(sql, cnstr);
-            var result = new DataTable();
-            da.Fill(result);
-            return Json(new { id = result.Rows[0]["id"] });
+                if (rec.Rows.Count == 0)
+                {
+                    return Json(new { id = "" });
+                };
+                if (rec.Rows[0]["column_default"].ToString() == "" && rec.Rows[0]["udt_name"].ToString() != "uuid")
+                {
+                    return Json(new { id = "" });
+                };
+                var c_default = rec.Rows[0]["column_default"].ToString();
+                if (rec.Rows[0]["udt_name"].ToString() == "uuid")
+                    c_default = "uuid_generate_v1()";
+                sql = "select " + c_default + " id";
+                da = new NpgsqlDataAdapter(sql, cnstr);
+                var result = new DataTable();
+                da.Fill(result);
+                return Json(new { id = result.Rows[0]["id"] });
+            }
+            else
+                return Json(new { id = Guid.NewGuid().ToString() });
 
         }
     }

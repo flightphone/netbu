@@ -230,7 +230,7 @@ var app = {
         });
 
         $.post('/pg/runsql', {
-            sql: 'select * from t_sysfieldmap',
+            sql: 'select  idmap, decname, dstfield, srcfield, iddeclare, classname, groupdec, keyfield from t_sysfieldmap',
             account: app.account,
             password: app.password
         },
