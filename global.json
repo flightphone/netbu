@@ -2,7 +2,7 @@
   "sdk": {
     "version": "2.1.402"
   },
-  "cns":"Host=localhost;Username=postgres;Password=aA12345678;Database=pomanager",
+  "cns":"Host=localhost;Username=postgres;Password=aA12345678;Database=uFlights",
   "mscns": "data source=localhost\\SQLEXPRESS8;User ID=sa;Password=aA12345678;database=uStore",
-  "isP": "tsql"
+  "isP": "postgres"
 }

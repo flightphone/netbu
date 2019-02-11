@@ -22,7 +22,7 @@ $.fn.datebox.defaults.parser = function (s) {
 
 
 var app = {
-    isP: false,
+    isP: true,
     account: '',
     password: '',
     colorParse: function (color) {
@@ -150,7 +150,7 @@ var app = {
 
                             }
                             else
-                                if (node.attributes.params1 == '75') {
+                                if (node.attributes.params == '75') {
                                     form = Object.create(fi_declare);
                                 }
                                 else
@@ -159,7 +159,7 @@ var app = {
                                         form = new Poo();
                                     }
                                     else {
-                                        if (!node.attributes.params1)
+                                        if (!node.attributes.params)
                                             return;
                                         else
                                             form = Object.create(finder);
@@ -167,7 +167,7 @@ var app = {
 
                     form.absid = 'app.forms.form' + node.id.toString();
                     form.node = node.id.toString();
-                    form.IdDeclare = node.attributes.params1;
+                    form.IdDeclare = node.attributes.params;
 
                     form.SQLParams = {};
                     form.DefaultValues = {};

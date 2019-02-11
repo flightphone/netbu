@@ -16,7 +16,7 @@ namespace netbu.Models
 
         public string iconCls { get; set; }
 
-        public object attributes { get; set; }
+        public Dictionary<string, string> attributes { get; set; }
 
         public string state { get; set; }
 
@@ -74,7 +74,7 @@ namespace netbu.Models
                         ListCaption.Add(ItemCaption);
                         treeItem ilist = new treeItem(ItemCaption);
                         ilist.id = (k == bi.Length - 1) ? mi["idmenu"].ToString() : mi["idmenu"].ToString() + "_node";
-                        ilist.attributes = new { link1 = mi["link1"].ToString(), params1 = mi["params"].ToString() };
+                        ilist.attributes = new Dictionary<string, string>() {{"link1",  mi["link1"].ToString()}, {"params", mi["params"].ToString() }};
                         if ((int)mi["idimage"] > 0)
                             ilist.iconCls = "tree-" + mi["idimage"].ToString();
 

@@ -1,3 +1,9 @@
+.icon-download{
+	background:url('icons/download-button.png') no-repeat center center;
+}
+
+
+
 .icon-csv{
 	background:url('icons/csv.png') no-repeat center center;
 }

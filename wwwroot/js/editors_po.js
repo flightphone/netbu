@@ -85,9 +85,9 @@ var tariffs = {
         $.ajax(settings).done(function (msg) {
             $.messager.alert('Загрузка файла', msg, 'info');
         });
-        
+
         $("#tariffile").val('');
-        
+
     },
 
     addInitGrid: function (sender) {
@@ -96,10 +96,14 @@ var tariffs = {
         sender.abut = $('<a>').appendTo(toolbar);
         sender.ebut = $('<a>').appendTo(toolbar);
         sender.dbut = $('<a>').appendTo(toolbar);
-        sender.lbut = $('<a>').appendTo(toolbar);
         //Не стирать! Обработка файла!
         sender.fbut = $('<a>').appendTo(toolbar);
+        sender.lbut = $('<a>').appendTo(toolbar);
         sender.file = $('<input type="file" id="tariffile" style="display:none" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onchange="' + sender.prop('handleFiles(this.files)') + '"/>').appendTo(toolbar);
+        //DnLoad
+        sender.dlbut = $('<a>').appendTo(toolbar);
+        sender.runbut = $('<a>').appendTo(toolbar);
+        sender.exbut = $('<a>').appendTo(toolbar);
 
 
         //Редакторы
@@ -185,7 +189,7 @@ var tariffs = {
         });
 
         //Не стирать! Обработка файла!
-        
+
         sender.fbut.linkbutton({
             iconCls: 'icon-magic',
             text: 'Файл',
@@ -199,7 +203,74 @@ var tariffs = {
                 sender.file.click();
             }
         });
-        
+
+        //Выгрузка тарифа sql
+        sender.dlbut.linkbutton({
+            iconCls: 'icon-download',
+            text: 'Экспорт (sql)',
+            plain: true,
+            onClick: function () {
+                var row = sender.MainTab.datagrid('getSelected');
+                if (!row) {
+                    $.messager.alert(sender.t_rpdeclare.descr, 'Выберете запись', 'info');
+                    return;
+                }
+                window.document.location = "/pg/tariffs/" + row["nn"].toString();
+            }
+        });
+
+
+        //Выгрузка тарифа uSmart
+        sender.runbut.linkbutton({
+            iconCls: 'icon-download',
+            text: 'Экспорт (uSmart)',
+            plain: true,
+            onClick: function () {
+                var row = sender.MainTab.datagrid('getSelected');
+                if (!row) {
+                    $.messager.alert(sender.t_rpdeclare.descr, 'Выберете запись', 'info');
+                    return;
+                }
+
+                $.messager.confirm(
+                    {
+                        title: 'Экспорт тарифов',
+                        msg: 'Перенести данные в справочник uSmart?',
+                        fn: function (r) {
+                            if (r) {
+                                var url = "/pg/runtariffs/" + row["nn"].toString();
+                                $.post(url, {},
+                                    function (data) {
+                                        $.messager.alert('Экспорт тарифов', data, 'info');
+                                    });
+
+                            }
+
+                        },
+
+                        ok: "Да",
+                        cancel: "Нет"
+                    });
+
+            }
+        });
+
+
+        //Выгрузка файла excel
+        sender.exbut.linkbutton({
+            iconCls: 'icon-download',
+            text: 'Экспорт (xlsx)',
+            plain: true,
+            onClick: function () {
+                var row = sender.MainTab.datagrid('getSelected');
+                if (!row) {
+                    $.messager.alert(sender.t_rpdeclare.descr, 'Выберете запись', 'info');
+                    return;
+                }
+                window.document.location = "/pg/excel/" + row["nn"].toString();
+            }
+        });
+
 
         $(sender.id('maintab')).datagrid({
             toolbar: toolbar,
