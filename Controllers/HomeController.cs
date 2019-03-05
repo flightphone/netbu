@@ -9,6 +9,8 @@ using Newtonsoft.Json;
 using Npgsql;
 using netbu.Models;
 using System.Data.SqlClient;
+using System.IO;
+using System.Net;
 
 namespace netbu.Controllers
 {
@@ -63,7 +65,7 @@ namespace netbu.Controllers
                 var cnstr = Program.isPostgres ? Program.AppConfig["cns"] : Program.AppConfig["mscns"]; ;
                 var sql = "select a.* , fn_getmenuimageid(a.caption) idimage from fn_mainmenu('ALL', @Account) a order by a.ordmenu, idmenu";
                 if (!Program.isPostgres)
-                    sql = "select a.* , dbo.fn_getmenuimageid(a.caption) idimage from fn_mainmenu('ALL', @Account) a order by a.ordmenu, idmenu";
+                    sql = "select a.* , dbo.fn_getmenuimageid(a.caption) idimage from fn_mainmenu('WEB', @Account) a order by a.ordmenu, idmenu";
                 if (Program.isPostgres)
                 {
                     var da = new NpgsqlDataAdapter(sql, cnstr);
@@ -96,7 +98,7 @@ namespace netbu.Controllers
             try
             {
                 string sql = Request.Form["sql"];
-                if (!Program.isPostgres)
+                if (!Program.isPostgres && !string.IsNullOrEmpty(sql))
                     sql = sql.Replace("||", "+");
                 var cnstr = Program.isPostgres ? Program.AppConfig["cns"] : Program.AppConfig["mscns"]; ;
                 var IdDeclare = Request.Form["IdDeclare"];
@@ -400,9 +402,56 @@ namespace netbu.Controllers
                 return Json(new { id = result.Rows[0]["id"] });
             }
             else
-                return Json(new { id = Guid.NewGuid().ToString() });
+            {
+                var sql = "select c.user_type_id from sys.tables t(nolock) inner join sys.columns c(nolock) on t.object_id = c.object_id where t.name = @tablename and column_id = 1";
+                var cnstr = Program.AppConfig["mscns"];
+                var da = new SqlDataAdapter(sql, cnstr);
+                da.SelectCommand.Parameters.AddWithValue("@tablename", table_name);
+                var rec = new DataTable();
+                da.Fill(rec);
+                if (rec.Rows.Count == 0)
+                {
+                    return Json(new { id = "" });
+                };
+                if ((int)rec.Rows[0][0] == 36)
+                {
+                    return Json(new { id = Guid.NewGuid().ToString() });
+                }
+                else
+                {
+                    return Json(new { id = "" });
+                }
+            }
 
         }
+
+
+        [Route("/usmart/getcntinfo/{inn}")]
+        public ActionResult getcntinfo(string inn)
+        {
+
+            var httpRequest = (HttpWebRequest)WebRequest.Create(Program.AppConfig["dadataurl"]);
+            httpRequest.Method = "POST";
+            httpRequest.ContentType = "application/json";
+            httpRequest.Headers.Add("Authorization", "Token " + Program.AppConfig["dadatakey"]);
+            var serializer = new JsonSerializer();
+            using (var w = new StreamWriter(httpRequest.GetRequestStream()))
+            {
+                using (JsonWriter writer = new JsonTextWriter(w))
+                {
+                    serializer.Serialize(writer, new { query = inn});
+                }
+            }
+            var httpResponse = (HttpWebResponse) httpRequest.GetResponse();
+            using (var r = new StreamReader(httpResponse.GetResponseStream())) {
+                string responseText = r.ReadToEnd();
+                return File(Encoding.UTF8.GetBytes(responseText), "application/json");
+                
+            }
+
+        }
+
     }
+
 
 }

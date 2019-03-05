@@ -22,9 +22,10 @@ $.fn.datebox.defaults.parser = function (s) {
 
 
 var app = {
-    isP: true,
+    isP: false,
     account: '',
     password: '',
+    startid: '',
     colorParse: function (color) {
         var number = Number(color);
         var b = (number & 0x000000FF);
@@ -154,6 +155,10 @@ var app = {
                                     form = Object.create(fi_declare);
                                 }
                                 else
+                                if (node.attributes.params == '1444') {
+                                    form = Object.create(fi_contractors);
+                                }
+                                else
                                     if (node.attributes.link1 == "porders") {
                                         //form = Object.create(porders);
                                         form = new Poo();
@@ -200,7 +205,9 @@ var app = {
         $('#main').panel({
             fit: true,
             href: 'content.html',
-            onLoad: function () { app.init(); }
+            onLoad: function () {
+                app.init();
+            }
 
         });
     },
@@ -221,8 +228,10 @@ var app = {
             },
             onSelect: this.treeSelect,
             onLoadSuccess: function (node, data) {
-                var node = $('#tree').tree('find', '2');
-                $('#tree').tree('select', node.target);
+                if (app.startid) {
+                    var node = $('#tree').tree('find', app.startid);
+                    $('#tree').tree('select', node.target);
+                }
             }
         });
         $('#tabs').tabs({

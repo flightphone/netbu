@@ -3,6 +3,8 @@
     "version": "2.1.402"
   },
   "cns":"Host=localhost;Username=postgres;Password=aA12345678;Database=uFlights",
-  "mscns": "data source=localhost\\SQLEXPRESS8;User ID=sa;Password=aA12345678;database=uStore",
-  "isP": "postgres"
+  "mscns": "data source=localhost\\SQLEXPRESS8;User ID=sa;Password=aA12345678;database=uFlights",
+  "isP": "tsql",
+  "dadataurl": "https://suggestions.dadata.ru/suggestions/api/4_1/rs/findById/party",
+  "dadatakey": "645e8f5cba4815395ad3c2260f4d1b04420541e5"
 }

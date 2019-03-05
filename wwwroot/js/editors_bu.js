@@ -290,6 +290,7 @@ var tc_class = {
             + '<div style="display:block;" id="div' + groupid + ngroup.toString() + '">'
             + '<table class="datagrid-btable" cellspacing="1" cellpadding="0" style="width:100%;background-color:lightgray"><tbody>';
 
+        var savefieldlist = sender.finder.t_rpdeclare.savefieldlist.toLowerCase().split(',');
         for (var i = 0; i < sender.fields.length; i++) {
 
             let edrw = '<tr class="datagrid-row">';
@@ -467,6 +468,7 @@ var tc_class = {
                             }
                             else {
                                 $(sender.id(fname)).textbox({
+                                    disabled: (savefieldlist.indexOf(fname.toLowerCase()) == -1 && !sender.fields[i].joinRow), //04/03/2019
                                     onChange: function (newValue, oldValue) {
                                         sender.record[fname] = newValue;
                                         sender.flagEdit = true;

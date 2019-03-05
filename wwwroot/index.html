@@ -4,7 +4,7 @@
     <meta name="mobile-web-app-capable" content="yes">
 	<meta name="viewport" content="user-scalable=yes, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
     <meta charset="utf-8"/>
-    <title>Пакеты тарифов</title>
+    <title>uSmart</title>
     <!--<link rel="stylesheet" type="text/css" href="easyui/theme/build.min.css">-->
 
     <link rel="stylesheet" type="text/css" href="easyui/theme/easyui.css?v=7">
@@ -19,15 +19,19 @@
     <script type="text/javascript" src="easyui/datagrid-filter.js"></script>
     <script type="text/javascript" src="easyui/locale/easyui-lang-ru.js"></script>
     <script type="text/javascript" src="js/jscolor.js"></script>
-    <script type="text/javascript" src="js/editors_bu.js?v=1.0"></script>
-    <script type="text/javascript" src="js/finder_bu.js?v=1.1"></script>
+    <script type="text/javascript" src="js/editors_bu.js?v=1.1"></script>
+    <script type="text/javascript" src="js/finder_bu.js?v=1.8"></script>
     <script type="text/javascript" src="js/editors_po.js?v=1.1"></script>
+    <script type="text/javascript" src="js/editors_cnt.js?v=1.1"></script>
 
     </head>
 	<body>
             <div id = "main">
             </div>
             <script>
+                var l = document.location;
+                if (l.hash)
+                    app.startid = l.hash.replace('#', '');
                 app.start();
             </script>
     </body>
