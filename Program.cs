@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
 using Microsoft.Extensions.Logging;
+using System.Net;
 
 namespace netbu
 {
@@ -27,6 +28,23 @@ namespace netbu
 
         AppConfig = config;
         isPostgres = (AppConfig["isP"] == "postgres");
+        string proxy = AppConfig["proxy"];
+        string proxyport = AppConfig["proxyport"];
+        string proxylogin = AppConfig["proxylogin"];
+        string proxypassword = AppConfig["proxypassword"];
+        if (!string.IsNullOrEmpty(AppConfig["proxy"]))
+            {
+                WebProxy wp = new WebProxy(proxy, int.Parse(proxyport));
+                if (string.IsNullOrEmpty(proxylogin))
+                    wp.UseDefaultCredentials = true;
+                else
+                    wp.Credentials = new NetworkCredential(proxylogin, proxypassword);
+                WebRequest.DefaultWebProxy = wp;
+                //GlobalProxySelection.Select = wp;
+            }
+
+
+
         return WebHost.CreateDefaultBuilder(args)
             .UseConfiguration(config)
             .UseStartup<Startup>();

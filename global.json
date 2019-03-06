@@ -6,5 +6,9 @@
   "mscns": "data source=localhost\\SQLEXPRESS8;User ID=sa;Password=aA12345678;database=uFlights",
   "isP": "tsql",
   "dadataurl": "https://suggestions.dadata.ru/suggestions/api/4_1/rs/findById/party",
-  "dadatakey": "645e8f5cba4815395ad3c2260f4d1b04420541e5"
+  "dadatakey": "645e8f5cba4815395ad3c2260f4d1b04420541e5",
+  "proxy":"",
+  "proxyport":"3128",
+  "proxylogin":"glonass\\manevich",
+  "proxypassword":"Pafos2018"
 }
