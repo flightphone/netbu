@@ -430,6 +430,7 @@ namespace netbu.Controllers
         public ActionResult getcntinfo(string inn)
         {
 
+
             var httpRequest = (HttpWebRequest)WebRequest.Create(Program.AppConfig["dadataurl"]);
             httpRequest.Method = "POST";
             httpRequest.ContentType = "application/json";
@@ -439,15 +440,16 @@ namespace netbu.Controllers
             {
                 using (JsonWriter writer = new JsonTextWriter(w))
                 {
-                    serializer.Serialize(writer, new { query = inn});
+                    serializer.Serialize(writer, new { query = inn });
                 }
             }
-            var httpResponse = (HttpWebResponse) httpRequest.GetResponse();
+            HttpWebResponse httpResponse = (HttpWebResponse)httpRequest.GetResponse();
             using (var r = new StreamReader(httpResponse.GetResponseStream())) {
                 string responseText = r.ReadToEnd();
                 return File(Encoding.UTF8.GetBytes(responseText), "application/json");
                 
             }
+
 
         }
 
