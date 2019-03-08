@@ -32,7 +32,7 @@ class ref@(Model.rw["DecName"].ToString()) : TC.TC_Class
             DelProc = "@(Model.rw["DelProc"].ToString())";
             EditProc = "@(Model.rw["EditProc"].ToString())";
             KeyField = "@(Model.rw["KeyField"].ToString())";
-            SaveField = new List<string>
+            SaveField = new List&lt;string&gt;
             {
               @(Model.fmtSaveFieldList)
             };
@@ -58,7 +58,7 @@ class ref@(Model.rw["DecName"].ToString()) : TC.TC_Class
                 foreach(string dstField in Model.ListField[key].LookUp.Keys)
                 {
                  <text>   
-                _WorkRow["@dstField"] = _TF_SV.SelectedRow["@Model.ListField[key].LookUp[dstField]"];</text>
+                _WorkRow["@dstField"] = _@(Model.ListField[key].FieldName).SelectedRow["@Model.ListField[key].LookUp[dstField]"];</text>
                 }
     <text>
         };
