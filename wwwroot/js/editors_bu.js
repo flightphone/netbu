@@ -190,7 +190,7 @@ var tc_class = {
             $(sender.id(sender.fields[i]['field'])).remove();
         }
 
-        sender.winedit = $('<div id="' + sender.idh('winedit') + '" style="width:700px;height:500px;padding:10px 10px 0px 10px"></div>').appendTo('body');
+        sender.winedit = $('<div id="' + sender.idh('winedit') + '" style="width:900px;height:500px;padding:10px 10px 0px 10px"></div>').appendTo('body');
         var s = $('#okcancel').html();
         s = s.replace('OKFun', sender.prop('okclick'));
         s = s.replace('CloseFun', sender.prop('cancelclick'));
