@@ -620,8 +620,11 @@ var tc_class = {
                         else
                             val = "'" + row[sender.finder.t_rpdeclare.keyfield.toLowerCase()].toString().replace(/'/g, "''") + "'"
                         var sql = 'select * from ' + sender.finder.t_rpdeclare.delproc + '(' + val + ')';
-                        if (!app.isP)
+                        if (!app.isP) {
                             sql = 'exec ' + sender.finder.t_rpdeclare.delproc + ' ' + val;
+                            if (sender.finder.t_rpdeclare.delproc.toLowerCase().indexOf("_del_1") > -1)
+                                sql = sql + ", '" + app.account + "', '" + app.account + "'"
+                        }
                         $.post('/pg/runsql', {
                             sql: sql,
                             account: app.account,

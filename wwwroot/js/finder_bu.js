@@ -159,6 +159,10 @@ var app = {
                                     form = Object.create(fi_contractors);
                                 }
                                 else
+                                if (node.attributes.params == '1451') {
+                                    form = Object.create(FlightCardsList);
+                                }
+                                else
                                     if (node.attributes.link1 == "porders") {
                                         //form = Object.create(porders);
                                         form = new Poo();
@@ -176,6 +180,7 @@ var app = {
 
                     form.SQLParams = {};
                     form.DefaultValues = {};
+                    form.DefaultValues.last_change_user = app.account;
 
                     app.forms['form' + node.id.toString()] = form;
 
