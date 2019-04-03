@@ -10,5 +10,6 @@
   "proxy":"",
   "proxyport":"3128",
   "proxylogin":"glonass\\manevich",
-  "proxypassword":"Pafos2018"
+  "proxypassword":"Pafos2018",
+  "docfiles":"C:\\_UTG"
 }

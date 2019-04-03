@@ -11,9 +11,11 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Net;
 using System.Xml;
+using Microsoft.AspNetCore.Authorization;
 
 namespace netbu.Controllers
 {
+    [Authorize]
     public class StoreController : Controller
     {
         public ActionResult refer(string id)

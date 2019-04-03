@@ -1,0 +1,104 @@
+@using System.IO;
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <title>Index of</title>
+  <style>
+    body {
+        font-family: "Segoe UI", "Segoe WP", "Helvetica Neue", 'RobotoRegular', sans-serif;
+        font-size: 14px;}
+    header h1 {
+        font-family: "Segoe UI Light", "Helvetica Neue", 'RobotoLight', "Segoe UI", "Segoe WP", sans-serif;
+        font-size: 28px;
+        font-weight: 100;
+        margin-top: 5px;
+        margin-bottom: 0px;}
+    #index {
+        border-collapse: separate; 
+        border-spacing: 0; 
+        margin: 0 0 20px; }
+    #index th {
+        vertical-align: bottom;
+        padding: 10px 5px 5px 5px;
+        font-weight: 400;
+        color: #a0a0a0;
+        text-align: center; }
+    #index td { padding: 3px 10px; }
+    #index th, #index td {
+        border-right: 1px #ddd solid;
+        border-bottom: 1px #ddd solid;
+        border-left: 1px transparent solid;
+        border-top: 1px transparent solid;
+        box-sizing: border-box; }
+    #index th:last-child, #index td:last-child {
+        border-right: 1px transparent solid; }
+    #index td.length, td.modified { text-align:right; }
+    a { color:#1ba1e2;text-decoration:none; }
+    a:hover { color:#13709e;text-decoration:underline; }
+  </style>
+</head>
+<body>
+  <section id="main">
+    <header><h1>Содержание @ViewBag.id</h1></header>
+    <table id="index" summary="The list of files in the given directory.  Column headers are listed in the first row.">
+    <thead>
+      <tr><th abbr="Name">Название</th><th abbr="Size">Размер</th><th abbr="Modified">Дата</th><th>Del</th></tr>
+    </thead>
+    <tbody>
+    @{
+        if (!string.IsNullOrEmpty(ViewBag.parent))
+        {
+            <tr class="directory">
+                <td class="name"><a href="/Docfiles/dir?id=@(ViewBag.parent)">...</a></td>
+                <td></td>
+                <td class="modified"></td>
+                <td></td>
+            </tr>
+        }
+
+    }        
+    @{
+        foreach (DirectoryInfo di in ViewBag.di.GetDirectories())
+        {
+            <tr class="directory">
+                <td class="name"><a href="/Docfiles/dir?id=@(ViewBag.id)@(di.Name)/">@(di.Name)/</a></td>
+                <td></td>
+                <td class="modified">@(di.LastAccessTime.ToString("dd.MM.yyyy HH:mm"))</td>
+                <td><a href="/Docfiles/dir?id=@(ViewBag.parent)">X</a></td>
+            </tr>
+
+        }
+    }
+
+    @{
+        foreach (FileInfo fi in ViewBag.di.GetFiles())
+        {
+            <tr class="file">
+            <td class="name"><a href="/Docfiles/file?id=@(ViewBag.id)@(fi.Name)">@(fi.Name)</a></td>
+            <td class="length">@(fi.Length.ToString("#,##"))</td>
+            <td class="modified">@(fi.LastAccessTime.ToString("dd.MM.yyyy HH:mm"))</td>
+            <td><a href="/Docfiles/dir?id=@(ViewBag.parent)">X</a></td>
+            </tr>
+
+        }
+
+    }  
+      
+    <tr class="file">
+            <td class="name">-</td>
+            <td class="length"></td>
+            <td class="modified"></td>
+            <td></td>
+    </tr>  
+
+    <tr class="file">
+            <td class="name" colspan="4">
+                <a href="/Docfiles/dir?id=@(ViewBag.parent)">Загрузить файл</a>&nbsp;&nbsp;
+                <a href="/Docfiles/dir?id=@(ViewBag.parent)">Новая папка</a>
+            </td>
+    </tr>
+    </tbody>
+    </table>
+  </section>
+</body>
+</html>

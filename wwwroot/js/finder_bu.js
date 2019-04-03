@@ -155,24 +155,28 @@ var app = {
                                     form = Object.create(fi_declare);
                                 }
                                 else
-                                if (node.attributes.params == '1444') {
-                                    form = Object.create(fi_contractors);
-                                }
-                                else
-                                if (node.attributes.params == '1451') {
-                                    form = Object.create(FlightCardsList);
-                                }
-                                else
-                                    if (node.attributes.link1 == "porders") {
-                                        //form = Object.create(porders);
-                                        form = new Poo();
+                                    if (node.attributes.params == '1444') {
+                                        form = Object.create(fi_contractors);
                                     }
-                                    else {
-                                        if (!node.attributes.params)
-                                            return;
+                                    else
+                                    if (node.attributes.params == '1445') {
+                                        form = Object.create(fi_agreements);
+                                    }
+                                    else
+                                        if (node.attributes.params == '1451') {
+                                            form = Object.create(FlightCardsList);
+                                        }
                                         else
-                                            form = Object.create(finder);
-                                    };
+                                            if (node.attributes.link1 == "porders") {
+                                                //form = Object.create(porders);
+                                                form = new Poo();
+                                            }
+                                            else {
+                                                if (!node.attributes.params)
+                                                    return;
+                                                else
+                                                    form = Object.create(finder);
+                                            };
 
                     form.absid = 'app.forms.form' + node.id.toString();
                     form.node = node.id.toString();
@@ -211,7 +215,7 @@ var app = {
             fit: true,
             href: 'content.html',
             onLoad: function () {
-                app.init();
+                //app.init();
             }
 
         });
@@ -383,7 +387,7 @@ var simpleHtml = {
     start: function () { },
     page: '',
     template: function () {
-        var s = '<iframe src="' + this.page + '" style = "height:100%;width:100%; border-width: 0"/>';
+        var s = '<iframe crossorigin src="' + this.page + '" style = "height:100%;width:100%; border-width: 0"/>';
         s = '<div class="easyui-layout" fit="true"><div data-options="region:\'center\', split:false">' + s + '</div></div>';
         return s;
     }
@@ -637,7 +641,40 @@ var finder = {
         sender.editor.finder = sender;
         sender.editor.start(sender.editor);
 
+        var toolbar = $('<div style="padding:2px 4px"></div>').appendTo('body');
+        sender.abut = $('<a>').appendTo(toolbar);
+        sender.ebut = $('<a>').appendTo(toolbar);
+        sender.dbut = $('<a>').appendTo(toolbar);
+
+        sender.abut.linkbutton({
+            iconCls: 'icon-add',
+            text: 'Добавить',
+            plain: true,
+            onClick: function () {
+                sender.editor.addrecord(sender.editor);
+            }
+        });
+
+        sender.ebut.linkbutton({
+            iconCls: 'icon-edit',
+            text: 'Редактировать',
+            plain: true,
+            onClick: function () {
+                sender.editor.editrecord(sender.editor);
+            }
+        });
+
+        sender.dbut.linkbutton({
+            iconCls: 'icon-cancel',
+            text: 'Удалить',
+            plain: true,
+            onClick: function () {
+                sender.editor.deleterecord(sender.editor);
+            }
+        });
+        sender.addTool(sender, toolbar);
         $(sender.id('maintab')).datagrid({
+            /*
             toolbar: [{
                 iconCls: 'icon-add',
                 text: 'Добавить',
@@ -658,10 +695,16 @@ var finder = {
                 }
 
             }],
+            */
+            toolbar: toolbar,
             onDblClickRow: function (index, row) { sender.editor.editrecord(sender.editor); }
         });
 
 
+
+    },
+    addTool:function(sender, toolbar)
+    {
 
     },
     onSelect: function (index, row, sender) { },
