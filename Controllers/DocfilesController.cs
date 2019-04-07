@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using netbu.Models;
 using System.Data.SqlClient;
 using System.IO;
+using System.Net;
 using Microsoft.AspNetCore.Authorization;
 
 
@@ -19,13 +20,98 @@ namespace netbu.Controllers
     {
 
         public ActionResult file (string id) {
+            id = WebUtility.HtmlDecode(id);
             string idf = id.Replace("/", @"\");
             string path = Program.AppConfig["docfiles"] + @"\" + idf;
-            return PhysicalFile(path, "application/octet-stream", Path.GetFileName(path));
+            string ext = Path.GetExtension(path).ToLower().Replace(".", "");
+            string ctype = "application/octet-stream";
+            if (ext == "pdf")
+                ctype = "application/pdf";
+            if (ext == "gif" || ext == "bmp"  || ext == "jpg"  || ext == "jpeg"  || ext == "png")    
+                ctype = "image/jpeg";
+            if (ext == "tiff")    
+                ctype = "image/tiff";    
+           
+            if (ctype == "application/octet-stream")    
+                return PhysicalFile(path, ctype, Path.GetFileName(path));
+            else
+            {
+                byte[] buf = System.IO.File.ReadAllBytes(path);
+                return File(buf, ctype);
+            }    
+            
 
         }
+    public JsonResult delete_file(string id, string mode)
+    {
+        id = WebUtility.HtmlDecode(id);
+        string res = "";
+        try
+        {
+            string idf = id.Replace("/", @"\");
+            string path = Program.AppConfig["docfiles"] + @"\" + idf;
+            if (mode=="file")
+                System.IO.File.Delete(path);
+            else
+                Directory.Delete(path, true);    
+        }
+        catch (Exception e)
+        {
+            res = e.Message;
+        }
+        return Json(new { error = res });
+    }
+
+    public JsonResult newdir(string id, string dir)
+    {
+        id = WebUtility.HtmlDecode(id);
+        string res = "";
+        try
+        {
+            string idf = id.Replace("/", @"\");
+            string path = Program.AppConfig["docfiles"] + @"\" + idf + @"\" + dir;
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+        }
+        catch (Exception e)
+        {
+            res = e.Message;
+        }
+        return Json(new { error = res });
+    }            
+    public JsonResult upload(string id, List<IFormFile> files)
+		{
+		
+            string res = "";
+            id = WebUtility.HtmlDecode(id);
+            string idf = id.Replace("/", @"\");
+            string path = Program.AppConfig["docfiles"] + @"/" + idf;
+			try
+			{
+				if (files!=null)
+                foreach (IFormFile img in files)
+					{
+
+                        string FileName = img.FileName;
+						int n = (int)img.Length;
+						byte[] buf = new byte[n];
+						Stream ms =  img.OpenReadStream();
+						ms.Read(buf, 0, n);
+                        System.IO.File.WriteAllBytes(path + img.FileName, buf);
+					}
+			}
+			catch (Exception e)
+			{
+				res = e.Message;
+			}
+			
+			return Json(new { error = res });
+				
+		}
+
         public ActionResult dir(string id)
 		{
+            id = WebUtility.HtmlDecode(id);
             string idf = id.Replace("/", @"\");
             string[] paths = id.Split("/", StringSplitOptions.RemoveEmptyEntries);
             string parent = "";

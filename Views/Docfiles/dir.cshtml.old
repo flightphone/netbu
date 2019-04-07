@@ -5,11 +5,9 @@
 <head>
   <link rel="stylesheet" type="text/css" href="../easyui/theme/easyui.css?v=7">
   <link rel="stylesheet" type="text/css" href="../easyui/theme/icon.css?v=4">
-  <link rel="stylesheet" type="text/css" href="../github/frameworks-abba.css">
-  <link rel="stylesheet" type="text/css" href="../github/github.css">
   <script type="text/javascript" src="../easyui/jquery.min.js"></script>
   <script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
-  <title>@(ViewBag.id)</title>
+  <title>Index of</title>
   <style>
     body {
         font-family: "Segoe UI", "Segoe WP", "Helvetica Neue", 'RobotoRegular', sans-serif;
@@ -39,16 +37,9 @@
         box-sizing: border-box; }
     #index th:last-child, #index td:last-child {
         border-right: 1px transparent solid; }
-    td.length { text-align:right; 
-        width: 110px;
-    } 
-    td.modified { text-align:right; 
-        width: 140px;
-    }
-    
-    
+    #index td.length, td.modified { text-align:right; }
     a { color:#1ba1e2;text-decoration:none; }
-    
+    a:hover { color:#13709e;text-decoration:underline; }
 
     a.icon {
     -webkit-padding-start: 1.5em;
@@ -56,7 +47,7 @@
     }
 
   
-    a.file1 {
+    a.file {
     background : url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAABnRSTlMAAAAAAABupgeRAAABHUlEQVR42o2RMW7DIBiF3498iHRJD5JKHurL+CRVBp+i2T16tTynF2gO0KSb5ZrBBl4HHDBuK/WXACH4eO9/CAAAbdvijzLGNE1TVZXfZuHg6XCAQESAZXbOKaXO57eiKG6ft9PrKQIkCQqFoIiQFBGlFIB5nvM8t9aOX2Nd18oDzjnPgCDpn/BH4zh2XZdlWVmWiUK4IgCBoFMUz9eP6zRN75cLgEQhcmTQIbl72O0f9865qLAAsURAAgKBJKEtgLXWvyjLuFsThCSstb8rBCaAQhDYWgIZ7myM+TUBjDHrHlZcbMYYk34cN0YSLcgS+wL0fe9TXDMbY33fR2AYBvyQ8L0Gk8MwREBrTfKe4TpTzwhArXWi8HI84h/1DfwI5mhxJamFAAAAAElFTkSuQmCC ") left top no-repeat;
             }
 
@@ -180,53 +171,21 @@ function handleFiles(files) {
 </script> 
 <body>
 <input type="file" id="fileElem" style="display:none" multiple onchange="handleFiles(this.files)">
- <div class="application-main " data-commit-hovercards-enabled=""> 
- <div class="container new-discussion-timeline experiment-repo-nav  ">
- <div class="repository-content ">
- <div class="file-navigation">   
-    
-    <div class="BtnGroup float-right">
-                <div class="BtnGroup">
-                <a href="#" onclick="$('#fileElem').click()"  class="btn btn-sm BtnGroup-item">Загрузить файл</a>
-                <a href="#" onclick="newdir()" class="btn btn-sm empty-icon float-right BtnGroup-item">Создать папку:</a>
-                </div>
-
-                <div class="BtnGroup">
-                <input type="text" id="newfolder" />
-                </div>
-                
-    </div>
-
-
-    <div class="breadcrumb mb-2">
-        <!--
-        <span class="js-repo-root text-bold">
-            <span class="js-path-segment">
-                <a data-pjax="true" href="/flightphone/netbu">
-                <span>netbu</span></a>
-                </span>
-                </span>
-                <span class="separator">/</span>
-        -->        
-                <strong class="final-path">@ViewBag.id</strong>
-                
-                <!--<span class="separator">/</span>-->
-                
-    </div>
-  </div>      
-    <div class="file-wrap">
-    <table  class="files js-navigation-container js-active-navigation-container">
+  <section id="main">
+    <header><h1>Содержание @WebUtility.HtmlDecode(ViewBag.id)</h1></header>
+    <table style="width:100%" id="index" summary="The list of files in the given directory.  Column headers are listed in the first row.">
     <thead>
-      <tr><th></th><th></th><th></th></tr>
+      <tr><th abbr="Name">Название</th><th abbr="Size">Размер</th><th abbr="Modified">Дата</th><th>Del</th></tr>
     </thead>
     <tbody>
     @{
         if (!string.IsNullOrEmpty(ViewBag.parent))
         {
-            <tr class="files js-navigation-container js-active-navigation-container">
+            <tr class="directory">
                 <td class="name"><a href="/Docfiles/dir?id=@(ViewBag.parent)" class="icon up">...</a></td>
                 <td></td>
                 <td class="modified"></td>
+                <td></td>
             </tr>
         }
 
@@ -234,13 +193,11 @@ function handleFiles(files) {
     @{
         foreach (DirectoryInfo di in ViewBag.di.GetDirectories())
         {
-            <tr class="files js-navigation-container js-active-navigation-container">
-                <td class="name"><a href="/Docfiles/dir?id=@(ViewBag.id)@(di.Name)/" class="icon dir">@(di.Name)</a></td>
+            <tr class="directory">
+                <td class="name"><a href="/Docfiles/dir?id=@(ViewBag.id)@(di.Name)/" class="icon dir">@(di.Name)/</a></td>
                 <td></td>
-                <td class="modified">@(di.LastAccessTime.ToString("dd.MM.yyyy HH:mm"))
-                    <a href="#" onclick="delete_file('@(ViewBag.id)@(di.Name)/', '@(di.Name)/', 'dir')">X</a>
-                </td>
-                
+                <td class="modified">@(di.LastAccessTime.ToString("dd.MM.yyyy HH:mm"))</td>
+                <td><a href="#" onclick="delete_file('@(ViewBag.id)@(di.Name)/', '@(di.Name)/', 'dir')">X</a></td>
             </tr>
 
         }
@@ -249,24 +206,33 @@ function handleFiles(files) {
     @{
         foreach (FileInfo fi in ViewBag.di.GetFiles())
         {
-            <tr class="files js-navigation-container js-active-navigation-container">
-            <td class="name"><a href="/Docfiles/file?id=@(ViewBag.id)@(fi.Name)" class="icon file1">@(fi.Name)</a></td>
+            <tr class="file">
+            <td class="name"><a href="/Docfiles/file?id=@(ViewBag.id)@(fi.Name)" class="icon file">@(fi.Name)</a></td>
             <td class="length">@(fi.Length.ToString("#,##"))</td>
-            <td class="modified">@(fi.LastAccessTime.ToString("dd.MM.yyyy HH:mm"))
-                <a href="#" onclick="delete_file('@(ViewBag.id)@(fi.Name)', '@(fi.Name)', 'file')">X</a>
-            </td>
+            <td class="modified">@(fi.LastAccessTime.ToString("dd.MM.yyyy HH:mm"))</td>
+            <td><a href="#" onclick="delete_file('@(ViewBag.id)@(fi.Name)', '@(fi.Name)', 'file')">X</a></td>
             </tr>
 
         }
 
     }  
       
-    
+    <tr class="file">
+            <td class="name">-</td>
+            <td class="length"></td>
+            <td class="modified"></td>
+            <td></td>
+    </tr>  
+
+    <tr class="file">
+            <td class="name" colspan="4">
+                <a href="#" onclick="$('#fileElem').click()">Загрузить файл</a>&nbsp;&nbsp;
+                <a href="#" onclick="newdir()">Создать папку:</a>&nbsp;
+                <input type="text" id="newfolder" />
+            </td>
+    </tr>
     </tbody>
     </table>
-  </div>
-</div>  
-</div>  
-</div>  
+  </section>
 </body>
 </html>
