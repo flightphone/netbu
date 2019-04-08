@@ -1,5 +1,6 @@
 @using System.IO;
 @using System.Net;
+@using System.Text;
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -11,34 +12,7 @@
   <script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
   <title>@(ViewBag.id)</title>
   <style>
-    body {
-        font-family: "Segoe UI", "Segoe WP", "Helvetica Neue", 'RobotoRegular', sans-serif;
-        font-size: 14px;}
-    header h1 {
-        font-family: "Segoe UI Light", "Helvetica Neue", 'RobotoLight', "Segoe UI", "Segoe WP", sans-serif;
-        font-size: 28px;
-        font-weight: 100;
-        margin-top: 5px;
-        margin-bottom: 0px;}
-    #index {
-        border-collapse: separate; 
-        border-spacing: 0; 
-        margin: 0 0 20px; }
-    #index th {
-        vertical-align: bottom;
-        padding: 10px 5px 5px 5px;
-        font-weight: 400;
-        color: #a0a0a0;
-        text-align: center; }
-    #index td { padding: 3px 10px; }
-    #index th, #index td {
-        border-right: 1px #ddd solid;
-        border-bottom: 1px #ddd solid;
-        border-left: 1px transparent solid;
-        border-top: 1px transparent solid;
-        box-sizing: border-box; }
-    #index th:last-child, #index td:last-child {
-        border-right: 1px transparent solid; }
+    
     td.length { text-align:right; 
         width: 110px;
     } 
@@ -51,7 +25,7 @@
     
 
     a.icon {
-    -webkit-padding-start: 1.5em;
+    padding-left: 22px;
     text-decoration: none;
     }
 
@@ -190,11 +164,9 @@ function handleFiles(files) {
                 <a href="#" onclick="$('#fileElem').click()"  class="btn btn-sm BtnGroup-item">Загрузить файл</a>
                 <a href="#" onclick="newdir()" class="btn btn-sm empty-icon float-right BtnGroup-item">Создать папку:</a>
                 </div>
-
                 <div class="BtnGroup">
                 <input type="text" id="newfolder" />
                 </div>
-                
     </div>
 
 
@@ -213,7 +185,13 @@ function handleFiles(files) {
                 <!--<span class="separator">/</span>-->
                 
     </div>
-  </div>      
+  </div>   
+  <div class="commit-tease js-details-container Details d-flex rounded-top-1" data-issue-and-pr-hovercards-enabled="">
+      <div class="flex-auto f6 mr-3">
+          Вы зашли как: <b>@(User.Identity.Name)</b>
+      </div>
+   </div>   
+   
     <div class="file-wrap">
     <table  class="files js-navigation-container js-active-navigation-container">
     <thead>
@@ -224,7 +202,7 @@ function handleFiles(files) {
         if (!string.IsNullOrEmpty(ViewBag.parent))
         {
             <tr class="files js-navigation-container js-active-navigation-container">
-                <td class="name"><a href="/Docfiles/dir?id=@(ViewBag.parent)" class="icon up">...</a></td>
+                <td class="name"><a href="/Docfiles/dir?id64=@(Convert.ToBase64String(Encoding.UTF8.GetBytes(ViewBag.parent), Base64FormattingOptions.None))" class="icon up">...</a></td>
                 <td></td>
                 <td class="modified"></td>
             </tr>
@@ -235,7 +213,7 @@ function handleFiles(files) {
         foreach (DirectoryInfo di in ViewBag.di.GetDirectories())
         {
             <tr class="files js-navigation-container js-active-navigation-container">
-                <td class="name"><a href="/Docfiles/dir?id=@(ViewBag.id)@(di.Name)/" class="icon dir">@(di.Name)</a></td>
+                <td class="name"><a href='/Docfiles/dir?id64=@(Convert.ToBase64String(Encoding.UTF8.GetBytes(ViewBag.id + di.Name + "/"), Base64FormattingOptions.None))' class="icon dir">@(di.Name)</a></td>
                 <td></td>
                 <td class="modified">@(di.LastAccessTime.ToString("dd.MM.yyyy HH:mm"))
                     <a href="#" onclick="delete_file('@(ViewBag.id)@(di.Name)/', '@(di.Name)/', 'dir')">X</a>
@@ -250,7 +228,7 @@ function handleFiles(files) {
         foreach (FileInfo fi in ViewBag.di.GetFiles())
         {
             <tr class="files js-navigation-container js-active-navigation-container">
-            <td class="name"><a href="/Docfiles/file?id=@(ViewBag.id)@(fi.Name)" class="icon file1">@(fi.Name)</a></td>
+            <td class="name"><a href="/Docfiles/file?id64=@(Convert.ToBase64String(Encoding.UTF8.GetBytes(ViewBag.id + fi.Name), Base64FormattingOptions.None))" class="icon file1">@(fi.Name)</a></td>
             <td class="length">@(fi.Length.ToString("#,##"))</td>
             <td class="modified">@(fi.LastAccessTime.ToString("dd.MM.yyyy HH:mm"))
                 <a href="#" onclick="delete_file('@(ViewBag.id)@(fi.Name)', '@(fi.Name)', 'file')">X</a>

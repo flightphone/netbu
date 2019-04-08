@@ -92,6 +92,25 @@ namespace netbu.Controllers {
             }
         }
 
+
+        public async Task<ActionResult> opendir(string cnt_sid, string id, string id64)
+        {
+            SqlDataAdapter da = new SqlDataAdapter("p_cntsession", Program.AppConfig["mscns"]);
+            da.SelectCommand.CommandType = CommandType.StoredProcedure;
+            da.SelectCommand.Parameters.AddWithValue("@cnt_sid", cnt_sid);
+            DataTable res = new DataTable();
+            da.Fill(res);
+            if (res.Rows.Count == 0)
+            {
+                return Redirect("~/Access.html?ReturnUrl=/Docfiles/dir?id=" + id + "&id64=" + id64);
+            }
+            else
+            {
+                string account = res.Rows[0]["username"].ToString();
+                await Authenticate(account); // аутентификация
+                return Redirect("~/Docfiles/dir?id=" + id + "&id64=" + id64);
+            }
+        }
         [Authorize]
         [Route ("/pg/runsql")]
         public JsonResult runsql () {
@@ -99,7 +118,7 @@ namespace netbu.Controllers {
                 string sql = Request.Form["sql"];
                 if (!Program.isPostgres && !string.IsNullOrEmpty (sql))
                     sql = sql.Replace ("||", "+");
-                var cnstr = Program.isPostgres ? Program.AppConfig["cns"] : Program.AppConfig["mscns"];;
+                var cnstr = Program.isPostgres ? Program.AppConfig["cns"] : Program.AppConfig["mscns"];
                 var IdDeclare = Request.Form["IdDeclare"];
                 var account = Request.Form["account"];
                 var password = Request.Form["password"];

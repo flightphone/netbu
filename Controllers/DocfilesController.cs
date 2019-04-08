@@ -11,6 +11,7 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Net;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Primitives;
 
 
 namespace netbu.Controllers
@@ -19,14 +20,26 @@ namespace netbu.Controllers
     public class DocfilesController : Controller
     {
 
-        public ActionResult file (string id) {
-            id = WebUtility.HtmlDecode(id);
+        
+        
+        public ActionResult file (string id, string id64) {
+            
+            if (!string.IsNullOrEmpty(id64))
+            {
+                id64 = id64.Replace(" ", "+");
+                id = Encoding.UTF8.GetString(Convert.FromBase64String(id64));
+            }
+            else
+                id = WebUtility.HtmlDecode(id);
+
             string idf = id.Replace("/", @"\");
             string path = Program.AppConfig["docfiles"] + @"\" + idf;
             string ext = Path.GetExtension(path).ToLower().Replace(".", "");
             string ctype = "application/octet-stream";
+            /*
             if (ext == "pdf")
                 ctype = "application/pdf";
+            */    
             if (ext == "gif" || ext == "bmp"  || ext == "jpg"  || ext == "jpeg"  || ext == "png")    
                 ctype = "image/jpeg";
             if (ext == "tiff")    
@@ -109,9 +122,16 @@ namespace netbu.Controllers
 				
 		}
 
-        public ActionResult dir(string id)
+        public ActionResult dir(string id, string id64)
 		{
-            id = WebUtility.HtmlDecode(id);
+            if (!string.IsNullOrEmpty(id64))
+            {
+                id64 = id64.Replace(" ", "+");
+                id = Encoding.UTF8.GetString(Convert.FromBase64String(id64));
+            }
+            else
+                id = WebUtility.HtmlDecode(id);
+
             string idf = id.Replace("/", @"\");
             string[] paths = id.Split("/", StringSplitOptions.RemoveEmptyEntries);
             string parent = "";
