@@ -159,24 +159,24 @@ var app = {
                                         form = Object.create(fi_contractors);
                                     }
                                     else
-                                    if (node.attributes.params == '1445') {
-                                        form = Object.create(fi_agreements);
-                                    }
-                                    else
-                                        if (node.attributes.params == '1451') {
-                                            form = Object.create(FlightCardsList);
+                                        if (node.attributes.params == '1445') {
+                                            form = Object.create(fi_agreements);
                                         }
                                         else
-                                            if (node.attributes.link1 == "porders") {
-                                                //form = Object.create(porders);
-                                                form = new Poo();
+                                            if (node.attributes.params == '1451') {
+                                                form = Object.create(FlightCardsList);
                                             }
-                                            else {
-                                                if (!node.attributes.params)
-                                                    return;
-                                                else
-                                                    form = Object.create(finder);
-                                            };
+                                            else
+                                                if (node.attributes.link1 == "porders") {
+                                                    //form = Object.create(porders);
+                                                    form = new Poo();
+                                                }
+                                                else {
+                                                    if (!node.attributes.params)
+                                                        return;
+                                                    else
+                                                        form = Object.create(finder);
+                                                };
 
                     form.absid = 'app.forms.form' + node.id.toString();
                     form.node = node.id.toString();
@@ -237,30 +237,31 @@ var app = {
             },
             onSelect: this.treeSelect,
             onLoadSuccess: function (node, data) {
-                if (app.startid) {
-                    var node = $('#tree').tree('find', app.startid);
-                    $('#tree').tree('select', node.target);
-                }
+                $.post('/pg/runsql', {
+                    sql: 'select  idmap, decname, dstfield, srcfield, iddeclare, classname, groupdec, keyfield from t_sysfieldmap',
+                    account: app.account,
+                    password: app.password
+                },
+                    function (data) {
+                        if (data.message) {
+                            $.messager.alert('Ошибка.', data.message, 'error');
+                        }
+                        else {
+                            app.t_sysfieldmap = data.rows;
+                            if (app.startid) {
+                                var node = $('#tree').tree('find', app.startid);
+                                $('#tree').tree('select', node.target);
+                            }
+                            //console.debug(this.t_sysfieldmap);
+                        }
+                    });
             }
         });
         $('#tabs').tabs({
             fit: true
         });
 
-        $.post('/pg/runsql', {
-            sql: 'select  idmap, decname, dstfield, srcfield, iddeclare, classname, groupdec, keyfield from t_sysfieldmap',
-            account: app.account,
-            password: app.password
-        },
-            function (data) {
-                if (data.message) {
-                    $.messager.alert('Ошибка.', data.message, 'error');
-                }
-                else {
-                    app.t_sysfieldmap = data.rows;
-                    //console.debug(this.t_sysfieldmap);
-                }
-            });
+
 
 
     }
@@ -703,8 +704,7 @@ var finder = {
 
 
     },
-    addTool:function(sender, toolbar)
-    {
+    addTool: function (sender, toolbar) {
 
     },
     onSelect: function (index, row, sender) { },
