@@ -33,6 +33,7 @@ namespace netbu.Controllers
             else
                 id = WebUtility.HtmlDecode(id);
 
+
             string idf = id.Replace("/", @"\");
             string path = Program.AppConfig["docfiles"] + @"\" + idf;
             string ext = Path.GetExtension(path).ToLower().Replace(".", "");

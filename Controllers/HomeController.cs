@@ -16,6 +16,7 @@ using netbu.Models;
 using Newtonsoft.Json;
 using Npgsql;
 using Microsoft.AspNetCore.Authorization;
+using suggestionscsharp;
 
 namespace netbu.Controllers
 {
@@ -64,6 +65,7 @@ namespace netbu.Controllers
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
             // установка аутентификационных куки
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
+            
 
         }
 
@@ -466,13 +468,15 @@ namespace netbu.Controllers
                     serializer.Serialize(writer, new { query = inn });
                 }
             }
+            string responseText = "";
             HttpWebResponse httpResponse = (HttpWebResponse)httpRequest.GetResponse();
             using (var r = new StreamReader(httpResponse.GetResponseStream()))
             {
-                string responseText = r.ReadToEnd();
-                return File(Encoding.UTF8.GetBytes(responseText), "application/json");
-
+                responseText = r.ReadToEnd();
             }
+
+            //SuggestResponse suggs = JsonConvert.DeserializeObject<SuggestResponse>(responseText);
+            return File(Encoding.UTF8.GetBytes(responseText), "application/json");
 
         }
 
