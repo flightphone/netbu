@@ -29,7 +29,7 @@ namespace netbu.Models
     public class PrintDoc
     {
 
-        public byte[] PrintDocx(String RepName, DataRow printRow, List<DataTable> Tables)
+        public byte[] PrintDocx(String RepName, DataRow printRow, List<DataTable> Tables, Dictionary<string, byte[]> Images)
         {
 
             string FileName = @"wwwroot\Reports\rep" + Guid.NewGuid().ToString() + ".zip";
@@ -58,6 +58,20 @@ namespace netbu.Models
                     using (StreamWriter writer = new StreamWriter(doc.Open()))
                     {
                         writer.Write(ResWord);
+                    }
+
+                    //Картинки
+                    foreach (string key in Images.Keys)
+                    {
+                        ZipArchiveEntry img = archive.GetEntry(@"word/media/" + key);
+                        if (img!=null)
+                        {
+                            using(Stream s = img.Open())
+                            {
+                                s.Write(Images[key], 0, Images[key].Length);
+                                s.Flush();
+                            }
+                        }
                     }
                 }
             }

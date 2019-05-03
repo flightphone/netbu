@@ -11,6 +11,9 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Net;
 using Microsoft.Extensions.Primitives;
+using System.Drawing;
+using System.Drawing.Imaging;
+
 
 
 namespace netbu.Controllers
@@ -52,19 +55,24 @@ namespace netbu.Controllers
             }
 
             string RH_Template = MapH.Rows[0]["MH_Template"].ToString().ToLower().Replace(".docx", "");
-            
 
-            /*
-            String code = MapH.Rows[0]["AD_NN"].ToString();
-            //Штрих код 17052012
-            
-            Barcode128 bc = new Barcode128();
-            bc.BarHeight = 100f;
-            bc.Code = code;
-            System.Drawing.Image img = bc.CreateDrawingImage(Color.Black, Color.White);
-            
-            
+
+            string codeurl = "https://www.barcodesinc.com/generator/image.php?type=C128B&width=120&height=100&xres=1&font=3&code=" + MapH.Rows[0]["AD_NN"].ToString();
+            var codeRequest = (HttpWebRequest)WebRequest.Create(codeurl);
+            codeRequest.Method = "GET";
+            HttpWebResponse codeResponse = (HttpWebResponse)codeRequest.GetResponse();
+            long nc = codeResponse.ContentLength;
+            Stream st = codeResponse.GetResponseStream();
+            //byte[] buf = new byte[(int)nc];
+            //st.Read(buf, 0, (int)nc);
+            System.Drawing.Image img = Image.FromStream(st);
             Bitmap bimg = new Bitmap(img);
+            for (int i = 0; i < 100; i++)
+            {
+                bimg.SetPixel(0, i, Color.White);
+                bimg.SetPixel(img.Width - 1, i, Color.White);
+
+            }
             //Расширяем картинку
             int bmpw = 790;
             int imgw = img.Width;
@@ -76,16 +84,26 @@ namespace netbu.Controllers
                 for (int j = 0; j < 100; j++)
                     bmp.SetPixel(i, j, c);
             }
+            MemoryStream ms = new MemoryStream();
+            bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+            byte[] buf = ms.ToArray();
+
+            Dictionary<string, byte[]> Images = new Dictionary<string, byte[]>() { { "image2.png", buf } };
+
+
+            /*
+            //Штрих код 17052012
+            */
+
+
+            string FileName = MapH.Rows[0]["MH_ArrivalFlNumber"].ToString() + "_" + MapH.Rows[0]["MH_DepartFlNumber"].ToString();
+            List<DataTable> atab = new List<DataTable>() { MapD };
+            PrintDoc pd = new PrintDoc();
+            byte[] res = pd.PrintDocx(RH_Template, MapH.Rows[0], atab, Images);
             
-            SortedList images = new SortedList();
-            images.Add("image2", bmp);
-            */ 
             
 
-            string FileName = MapH.Rows[0]["MH_ArrivalFlNumber"].ToString() + "_" + MapH.Rows[0]["MH_DepartFlNumber"].ToString();            
-            List<DataTable> atab = new List<DataTable>(){MapD};
-            PrintDoc pd = new PrintDoc();
-            byte[] res = pd.PrintDocx(RH_Template, MapH.Rows[0], atab);
+            //return File(res, "application/octet-stream", FileName + ".docx");
             
             Dictionary<string, object> param = new Dictionary<string, object>();
             Dictionary<string, object> FileValue = new Dictionary<string, object>();
@@ -113,8 +131,9 @@ namespace netbu.Controllers
                 responseText = r.ReadToEnd();
             }
             ConvertApiResponse resp = JsonConvert.DeserializeObject<ConvertApiResponse>(responseText);
-            //return File(res, "application/octet-stream", FileName + ".docx");
             return File(Convert.FromBase64String(resp.Files[0].FileData), "application/pdf", resp.Files[0].FileName);
+            
+            
         }
     }
 }
