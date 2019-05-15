@@ -29,6 +29,25 @@ namespace netbu.Models
     public class PrintDoc
     {
 
+        public string ExportCSV(DataTable Tab)
+        {
+            StringBuilder Res = new StringBuilder();
+            string s = "";
+            s = Tab.Columns[0].ColumnName;
+            for (int i = 1; i < Tab.Columns.Count; i++)
+                s = s + ";" + Tab.Columns[i].ColumnName;
+            Res.AppendLine(s);
+            foreach (DataRow rw in Tab.Rows)
+            {
+                s = @"""" + rw[0].ToString().TrimEnd().Replace(@"""", @"""""") + @"""";
+                for (int i = 1; i < Tab.Columns.Count; i++){
+                    s = s + ";" + @"""" + rw[i].ToString().TrimEnd().Replace(@"""", @"""""") + @"""";
+                }
+                Res.AppendLine(s);     
+            }
+            
+            return Res.ToString().Trim();
+        }
         public byte[] PrintDocx(String RepName, DataRow printRow, List<DataTable> Tables, Dictionary<string, byte[]> Images)
         {
 

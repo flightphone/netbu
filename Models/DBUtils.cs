@@ -4,9 +4,60 @@ using System.Data;
 using System.Data.SqlClient;
 using Npgsql;
 using netbu;
+using Newtonsoft.Json;
+using System.Net;
+using System.IO;
+using suggestionscsharp;
 
 namespace netbu.Models
 {
+
+    class dadataINN {
+        public string getjson(string inn)
+        {
+            if (string.IsNullOrEmpty(inn))
+                return "";
+            inn = inn.Split('/')[0];
+
+            var httpRequest = (HttpWebRequest)WebRequest.Create(Program.AppConfig["dadataurl"]);
+            httpRequest.Method = "POST";
+            httpRequest.ContentType = "application/json";
+            httpRequest.Headers.Add("Authorization", "Token " + Program.AppConfig["dadatakey"]);
+            var serializer = new JsonSerializer();
+            using (var w = new StreamWriter(httpRequest.GetRequestStream()))
+            {
+                using (JsonWriter writer = new JsonTextWriter(w))
+                {
+                    serializer.Serialize(writer, new { query = inn });
+                }
+            }
+            string responseText = "";
+            HttpWebResponse httpResponse = (HttpWebResponse)httpRequest.GetResponse();
+            using (var r = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                responseText = r.ReadToEnd();
+            }
+            return responseText;
+        }
+
+        public PartyData exec(string inn)
+        {
+            string responseText = getjson(inn);
+            if (string.IsNullOrEmpty(responseText))
+                return null;
+            try
+            {
+                SuggestResponse suggs = JsonConvert.DeserializeObject<SuggestResponse>(responseText);
+                if (suggs.suggestions.Count == 0)
+                    return null;
+                else
+                    return suggs.suggestions[0].data;
+            }
+            catch {
+                return null;
+            }
+        }
+    }
 
     public class treeItem
     {
@@ -92,5 +143,5 @@ namespace netbu.Models
         }
     }
 
-
+    
 }

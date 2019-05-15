@@ -81,6 +81,74 @@ var fi_agreements = {
     }
 };
 
+var DaDataLoads = {
+    __proto__: finder,
+    
+    handleFiles: function (files) {
+
+        if (!files.length)
+            return;
+        
+        var findobj = new FormData();
+        findobj.append('img', files[0]);
+        sender = this;
+
+        
+
+        $.ajax({
+	        type: 'POST',
+	        url: '/DaData/upload',
+	        processData: false, 
+        	contentType: false,
+	        data: findobj, 
+	        //error : show_error,
+	        success: function(msg)   
+						{
+						
+							$("#tariffile").val('');
+							if (msg.error)
+							{
+                                $.messager.alert('Ошибка загруки файла', msg.error, 'error');
+							}
+							else
+							{
+								sender.UpdateTab(sender);
+							}							
+							
+						}
+	    });
+
+        
+
+    },
+
+
+    addInitGrid: function (sender) {
+
+        var toolbar = $('<div style="padding:2px 4px"></div>').appendTo('body');
+        sender.file = $('<input type="file" id="tariffile" style="display:none" accept="text/txt" onchange="' + sender.prop('handleFiles(this.files)') + '"/>').appendTo(toolbar);
+        //Не стирать! Обработка файла!
+        sender.fbut = $('<a>').appendTo(toolbar);
+        sender.fbut.linkbutton({
+            iconCls: 'icon-add',
+            text: 'Добавить',
+            plain: true,
+            onClick: function () {
+                sender.file.click();
+                //  sender.UpdateTab(sender);
+            }
+        });
+    
+    
+
+        $(sender.id('maintab')).datagrid({
+            toolbar: toolbar
+        });
+
+    }
+
+}
+
 var FlightCardsList = {
     __proto__: finder,
     init: function () {

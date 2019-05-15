@@ -1,8 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+//using System.ComponentModel.CollectionConverter;
 
 
 namespace suggestionscsharp {
+
+
 
 public  class Suggestion {
         public string value { get; set; }
@@ -22,7 +26,13 @@ public class SuggestResponse {
 public class AddressResponse {
             public string value { get; set; }
             public string unrestricted_value { get; set; }
+            [TypeConverter(typeof(ExpandableObjectConverter))]
             public AddressData data { get; set; }
+            public override string ToString()
+            {
+                return this.value;
+            }
+    
     }
 
     public class AddressData {
@@ -111,15 +121,29 @@ public class AddressResponse {
         public string beltway_hit      { get; set; }
         public string beltway_distance { get; set; }
 
+        [TypeConverter(typeof(ArrayConverter))]
         public List<string> history_values { get; set; }
 
-        public List<MetroData> metro { get; set; }
+        [TypeConverter(typeof(ArrayConverter))]
+        public List<Метро> metro { get; set; }
+
+        public override string ToString()
+        {
+            return this.source;
+        }
     }
 
-    public class MetroData {
+    //[TypeConverter(typeof(ExpandableObjectConverter))]
+    public class Метро {
         public string  name     { get; set; }
         public string  line     { get; set; }
         public decimal distance { get; set; }
+
+        public override string ToString()
+        {
+            return this.name;
+        }
+        
     }
 
     public class AddressBound {
@@ -178,6 +202,10 @@ public class AddressResponse {
         public string name          { get; set; }
         public string patronymic    { get; set; }
         public string gender        { get; set; }
+        public override string ToString()
+        {
+            return surname + " " + name + " " + patronymic;
+        }
     }
 
     public enum FioPart {
@@ -185,29 +213,140 @@ public class AddressResponse {
         NAME,
         PATRONYMIC
     }
+    public class CapitalData
+    {
+        public string type { get; set; }
+        public string value { get; set; }
+        public override string ToString()
+        {
+            return value.ToString();
+        }
+    }
+
+    public class Founder
+    {
+        public string inn { get; set; }
+        [TypeConverter(typeof(ExpandableObjectConverter))]
+        public FioData fio {get;set;}
+        public string hid { get; set; }
+        public string type { get; set; }
+        public string name { get; set; }
+        public override string ToString()
+        {
+            try
+            {
+                string s = name;
+                if (type == "PHYSICAL")
+                    s = fio.ToString();
+                return s;
+            }
+            catch 
+            {
+                return "?";
+            }
+            
+        }
+    }
+
+    public class Manager
+    {
+        public string inn { get; set; }
+        [TypeConverter(typeof(ExpandableObjectConverter))]
+        public FioData fio { get; set; }
+        public string post { get; set; }
+        public string hid { get; set; }
+        public string type { get; set; }
+        public override string ToString()
+        {
+            try
+            {
+                string s = fio.ToString() + ", " + post;
+                return s;
+            }
+            catch { 
+            return "?";
+            }
+        }
+    }
+
+    
+    public class Okved { 
+     public bool main { get; set; }
+     public string type { get; set; }
+     public string  code { get; set; }
+     public string  name { get; set; }
+     public override string ToString()
+     {
+         return name;
+     }
+
+    }
 
     public class PartyData {
+        [TypeConverter(typeof(ExpandableObjectConverter))]
         public AddressResponse address { get; set; }
 
         public string branch_count         { get; set; }
+
+        
         public PartyBranchType branch_type { get; set; }
 
         public string inn       { get; set; }
         public string kpp       { get; set; }
         public string ogrn      { get; set; }
+        [Browsable(false)]
         public string ogrn_date { get; set; }
+        [DisplayName("Дата выдачи ОГРН")]
+        public string ogrn_date_fmt
+        {
+            get {
+                string res = "";
+                if (!string.IsNullOrEmpty(ogrn_date))
+                {
+                    long d = long.Parse(ogrn_date);
+                    res = (new DateTime(1970, 1, 1)).AddMilliseconds(d).ToString("dd.MM.yyyy");
+                }
+                return res;
+            }
+        }
+        
         public string hid       { get; set; }
 
+        [TypeConverter(typeof(ExpandableObjectConverter))]
+        public CapitalData capital { get; set; }
+
+        [TypeConverter(typeof(ExpandableObjectConverter))]
         public PartyManagementData management { get; set; }
+
+        [TypeConverter(typeof(ArrayConverter))]
+        public List<Founder> founders { get; set; }
+        
+        [TypeConverter(typeof(ArrayConverter))]
+        public List<Manager> managers { get; set; }
+
+        [TypeConverter(typeof(ExpandableObjectConverter))]
         public PartyNameData name             { get; set; }
 
         public string okpo       { get; set; }
         public string okved      { get; set; }
+        [TypeConverter(typeof(ArrayConverter))]
+        public List<Okved> okveds { get; set; }
+
+
         public string okved_type { get; set; }
 
+        [TypeConverter(typeof(ExpandableObjectConverter))]
         public PartyOpfData opf     { get; set; }
+
+        [TypeConverter(typeof(ExpandableObjectConverter))]
         public PartyStateData state { get; set; }
+
+        
         public PartyType type       { get; set; }
+        public override string ToString()
+        {
+            return this.inn;
+        }
     }
 
     public enum PartyBranchType {
@@ -218,6 +357,10 @@ public class AddressResponse {
     public class PartyManagementData {
         public string name { get; set; }
         public string post { get; set; }
+        public override string ToString()
+        {
+            return this.name;
+        }
     }
 
     public class PartyNameData {
@@ -226,19 +369,73 @@ public class AddressResponse {
         public string latin             { get; set; }
         public string full              { get; set; }
         public string @short            { get; set; }
+
+        public override string ToString()
+        {
+            return this.full_with_opf;
+        }
+
     }
 
     public class PartyOpfData {
         public string code      { get; set; }
         public string full      { get; set; }
         public string @short    { get; set; }
+
+        public override string ToString()
+        {
+            return this.@short;
+        }
     }
 
     public class PartyStateData {
+        [Browsable(false)]
         public string actuality_date    { get; set; }
+        [Browsable(false)]
         public string registration_date { get; set; }
+        [Browsable(false)]
         public string liquidation_date  { get; set; }
+
+        [DisplayName("дата актуальности сведений")]
+        public string actuality_date_fmt { get {
+            return this.fmtdate(actuality_date);
+        } 
+        }
+
+        [DisplayName("дата регистрации")]
+        public string registration_date_fmt
+        {
+            get
+            {
+                return this.fmtdate(registration_date);
+            }
+        }
+
+        [DisplayName("дата ликвидации")]
+        public string liquidation_date_fmt
+        {
+            get
+            {
+                return this.fmtdate(liquidation_date);
+            }
+        }
+
         public PartyStatus status       { get; set; }
+
+        public override string ToString()
+        {
+            return this.status.ToString();
+        }
+        public string fmtdate(string ogrn_date)
+        {
+            string res = "";
+            if (!string.IsNullOrEmpty(ogrn_date))
+            {
+                long d = long.Parse(ogrn_date);
+                res = (new DateTime(1970, 1, 1)).AddMilliseconds(d).ToString("dd.MM.yyyy");
+            }
+            return res;
+        }
     }
 
     public enum PartyStatus {

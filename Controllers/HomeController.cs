@@ -456,26 +456,8 @@ namespace netbu.Controllers
         public ActionResult getcntinfo(string inn)
         {
 
-            var httpRequest = (HttpWebRequest)WebRequest.Create(Program.AppConfig["dadataurl"]);
-            httpRequest.Method = "POST";
-            httpRequest.ContentType = "application/json";
-            httpRequest.Headers.Add("Authorization", "Token " + Program.AppConfig["dadatakey"]);
-            var serializer = new JsonSerializer();
-            using (var w = new StreamWriter(httpRequest.GetRequestStream()))
-            {
-                using (JsonWriter writer = new JsonTextWriter(w))
-                {
-                    serializer.Serialize(writer, new { query = inn });
-                }
-            }
-            string responseText = "";
-            HttpWebResponse httpResponse = (HttpWebResponse)httpRequest.GetResponse();
-            using (var r = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                responseText = r.ReadToEnd();
-            }
-
-            //SuggestResponse suggs = JsonConvert.DeserializeObject<SuggestResponse>(responseText);
+            dadataINN di = new dadataINN();
+            string responseText = di.getjson(inn);
             return File(Encoding.UTF8.GetBytes(responseText), "application/json");
 
         }
