@@ -37,6 +37,92 @@ namespace netbu.Controllers
             byte[] buf = Encoding.GetEncoding(1251).GetBytes(restxt);
             return File(buf, ctype, filen);
         }
+
+        private void Dadataupdate()
+        {
+            string cnstr = Program.AppConfig["mscns"];
+            string sql0 = "select  * from v_not_cntdadata";
+            SqlDataAdapter da = new SqlDataAdapter(sql0, cnstr);
+            DataTable resTab = new DataTable();
+            da.Fill(resTab);
+            SqlConnection cn = new SqlConnection(cnstr);
+            cn.Open();
+            try
+            {
+
+                string sql = "insert into cntdadata (contractor_id,  ls_inn,  ls_status,  ls_actuality_date, ls_type, ls_full_with_opf,  ls_short_with_opf, ls_load_status) " +
+                " values (@ls_ld,  @ls_inn,  @ls_status,  @ls_actuality_date, @ls_type, @ls_full_with_opf,  @ls_short_with_opf, @ls_load_status) ";
+                SqlCommand cmd = new SqlCommand(sql, cn);
+                dadataINN di = new dadataINN();
+
+                for (int i = 0; i < resTab.Rows.Count; i++)
+                {
+                    if (!Program.FlagDadataUpdate)
+                        break;
+                    string inn = resTab.Rows[i]["contractor_inn"].ToString().Trim();
+                    string ls_load_status = "";
+                    PartyData pdata = null;
+                    try
+                    {
+                        pdata = di.exec(inn);
+                        if (pdata == null)
+                            ls_load_status = "Не найдено";
+                    }
+                    catch (Exception ee)
+                    {
+                        ls_load_status = ee.Message;
+                    }
+                    string ls_status = "";
+                    string ls_actuality_date = "";
+                    string ls_type = "";
+                    string ls_full_with_opf = "";
+                    string ls_short_with_opf = "";
+                    if (pdata != null)
+                    {
+
+                        ls_status = pdata.state.status.ToString();
+
+                        if (pdata.state.actuality_date_fmt != null)
+                            ls_actuality_date = pdata.state.actuality_date_fmt;
+
+                        ls_type = pdata.type.ToString();
+
+                        if (pdata.name.full_with_opf != null)
+                            ls_full_with_opf = pdata.name.full_with_opf;
+
+                        if (pdata.name.short_with_opf != null)
+                            ls_short_with_opf = pdata.name.short_with_opf;
+                    }
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@ls_ld", resTab.Rows[i]["contractor_id"]);
+                    cmd.Parameters.AddWithValue("@ls_inn", inn);
+                    cmd.Parameters.AddWithValue("@ls_status", ls_status);
+                    cmd.Parameters.AddWithValue("@ls_actuality_date", ls_actuality_date);
+                    cmd.Parameters.AddWithValue("@ls_type", ls_type);
+                    cmd.Parameters.AddWithValue("@ls_full_with_opf", ls_full_with_opf);
+                    cmd.Parameters.AddWithValue("@ls_short_with_opf", ls_short_with_opf);
+                    cmd.Parameters.AddWithValue("@ls_load_status", ls_load_status);
+                    cmd.ExecuteNonQuery();
+                }
+                Program.FlagDadataUpdate = false;
+                cn.Close();
+            }
+            catch (Exception ex)
+            {
+                Program.FlagDadataUpdate = false;
+                cn.Close();
+            }
+
+        }
+
+        private async void DadataupdateAsync()
+        {
+
+            await Task.Run(() => Dadataupdate());
+
+        }
+
+
         private void Dadataload(int ld_pk, string restxt)
         {
             string cnstr = Program.AppConfig["mscns"];
@@ -118,6 +204,30 @@ namespace netbu.Controllers
 
             await Task.Run(() => Dadataload(ld_pk, restxt));
 
+        }
+
+
+        [AllowAnonymous]
+        public string update()
+        {
+            string res = "На сервере запущен процесс загрузки с dadata";
+            if (!Program.FlagDadataUpdate)
+            {
+                Program.FlagDadataUpdate = true;
+                DadataupdateAsync();
+            }
+            else
+                res = "На сервере уже был запущен процесс загрузки с dadata";
+
+            return res;
+        }
+
+        [AllowAnonymous]
+        public string stopupdate()
+        {
+            string res = "Процесс загрузки с dadata остановлен";
+            Program.FlagDadataUpdate = false;
+            return res;
         }
         public JsonResult upload(IFormFile img)
         {

@@ -53,5 +53,6 @@ namespace netbu
         public static IConfiguration AppConfig { get; set; }
 
         public static bool isPostgres {get;set;}
+        public static bool FlagDadataUpdate = false;
     }
 }
