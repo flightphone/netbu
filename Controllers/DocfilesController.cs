@@ -147,6 +147,9 @@ namespace netbu.Controllers
             DirectoryInfo di = new DirectoryInfo(path);
             //DirectoryInfo[] dirs = di.GetDirectories();
             //FileInfo[] files = di.GetFiles();
+            //Доступ
+            int fileacc = dadataINN.FileAccess(User.Identity.Name, paths[0]);
+            ViewBag.fileacc = fileacc;
 
             ViewBag.di = di;
             //ViewBag.dirs = dirs;

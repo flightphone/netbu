@@ -56,7 +56,7 @@ namespace netbu.Controllers
 
             string RH_Template = MapH.Rows[0]["MH_Template"].ToString().ToLower().Replace(".docx", "");
 
-
+            /* Картинку пока не рисуем 
             string codeurl = "https://www.barcodesinc.com/generator/image.php?type=C128B&width=120&height=100&xres=1&font=3&code=" + MapH.Rows[0]["AD_NN"].ToString();
             var codeRequest = (HttpWebRequest)WebRequest.Create(codeurl);
             codeRequest.Method = "GET";
@@ -89,6 +89,8 @@ namespace netbu.Controllers
             byte[] buf = ms.ToArray();
 
             Dictionary<string, byte[]> Images = new Dictionary<string, byte[]>() { { "image2.png", buf } };
+            */
+            Dictionary<string, byte[]> Images = new Dictionary<string, byte[]>();
 
 
             /*
@@ -102,9 +104,10 @@ namespace netbu.Controllers
             byte[] res = pd.PrintDocx(RH_Template, MapH.Rows[0], atab, Images);
             
             
-
-            //return File(res, "application/octet-stream", FileName + ".docx");
+            //Возвращаем word
+            return File(res, "application/octet-stream", FileName + ".docx");
             
+            /*
             Dictionary<string, object> param = new Dictionary<string, object>();
             Dictionary<string, object> FileValue = new Dictionary<string, object>();
             FileValue.Add("Name", FileName + ".docx");
@@ -132,7 +135,7 @@ namespace netbu.Controllers
             }
             ConvertApiResponse resp = JsonConvert.DeserializeObject<ConvertApiResponse>(responseText);
             return File(Convert.FromBase64String(resp.Files[0].FileData), "application/pdf", resp.Files[0].FileName);
-            
+             */
             
         }
     }

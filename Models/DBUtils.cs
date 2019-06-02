@@ -57,6 +57,23 @@ namespace netbu.Models
                 return null;
             }
         }
+
+        public static int FileAccess(string Account, string dogid)
+        {
+            String sql = "select dbo.fn_cntFileAccess(@Account, @dogid)";
+            SqlConnection cn = new SqlConnection(Program.AppConfig["mscns"]);
+            SqlCommand cmd = new SqlCommand(sql, cn);
+            cn.Open();
+            cmd.Parameters.AddWithValue("@Account", Account);
+            cmd.Parameters.AddWithValue("@dogid", dogid);
+            int r = (int)cmd.ExecuteScalar();
+            return r;
+
+        }
+
+
+
+
     }
 
     public class treeItem

@@ -179,8 +179,10 @@ namespace netbu.Controllers
                         return Json(new { message = "Не найден IdDeclare: " + IdDeclare });
                     }
                     sql = redec.Rows[0]["decsql"].ToString();
-                    sql = sql.Replace("[Account]", account);
+                    
                 }
+
+                sql = sql.Replace("[Account]", account);
 
                 Int64 total = 0;
                 var sqltotal = sql;

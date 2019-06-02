@@ -107,7 +107,7 @@ namespace netbu.Controllers
                 Program.FlagDadataUpdate = false;
                 cn.Close();
             }
-            catch (Exception ex)
+            catch 
             {
                 Program.FlagDadataUpdate = false;
                 cn.Close();

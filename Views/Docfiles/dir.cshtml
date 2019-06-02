@@ -161,12 +161,27 @@ function handleFiles(files) {
     
     <div class="BtnGroup float-right">
                 <div class="BtnGroup">
+                @{
+                if ((ViewBag.fileacc & 2) == 2)    
+                {
                 <a href="#" onclick="$('#fileElem').click()"  class="btn btn-sm BtnGroup-item">Загрузить файл</a>
+                }
+                }
+                @{
+                if ((ViewBag.fileacc & 4) == 4)    
+                {
                 <a href="#" onclick="newdir()" class="btn btn-sm empty-icon float-right BtnGroup-item">Создать папку:</a>
+                }
+                }
                 </div>
+                @{
+                if ((ViewBag.fileacc & 4) == 4)    
+                {
                 <div class="BtnGroup">
                 <input type="text" id="newfolder" />
                 </div>
+                }
+                }
     </div>
 
 
@@ -189,6 +204,13 @@ function handleFiles(files) {
   <div class="commit-tease js-details-container Details d-flex rounded-top-1" data-issue-and-pr-hovercards-enabled="">
       <div class="flex-auto f6 mr-3">
           Вы зашли как: <b>@(User.Identity.Name)</b>
+          @{
+              if ((ViewBag.fileacc & 1) == 0) 
+              {
+                  <span>(отказано в доступе)</span>
+              }
+        
+          }
       </div>
    </div>   
    
@@ -199,6 +221,8 @@ function handleFiles(files) {
     </thead>
     <tbody>
     @{
+        if ((ViewBag.fileacc & 1) == 1) 
+        {
         if (!string.IsNullOrEmpty(ViewBag.parent))
         {
             <tr class="files js-navigation-container js-active-navigation-container">
@@ -207,34 +231,50 @@ function handleFiles(files) {
                 <td class="modified"></td>
             </tr>
         }
+        }
 
     }        
     @{
+        if ((ViewBag.fileacc & 1) == 1) 
+        {
         foreach (DirectoryInfo di in ViewBag.di.GetDirectories())
         {
             <tr class="files js-navigation-container js-active-navigation-container">
                 <td class="name"><a href='/Docfiles/dir?id64=@(Convert.ToBase64String(Encoding.UTF8.GetBytes(ViewBag.id + di.Name + "/"), Base64FormattingOptions.None))' class="icon dir">@(di.Name)</a></td>
                 <td></td>
-                <td class="modified">@(di.LastAccessTime.ToString("dd.MM.yyyy HH:mm"))
-                    <a href="#" onclick="delete_file('@(ViewBag.id)@(di.Name)/', '@(di.Name)/', 'dir')">X</a>
-                </td>
+                @{
+                if ((ViewBag.fileacc & 8) == 8)
+                {
+                    <td class="modified">@(di.LastAccessTime.ToString("dd.MM.yyyy HH:mm"))
+                        <a href="#" onclick="delete_file('@(ViewBag.id)@(di.Name)/', '@(di.Name)/', 'dir')">X</a>
+                    </td>
+                }
+                }
                 
             </tr>
 
         }
+        }
     }
 
     @{
+        if ((ViewBag.fileacc & 1) == 1) 
+        {
         foreach (FileInfo fi in ViewBag.di.GetFiles())
         {
             <tr class="files js-navigation-container js-active-navigation-container">
             <td class="name"><a href="/Docfiles/file?id64=@(Convert.ToBase64String(Encoding.UTF8.GetBytes(ViewBag.id + fi.Name), Base64FormattingOptions.None))" class="icon file1">@(fi.Name)</a></td>
             <td class="length">@(fi.Length.ToString("#,##"))</td>
+            @{
+            if ((ViewBag.fileacc & 8) == 8){
             <td class="modified">@(fi.LastAccessTime.ToString("dd.MM.yyyy HH:mm"))
                 <a href="#" onclick="delete_file('@(ViewBag.id)@(fi.Name)', '@(fi.Name)', 'file')">X</a>
             </td>
+            }
+            }
             </tr>
 
+        }
         }
 
     }  

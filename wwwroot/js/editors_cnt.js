@@ -188,3 +188,121 @@ var FlightCardsList = {
 
     }
 };
+
+
+
+var AccessDgs = {
+    __proto__: rootObj,
+    addAcc: function (sender) {
+        var row = sender.form.LeftTab.MainTab.datagrid('getSelected');
+        if (row) {
+            var freerow = sender.form.FreeTab.MainTab.datagrid('getSelected');
+            if (freerow) {
+                var sql = "exec p_cnt_subsGroups_Subscribers_EDIT '" + row["grp"] + "', '" + freerow["Account"] + "'";
+
+                $.post('/pg/runsql',
+                    {
+                        sql: sql,
+                        account: app.account,
+                        password: app.password
+                    },
+                    function (data) {
+                        sender.form.FreeTab.ReloadTab(sender.form.FreeTab);
+                        sender.form.AccessTab.ReloadTab(sender.form.AccessTab);
+                    });
+
+
+            }
+        }
+
+    },
+    deleteAcc: function (sender) {
+        var row = sender.form.LeftTab.MainTab.datagrid('getSelected');
+        if (row) {
+            var freerow = sender.form.AccessTab.MainTab.datagrid('getSelected');
+            if (freerow) {
+                var sql = "exec p_cnt_subsGroups_Subscribers_DEL '" + row["grp"] + "', '" + freerow["Account"] + "'";
+
+                $.post('/pg/runsql',
+                    {
+                        sql: sql,
+                        account: app.account,
+                        password: app.password
+                    },
+                    function (data) {
+                        sender.form.FreeTab.ReloadTab(sender.form.FreeTab);
+                        sender.form.AccessTab.ReloadTab(sender.form.AccessTab);
+                    });
+
+
+            }
+        }
+    },
+    start: function () {
+        this.AccessTab = Object.create(finder);
+        this.AccessTab.SQLParams = {};
+        this.AccessTab.absid = 'AccessTab1010';
+        this.AccessTab.IdDeclare = '1458';
+        this.AccessTab.form = this;
+        this.AccessTab.addInitGrid = function (sender) {
+            $(sender.id('maintab')).datagrid({
+                onDblClickRow: function (index, row) { sender.form.deleteAcc(sender); }
+            });
+        };
+        this.AccessTab.start();
+
+        this.FreeTab = Object.create(finder);
+        this.FreeTab.SQLParams = {};
+        this.FreeTab.absid = 'FreeTab1010';
+        this.FreeTab.IdDeclare = '1459';
+        this.FreeTab.form = this;
+
+        this.FreeTab.addInitGrid = function (sender) {
+            $(sender.id('maintab')).datagrid({
+                toolbar: [{
+                    iconCls: 'icon-up',
+                    text: 'Добавить',
+                    handler: function () {
+                        sender.form.addAcc(sender);
+                    }
+                }, '-', {
+                    iconCls: 'icon-down',
+                    text: 'Удалить',
+                    handler: function () {
+                        sender.form.deleteAcc(sender);
+                    }
+                }],
+                onDblClickRow: function (index, row) { sender.form.addAcc(sender); }
+            });
+        }
+
+        this.FreeTab.start();
+
+        this.LeftTab = Object.create(finder);
+        this.LeftTab.SQLParams = {};
+        this.LeftTab.absid = 'LeftTab1010';
+        this.LeftTab.IdDeclare = '1457';
+        this.LeftTab.form = this;
+        this.LeftTab.addInitGrid = function (sender) { };
+
+        this.LeftTab.onSelect = function (index, row, sender) {
+            sender.form.AccessTab.SQLParams.grp = row["grp"];
+            sender.form.AccessTab.UpdateTab(sender.form.AccessTab);
+
+            sender.form.FreeTab.SQLParams.grp = row["grp"];
+            sender.form.FreeTab.UpdateTab(sender.form.FreeTab);
+
+        };
+
+
+
+        this.LeftTab.start();
+
+
+    },
+    template: function () {
+
+        var s = $('#access').text();
+        return s;
+    },
+};

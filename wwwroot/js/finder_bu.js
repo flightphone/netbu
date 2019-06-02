@@ -150,6 +150,10 @@ var app = {
                                 form = Object.create(Access);
 
                             }
+                            else if (node.attributes.link1 == "RegulationPrint.Dgs.groupSubs") {
+                                form = Object.create(AccessDgs);
+
+                            }
                             else
                                 if (node.attributes.params == '75') {
                                     form = Object.create(fi_declare);

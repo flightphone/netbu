@@ -42,6 +42,15 @@ namespace netbu
                 WebRequest.DefaultWebProxy = wp;
                 //GlobalProxySelection.Select = wp;
             }
+        //Мапим диск
+        try{
+                System.Diagnostics.Process batch = new System.Diagnostics.Process();
+                batch.StartInfo.FileName = @"wwwroot\Run\disk.cmd";
+                batch.Start();  
+        }
+        catch
+        {;}        
+        //https://stackoverflow.com/questions/4624113/start-a-net-process-as-a-different-user          
 
 
 
