@@ -111,20 +111,7 @@ var app = {
             if (tab)
                 $('#tabs').tabs('select', node.text);
             else {
-                /*
-                if (node.attributes.link1.indexOf('/') > -1)
-                {
-                    $('#tabs').tabs('add', {
-                        title: node.text,
-                        href: node.attributes.link1,
-                        closable:true,
-                        selected:true,
-                        iconCls : node.iconCls,
-                        fit: true
-                        });
-                }
-                else
-                */
+                
                 {
                     var form = {};
                     if (node.attributes.link1.indexOf('/') > -1) {
@@ -193,6 +180,7 @@ var app = {
                     form.SQLParams = {};
                     form.DefaultValues = {};
                     form.DefaultValues.last_change_user = app.account;
+                    form.DefaultValues.audtuser = app.account;
 
                     app.forms['form' + node.id.toString()] = form;
 
@@ -640,10 +628,12 @@ var finder = {
             return;
         }
 
-        if (!sender.t_rpdeclare['editproc'])
+        if (!sender.t_rpdeclare['editproc'] && !sender.t_rpdeclare['keyvalue'])
             return;
-        if (sender.t_rpdeclare['editproc'] == '')
+        if (sender.t_rpdeclare['editproc'] == '' && !sender.t_rpdeclare['keyvalue'])
             return;
+
+
         //Редакторы
         sender.editor = Object.create(sender.editor_class);
         sender.editor.absid = sender.prop('editor');
@@ -651,60 +641,99 @@ var finder = {
         sender.editor.start(sender.editor);
 
         var toolbar = $('<div style="padding:2px 4px"></div>').appendTo('body');
-        sender.abut = $('<a>').appendTo(toolbar);
-        sender.ebut = $('<a>').appendTo(toolbar);
-        sender.dbut = $('<a>').appendTo(toolbar);
 
-        sender.abut.linkbutton({
-            iconCls: 'icon-add',
-            text: 'Добавить',
-            plain: true,
-            onClick: function () {
-                sender.editor.addrecord(sender.editor);
-            }
-        });
+        if (sender.t_rpdeclare['editproc'] != '') {
 
-        sender.ebut.linkbutton({
-            iconCls: 'icon-edit',
-            text: 'Редактировать',
-            plain: true,
-            onClick: function () {
-                sender.editor.editrecord(sender.editor);
-            }
-        });
+            sender.abut = $('<a>').appendTo(toolbar);
+            sender.ebut = $('<a>').appendTo(toolbar);
+            sender.dbut = $('<a>').appendTo(toolbar);
 
-        sender.dbut.linkbutton({
-            iconCls: 'icon-cancel',
-            text: 'Удалить',
-            plain: true,
-            onClick: function () {
-                sender.editor.deleterecord(sender.editor);
-            }
-        });
-        sender.addTool(sender, toolbar);
-        $(sender.id('maintab')).datagrid({
-            /*
-            toolbar: [{
+            sender.abut.linkbutton({
                 iconCls: 'icon-add',
                 text: 'Добавить',
-                handler: function () {
+                plain: true,
+                onClick: function () {
                     sender.editor.addrecord(sender.editor);
                 }
-            }, '-', {
+            });
+
+            sender.ebut.linkbutton({
                 iconCls: 'icon-edit',
                 text: 'Редактировать',
-                handler: function () {
+                plain: true,
+                onClick: function () {
                     sender.editor.editrecord(sender.editor);
                 }
-            }, '-', {
+            });
+
+            sender.dbut.linkbutton({
                 iconCls: 'icon-cancel',
                 text: 'Удалить',
-                handler: function () {
+                plain: true,
+                onClick: function () {
                     sender.editor.deleterecord(sender.editor);
                 }
+            });
+        }
 
-            }],
-            */
+        if (sender.t_rpdeclare['keyvalue'] > 0)
+        {
+            //Кнопочка со строками 06/06/2019
+            sender.lbut = $('<a>').appendTo(toolbar);
+            sender.lbut.linkbutton({
+                iconCls: 'tree-file',
+                text: 'Строки',
+                plain: true,
+                onClick: function () {
+                    var row = sender.MainTab.datagrid('getSelected');
+                    if (!row) {
+                        $.messager.alert(sender.t_rpdeclare.descr, 'Выберете запись', 'info');
+                        return;
+                    }
+                    var node_text = sender.t_rpdeclare.descr + "_" + row[sender.t_rpdeclare.dispfield].toString() ;
+                    var node_id = sender.t_rpdeclare.descr + "_" + row[sender.t_rpdeclare.keyfield].toString();
+                    var tab = $('#tabs').tabs('getTab', node_text);
+                    if (tab)
+                        $('#tabs').tabs('select', node_text);
+                    else {
+                        let form1 = Object.create(finder);
+                        form1.absid = 'app.forms.form' + node_id.toString();
+                        form1.node = node_id.toString();
+                        form1.IdDeclare = sender.t_rpdeclare['keyvalue'];
+                        form1.SQLParams = {};
+                        form1.DefaultValues = {};
+                        form1.SQLParams['Account'] = app.account;
+                        form1.SQLParams[sender.t_rpdeclare.keyfield] = row[sender.t_rpdeclare.keyfield].toString();
+                        form1.DefaultValues[sender.t_rpdeclare.keyfield] = row[sender.t_rpdeclare.keyfield].toString();
+                        form1.DefaultValues['last_change_user'] = app.account;
+                        form1.DefaultValues['audtuser'] = app.account;
+
+    
+                        app.forms['form' + node_id.toString()] = form1;
+    
+                        var cnt = form1.template();
+    
+                        $('#tabs').tabs('add', {
+                            title: node_text,
+                            content: cnt,
+                            closable: true,
+                            selected: true,
+                            fit: true
+                        });
+    
+                        form1.start();
+    
+                    }
+    
+    
+                }
+            });
+    
+
+
+        }
+        sender.addTool(sender, toolbar);
+        $(sender.id('maintab')).datagrid({
             toolbar: toolbar,
             onDblClickRow: function (index, row) { sender.editor.editrecord(sender.editor); }
         });

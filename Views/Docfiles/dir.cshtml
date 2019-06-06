@@ -242,14 +242,18 @@ function handleFiles(files) {
             <tr class="files js-navigation-container js-active-navigation-container">
                 <td class="name"><a href='/Docfiles/dir?id64=@(Convert.ToBase64String(Encoding.UTF8.GetBytes(ViewBag.id + di.Name + "/"), Base64FormattingOptions.None))' class="icon dir">@(di.Name)</a></td>
                 <td></td>
-                @{
-                if ((ViewBag.fileacc & 8) == 8)
-                {
+                
+                
                     <td class="modified">@(di.LastAccessTime.ToString("dd.MM.yyyy HH:mm"))
+                    @{
+                    if ((ViewBag.fileacc & 8) == 8)
+                    {    
                         <a href="#" onclick="delete_file('@(ViewBag.id)@(di.Name)/', '@(di.Name)/', 'dir')">X</a>
+                    }    
+                    }
                     </td>
-                }
-                }
+                
+                
                 
             </tr>
 
@@ -265,13 +269,14 @@ function handleFiles(files) {
             <tr class="files js-navigation-container js-active-navigation-container">
             <td class="name"><a href="/Docfiles/file?id64=@(Convert.ToBase64String(Encoding.UTF8.GetBytes(ViewBag.id + fi.Name), Base64FormattingOptions.None))" class="icon file1">@(fi.Name)</a></td>
             <td class="length">@(fi.Length.ToString("#,##"))</td>
-            @{
-            if ((ViewBag.fileacc & 8) == 8){
+            
             <td class="modified">@(fi.LastAccessTime.ToString("dd.MM.yyyy HH:mm"))
+            @{
+            if ((ViewBag.fileacc & 8) == 8){    
                 <a href="#" onclick="delete_file('@(ViewBag.id)@(fi.Name)', '@(fi.Name)', 'file')">X</a>
+            }
+            }    
             </td>
-            }
-            }
             </tr>
 
         }

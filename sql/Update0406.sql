@@ -6,8 +6,8 @@ go
 
 --drop table [dbo].[cntFilterH]
 CREATE TABLE [dbo].[cntFilterH](
-    FH_NN int identity(1,1) not null,
 	[FH_PK] uniqueidentifier NOT NULL default(newid()),
+	FH_NN int identity(1,1) not null,
 	FH_Caption varchar(255),
 	[FH_TEXT] [varchar](max) NULL,
  CONSTRAINT [PK_cntFilterH] PRIMARY KEY CLUSTERED 
@@ -219,6 +219,8 @@ set @flt = replace(@flt, ' или ', '|')
 set @flt = replace(@flt, ' и ', '&')
 set @flt = replace(@flt, ' or ', '|')
 set @flt = replace(@flt, ' and ', '&')
+set @flt = replace(@flt, ' not ', '!')
+set @flt = replace(@flt, ' не ', '!')
 set @flt = replace(@flt, ' ', '')
 if isnull(@flt, '') = ''
 	return
