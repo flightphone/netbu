@@ -207,7 +207,7 @@ var tc_class = {
                 var f = sender.fields[i].DisplayFormat;
                 var tp = 'text';
                 var precision = 0;
-                if (sender.fields[i].field == 'color')
+                if (sender.fields[i].field.toLowerCase() == 'color')
                     tp = 'color';
 
                 if (f) {
@@ -456,10 +456,12 @@ var tc_class = {
                                         required: false,
                                         onFineChange: function () {
                                             if ($(sender.id(fnn)).val() == '')
-                                                sender.record['color'] = '';
+                                                //sender.record['color'] = '';
+                                                sender.record['Color'] = '';
                                             else {
                                                 let c = (255 << 24 | Math.round(sender.Color.rgb[0]) << 16 | Math.round(sender.Color.rgb[1]) << 8 | Math.round(sender.Color.rgb[2]));
-                                                sender.record['color'] = c;
+                                                //sender.record['color'] = c;
+                                                sender.record['Color'] = c;
                                             }
                                             sender.flagEdit = true;
                                         }
@@ -660,7 +662,7 @@ var column_editor = {
     rows: [],
     show: function (sender) {
         //sender.win.window('open');
-        var sql = "select paramvalue from t_sysParams  where  paramname = 'GridFind" + sender.editform.record['decname'] + "'";
+        var sql = "select paramvalue from t_sysParams  where  paramname = 'GridFind" + sender.editform.record['DecName'] + "'";
         $.post('/pg/runsql', {
             sql: sql,
             account: app.account,
@@ -697,7 +699,7 @@ var column_editor = {
                         {
                             Visible: $(this).attr('Visible'),
                             NN: n,
-                            FieldName: $(this).attr('FieldName').toLowerCase(),
+                            FieldName: $(this).attr('FieldName'),
                             FieldCaption: $(this).attr('FieldCaption'),
                             Width: $(this).attr('Width'),
                             DisplayFormat: $(this).attr('DisplayFormat'),
@@ -718,7 +720,8 @@ var column_editor = {
             $('#LabelField').textbox('setValue', '');
             $('#LabelText').textbox('setValue', 'Итого:');
         }
-        var sql = sender.editform.record['decsql'] + " limit 1";
+        //var sql = sender.editform.record['decsql'] + " limit 1";
+        var sql = sender.editform.record['DecSQL'];
         $.post('/pg/runsql', {
             sql: sql,
             account: app.account,
@@ -795,9 +798,11 @@ var column_editor = {
     },
     SaveXML: function (sender) {
 
-        var ParamName = 'GridFind' + sender.editform.record['decname'];
+        //var ParamName = 'GridFind' + sender.editform.record['decname'];
+        var ParamName = 'GridFind' + sender.editform.record['DecName'];
         var ParamValue = $('#teXML').val();
-        var sql = "select p_lbrsetparam ('" + ParamName + "', '" + ParamValue + "', '" + ParamName + "')";
+        //var sql = "select p_lbrsetparam ('" + ParamName + "', '" + ParamValue + "', '" + ParamName + "')";
+        var sql = "exec p_lbrsetparam '" + ParamName + "', '" + ParamValue + "', '" + ParamName + "'";
 
         $.post('/pg/runsql', {
             sql: sql,
@@ -940,20 +945,34 @@ var declare_editor = {
         $(sender.id('winedit')).window('close');
     },
     fields: [
-        { title: 'Код', field: 'iddeclare', tp: 'numeric' },
-        { title: 'Название', field: 'decname' },
-        { title: 'Описание', field: 'descr' },
-        { title: 'Тип', field: 'dectype', tp: 'numeric' },
-        { title: 'Ключевое поле', field: 'keyfield' },
-        { title: 'Отображаемое поле', field: 'dispfield' },
-        /*{title: 'DetailDeclare', field : 'keyvalue'},
+        { title: 'Код', field: 'IdDeclare', tp: 'numeric' },
+        { title: 'Название', field: 'DecName' },
+        { title: 'Описание', field: 'Descr' },
+        { title: 'Тип', field: 'DecType', tp: 'numeric' },
+        { title: 'Ключевое поле', field: 'KeyField' },
+        { title: 'Отображаемое поле', field: 'DispField' },
+        {
+            title: 'Детализация',
+            field: 'KeyValue',
+            joinRow: {
+                IdDeclare: '75',
+                classname: 'Bureau.Finder',
+                fields: {
+                    KeyValue: 'IdDeclare'
+                }
+            }
+            
+
+        },
+        /*
         {title: 'EditForm', field : 'dispvalue'},
         {title: 'CloseBitProc', field : 'keyparamname'},
         {title: 'DispParamName', field : 'dispparamname'},
         {title: 'AddKeys', field : 'addkeys'},
         */
-        { title: 'Таблица', field: 'tablename' },
-        { title: 'Запрос', field: 'decsql' },
+
+        { title: 'Таблица', field: 'TableName' },
+        { title: 'Запрос', field: 'DecSQL' },
         { title: 'Картинка', field: 'image_bmp' },
         {
             title: 'Колонки', field: 'col_grid',
@@ -962,9 +981,9 @@ var declare_editor = {
             }
         },
 
-        { title: 'Функция обновления', field: 'editproc' },
-        { title: 'Функция удаления', field: 'delproc' },
-        { title: 'Список полей', field: 'savefieldlist' }
+        { title: 'Функция обновления', field: 'EditProc' },
+        { title: 'Функция удаления', field: 'DelProc' },
+        { title: 'Список полей', field: 'SaveFieldList' }
 
     ]
 };

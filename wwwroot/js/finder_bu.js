@@ -270,8 +270,8 @@ var Access = {
         if (row) {
             var freerow = sender.form.FreeTab.MainTab.datagrid('getSelected');
             if (freerow) {
-                var sql = "select p_sysaccesuser('" + row["objectname"] + "', '" + freerow["account"] + "', 1)";
-
+                //var sql = "select p_sysaccesuser('" + row["objectname"] + "', '" + freerow["account"] + "', 1)";
+                var sql = "exec p_sysAccesUser '" + row["ObjectName"] + "', '" + freerow["Account"] + "', 1";
                 $.post('/pg/runsql',
                     {
                         sql: sql,
@@ -293,7 +293,8 @@ var Access = {
         if (row) {
             var freerow = sender.form.AccessTab.MainTab.datagrid('getSelected');
             if (freerow) {
-                var sql = "select p_sysaccesuser('" + row["objectname"] + "', '" + freerow["account"] + "', 2)";
+                //var sql = "select p_sysaccesuser('" + row["objectname"] + "', '" + freerow["account"] + "', 2)";
+                var sql = "exec p_sysAccesUser '" + row["ObjectName"] + "', '" + freerow["ACCOUNT"] + "', 2";
 
                 $.post('/pg/runsql',
                     {
@@ -358,10 +359,12 @@ var Access = {
         this.LeftTab.addInitGrid = function (sender) { };
 
         this.LeftTab.onSelect = function (index, row, sender) {
-            sender.form.AccessTab.SQLParams.objectname = row["objectname"];
+            //sender.form.AccessTab.SQLParams.objectname = row["objectname"];
+            sender.form.AccessTab.SQLParams.ObjectName = row["ObjectName"];
             sender.form.AccessTab.UpdateTab(sender.form.AccessTab);
 
-            sender.form.FreeTab.SQLParams.grp = row["objectname"];
+            //sender.form.FreeTab.SQLParams.grp = row["objectname"];
+            sender.form.FreeTab.SQLParams.GRP = row["ObjectName"];
             sender.form.FreeTab.UpdateTab(sender.form.FreeTab);
 
         };
@@ -780,6 +783,8 @@ var finder = {
             rowStyler: function (index, row) {
                 if (row.color)
                     return 'background-color: ' + app.colorParse(row.color);
+                if (row.Color)
+                    return 'background-color: ' + app.colorParse(row.Color);    
 
             },
             onSelect: function (index, row) {
@@ -791,6 +796,8 @@ var finder = {
                 if (this.rowselect) {
                     if (this.rowselect.color)
                         $('.datagrid-row-selected').css({ background: app.colorParse(this.rowselect.color) });
+                    if (this.rowselect.Color)
+                        $('.datagrid-row-selected').css({ background: app.colorParse(this.rowselect.Color) });    
 
                 }
             }
