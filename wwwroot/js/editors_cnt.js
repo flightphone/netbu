@@ -202,9 +202,9 @@ var AccessDgs = {
 
                 $.post('/pg/runsql',
                     {
-                        sql: sql,
-                        account: app.account,
-                        password: app.password
+                        sql: sql//,
+                        //account: app.account,
+                        //password: app.password
                     },
                     function (data) {
                         sender.form.FreeTab.ReloadTab(sender.form.FreeTab);
@@ -225,9 +225,9 @@ var AccessDgs = {
 
                 $.post('/pg/runsql',
                     {
-                        sql: sql,
-                        account: app.account,
-                        password: app.password
+                        sql: sql//,
+                        //account: app.account,
+                        //password: app.password
                     },
                     function (data) {
                         sender.form.FreeTab.ReloadTab(sender.form.FreeTab);

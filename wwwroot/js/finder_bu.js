@@ -142,7 +142,7 @@ var app = {
 
                             }
                             else
-                                if (node.attributes.params == '75') {
+                                if (node.attributes.params == '1465') {
                                     form = Object.create(fi_declare);
                                 }
                                 else
@@ -234,9 +234,9 @@ var app = {
             onSelect: this.treeSelect,
             onLoadSuccess: function (node, data) {
                 $.post('/pg/runsql', {
-                    sql: 'select  idmap, decname, dstfield, srcfield, iddeclare, classname, groupdec, keyfield from t_sysfieldmap',
-                    account: app.account,
-                    password: app.password
+                    sql: 'select  idmap, decname, dstfield, srcfield, iddeclare, classname, groupdec, keyfield from t_sysfieldmap'//,
+                    //account: app.account,
+                    //password: app.password
                 },
                     function (data) {
                         if (data.message) {
@@ -274,9 +274,9 @@ var Access = {
                 var sql = "exec p_sysAccesUser '" + row["ObjectName"] + "', '" + freerow["Account"] + "', 1";
                 $.post('/pg/runsql',
                     {
-                        sql: sql,
-                        account: app.account,
-                        password: app.password
+                        sql: sql//,
+                        //account: app.account,
+                        //password: app.password
                     },
                     function (data) {
                         sender.form.FreeTab.ReloadTab(sender.form.FreeTab);
@@ -298,9 +298,9 @@ var Access = {
 
                 $.post('/pg/runsql',
                     {
-                        sql: sql,
-                        account: app.account,
-                        password: app.password
+                        sql: sql//,
+                        //account: app.account,
+                        //password: app.password
                     },
                     function (data) {
                         sender.form.FreeTab.ReloadTab(sender.form.FreeTab);
@@ -487,9 +487,9 @@ var finder = {
             SumFields: sender.SumFields,
             LabelField: sender.LabelField,
             LabelText: sender.LabelText,
-            pagination: 1,
-            account: app.account,
-            password: app.password
+            pagination: 1//,
+            //account: app.account,
+            //password: app.password
         });
     },
     ReloadTab: function (sender) {
@@ -500,9 +500,9 @@ var finder = {
             SumFields: sender.SumFields,
             LabelField: sender.LabelField,
             LabelText: sender.LabelText,
-            pagination: 1,
-            account: app.account,
-            password: app.password
+            pagination: 1//,
+            //account: app.account,
+            //password: app.password
         });
     },
     createColumns: function (data, sender) {
@@ -515,7 +515,7 @@ var finder = {
             sender.t_rpdeclare = data.rows[0];
             if (app.isP)
                 sender.t_rpdeclare.decsql = sender.t_rpdeclare.decsql.toLowerCase();
-            sender.t_rpdeclare.decsql = sender.t_rpdeclare.decsql.replace(/\(nolock\)/g, '');
+            //sender.t_rpdeclare.decsql = sender.t_rpdeclare.decsql.replace(/\(nolock\)/g, '');
             //sender.t_rpdeclare.decsql = sender.t_rpdeclare.decsql.replace(/\(NOLOCK\)/g, '');
             sender.setSQLParams(sender);
 
@@ -637,15 +637,19 @@ var finder = {
             return;
 
 
-        //Редакторы
-        sender.editor = Object.create(sender.editor_class);
-        sender.editor.absid = sender.prop('editor');
-        sender.editor.finder = sender;
-        sender.editor.start(sender.editor);
+        
 
         var toolbar = $('<div style="padding:2px 4px"></div>').appendTo('body');
 
-        if (sender.t_rpdeclare['editproc'] != '') {
+        if (sender.t_rpdeclare['editproc']) 
+        if (sender.t_rpdeclare['editproc'] != '') 
+        {
+
+            //Редакторы
+            sender.editor = Object.create(sender.editor_class);
+            sender.editor.absid = sender.prop('editor');
+            sender.editor.finder = sender;
+            sender.editor.start(sender.editor);
 
             sender.abut = $('<a>').appendTo(toolbar);
             sender.ebut = $('<a>').appendTo(toolbar);
@@ -759,9 +763,9 @@ var finder = {
                 SumFields: sender.SumFields,
                 LabelField: sender.LabelField,
                 LabelText: sender.LabelText,
-                pagination: 1,
-                account: app.account,
-                password: app.password
+                pagination: 1//,
+                //account: app.account,
+                //password: app.password
             },
             columns: [sender.columns],
             frozenColumns: [sender.frozenColumns],
@@ -813,8 +817,8 @@ var finder = {
         var sql = "select iddeclare, decname, descr, dectype, decsql, keyfield, dispfield, keyvalue, dispvalue, keyparamname, dispparamname, isbasename, descript, addkeys, tablename, editproc, delproc, image_bmp, savefieldlist, p.paramvalue from t_rpdeclare d left join t_sysparams p on 'GridFind' || d.decname = p.paramname where iddeclare = " + this.IdDeclare.toString();
         var form = new FormData();
         form.append('sql', sql);
-        form.append('account', app.account);
-        form.append('password', app.password);
+        //form.append('account', app.account);
+        //form.append('password', app.password);
 
         var fun = this.createColumns;
         var sender = this;

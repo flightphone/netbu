@@ -143,15 +143,19 @@ namespace netbu.Controllers
                     sql = sql.Replace("||", "+");
                 var cnstr = Program.isPostgres ? Program.AppConfig["cns"] : Program.AppConfig["mscns"];
                 var IdDeclare = Request.Form["IdDeclare"];
-                var account = Request.Form["account"];
-                var password = Request.Form["password"];
+                var account = User.Identity.Name;
+                
+                //Не передаем account
+                //var account = Request.Form["account"];
+                //var password = Request.Form["password"];
                 //NpgsqlDataAdapter da;
-
+                /*
                 var tu = new treeutil();
                 if (!tu.checkAccess(account, password))
                 {
                     return Json(new { message = "Access denied." });
                 }
+                */
 
                 if (string.IsNullOrEmpty(sql) && string.IsNullOrEmpty(IdDeclare))
                 {

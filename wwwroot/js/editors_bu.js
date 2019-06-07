@@ -44,10 +44,10 @@ var tc_class = {
         var savefieldlist = [];
         var vals = [];
         if (sender.finder.t_rpdeclare.savefieldlist != null && sender.finder.t_rpdeclare.savefieldlist != '')
-            if (app.isP)
-                savefieldlist = sender.finder.t_rpdeclare.savefieldlist.toLowerCase().split(',');
-            else
-                savefieldlist = sender.finder.t_rpdeclare.savefieldlist.split(',');
+            //if (app.isP)
+            //    savefieldlist = sender.finder.t_rpdeclare.savefieldlist.toLowerCase().split(',');
+            //else
+            savefieldlist = sender.finder.t_rpdeclare.savefieldlist.split(',');
 
         else
             for (var key in rec)
@@ -85,9 +85,9 @@ var tc_class = {
             sql = sql + sender.createSQLSave(sender, recs[i]) + ';';
 
         $.post('/pg/runsql', {
-            sql: sql,
-            account: app.account,
-            password: app.password
+            sql: sql//,
+            //account: app.account,
+            //password: app.password
         },
             function (data) {
                 if (data.message) {
@@ -105,9 +105,9 @@ var tc_class = {
 
         var sql = sender.createSQLSave(sender, rec);
         $.post('/pg/runsql', {
-            sql: sql,
-            account: app.account,
-            password: app.password
+            sql: sql//,
+            //account: app.account,
+            //password: app.password
         },
             function (data) {
                 if (data.message) {
@@ -198,7 +198,7 @@ var tc_class = {
         return s;
     },
     start: function (sender) {
-
+//Define
         if (sender.fields.length == 0) {
             sender.fields = sender.finder.frozenColumns.concat(sender.finder.columns);
 
@@ -206,6 +206,7 @@ var tc_class = {
             for (var i = 0; i < sender.fields.length; i++) {
                 var f = sender.fields[i].DisplayFormat;
                 var tp = 'text';
+
                 var precision = 0;
                 if (sender.fields[i].field.toLowerCase() == 'color')
                     tp = 'color';
@@ -290,12 +291,16 @@ var tc_class = {
             + '<div style="display:block;" id="div' + groupid + ngroup.toString() + '">'
             + '<table class="datagrid-btable" cellspacing="1" cellpadding="0" style="width:100%;background-color:lightgray"><tbody>';
 
-        var savefieldlist = sender.finder.t_rpdeclare.savefieldlist.toLowerCase().split(',');
+        if (!sender.finder.t_rpdeclare.savefieldlist)
+            sender.finder.t_rpdeclare.savefieldlist = ''
+        //var savefieldlist = sender.finder.t_rpdeclare.savefieldlist.toLowerCase().split(',');
+        savefieldlist = sender.finder.t_rpdeclare.savefieldlist.split(',');
         for (var i = 0; i < sender.fields.length; i++) {
 
             let edrw = '<tr class="datagrid-row">';
             edrw = edrw + '<td style="width:50%;background-color: white"><div style="height:auto;" class="datagrid-cell">' + sender.fields[i]['title'] + '</div></td>';
-            edrw = edrw + '<td style="width:50%;background-color: white"><div style="height:auto;" class="datagrid-cell">'
+            edrw = edrw + '<td style="width:50%;background-color: white"><div style="height:auto;" class="datagrid-cell">'        
+            
             if (sender.fields[i]['field'] == 'color') {
                 edrw = edrw + '<input  style="width:100%" class="jscolor"  id="' + sender.idh(sender.fields[i]['field']) + '"/>';
             }
@@ -385,10 +390,11 @@ var tc_class = {
                 }
             }
         });
-
+//Render
         for (var i = 0; i < sender.fields.length; i++) {
             let fname = sender.fields[i]['field'];
             let tp = sender.fields[i].tp;
+           
             if (tp == 'date')
                 $(sender.id(fname)).datebox({
 
@@ -433,9 +439,9 @@ var tc_class = {
                                 method: 'POST',
                                 queryParams: {
                                     IdDeclare: sender.fields[i].joinRow.IdDeclare,
-                                    array: 1,
-                                    account: app.account,
-                                    password: app.password
+                                    array: 1//,
+                                    //account: app.account,
+                                    //password: app.password
                                 },
                                 valueField: textfield,
                                 textField: textfield,
@@ -468,49 +474,63 @@ var tc_class = {
                                     });
 
                             }
-                            else {
-                                $(sender.id(fname)).textbox({
-                                    disabled: (savefieldlist.indexOf(fname.toLowerCase()) == -1 && !sender.fields[i].joinRow), //04/03/2019
-                                    onChange: function (newValue, oldValue) {
-                                        sender.record[fname] = newValue;
-                                        sender.flagEdit = true;
-
-                                    }
-                                });
-
-                                if (sender.fields[i].joinRow || sender.fields[i].field == 'image_bmp') {
-                                    let fnum = i;
-                                    if (!sender.fields[i].joinRow)
-                                        sender.fields[i].joinRow = {};
-
-                                    if (sender.fields[i].joinRow.finder_class)
-                                        sender.fields[i].finder = Object.create(sender.fields[i].joinRow.finder_class)
-                                    else
-                                        if (sender.fields[i].field == 'image_bmp') {
-                                            sender.fields[i].finder = Object.create(image_editor);
-                                        }
-                                        else
-                                            sender.fields[i].finder = Object.create(finder);
-
-
-                                    sender.fields[i].finder.absid = sender.prop('fields[' + i.toString() + '].finder');
-                                    sender.fields[i].finder.IdDeclare = sender.fields[i].joinRow.IdDeclare;
-                                    sender.fields[i].finder.editform = sender;
-                                    sender.fields[i].finder.fnum = fnum;
-                                    sender.fields[i].finder.OKFun = function (sen) {
-                                        sen.editform.oklooksender(sen.editform, sen.fnum);
-                                    };
-                                    sender.fields[i].finder.start();
+                            else
+                                if (tp == 'multi') {
+                                    
                                     $(sender.id(fname)).textbox({
-                                        icons: [{
-                                            iconCls: 'icon-combo',
-                                            handler: function (e) {
-                                                sender.showFinder(sender, fnum);
-                                            }
-                                        }]
+                                        multiline :true,
+                                        height : 100,
+                                        disabled: (savefieldlist.indexOf(fname) == -1 && !sender.fields[i].joinRow), //04/03/2019
+                                        onChange: function (newValue, oldValue) {
+                                            sender.record[fname] = newValue;
+                                            sender.flagEdit = true;
+
+                                        }
                                     });
                                 }
-                            }
+                                else {
+                                    $(sender.id(fname)).textbox({
+                                        disabled: (savefieldlist.indexOf(fname) == -1 && !sender.fields[i].joinRow), //04/03/2019
+                                        onChange: function (newValue, oldValue) {
+                                            sender.record[fname] = newValue;
+                                            sender.flagEdit = true;
+
+                                        }
+                                    });
+
+                                    if (sender.fields[i].joinRow || sender.fields[i].field == 'image_bmp') {
+                                        let fnum = i;
+                                        if (!sender.fields[i].joinRow)
+                                            sender.fields[i].joinRow = {};
+
+                                        if (sender.fields[i].joinRow.finder_class)
+                                            sender.fields[i].finder = Object.create(sender.fields[i].joinRow.finder_class)
+                                        else
+                                            if (sender.fields[i].field == 'image_bmp') {
+                                                sender.fields[i].finder = Object.create(image_editor);
+                                            }
+                                            else
+                                                sender.fields[i].finder = Object.create(finder);
+
+
+                                        sender.fields[i].finder.absid = sender.prop('fields[' + i.toString() + '].finder');
+                                        sender.fields[i].finder.IdDeclare = sender.fields[i].joinRow.IdDeclare;
+                                        sender.fields[i].finder.editform = sender;
+                                        sender.fields[i].finder.fnum = fnum;
+                                        sender.fields[i].finder.OKFun = function (sen) {
+                                            sen.editform.oklooksender(sen.editform, sen.fnum);
+                                        };
+                                        sender.fields[i].finder.start();
+                                        $(sender.id(fname)).textbox({
+                                            icons: [{
+                                                iconCls: 'icon-combo',
+                                                handler: function (e) {
+                                                    sender.showFinder(sender, fnum);
+                                                }
+                                            }]
+                                        });
+                                    }
+                                }
         }
         sender.onStart(sender);
     },
@@ -628,9 +648,9 @@ var tc_class = {
                                 sql = sql + ", '" + app.account + "', '" + app.account + "'"
                         }
                         $.post('/pg/runsql', {
-                            sql: sql,
-                            account: app.account,
-                            password: app.password
+                            sql: sql//,
+                            //account: app.account,
+                            //password: app.password
                         },
                             function (data) {
                                 if (data.message) {
@@ -664,9 +684,9 @@ var column_editor = {
         //sender.win.window('open');
         var sql = "select paramvalue from t_sysParams  where  paramname = 'GridFind" + sender.editform.record['DecName'] + "'";
         $.post('/pg/runsql', {
-            sql: sql,
-            account: app.account,
-            password: app.password
+            sql: sql//,
+            //account: app.account,
+            //password: app.password
         },
             function (data) {
                 var sXML = '';
@@ -723,9 +743,9 @@ var column_editor = {
         //var sql = sender.editform.record['decsql'] + " limit 1";
         var sql = sender.editform.record['DecSQL'];
         $.post('/pg/runsql', {
-            sql: sql,
-            account: app.account,
-            password: app.password
+            sql: sql//,
+            //account: app.account,
+            //password: app.password
         },
             function (data) {
                 //console.debug(data);
@@ -805,9 +825,9 @@ var column_editor = {
         var sql = "exec p_lbrsetparam '" + ParamName + "', '" + ParamValue + "', '" + ParamName + "'";
 
         $.post('/pg/runsql', {
-            sql: sql,
-            account: app.account,
-            password: app.password
+            sql: sql//,
+            //account: app.account,
+            //password: app.password
         },
             function (data) {
                 //console.debug(sql);
@@ -961,7 +981,7 @@ var declare_editor = {
                     KeyValue: 'IdDeclare'
                 }
             }
-            
+
 
         },
         /*
@@ -972,7 +992,7 @@ var declare_editor = {
         */
 
         { title: 'Таблица', field: 'TableName' },
-        { title: 'Запрос', field: 'DecSQL' },
+        { title: 'Запрос', field: 'DecSQL', tp : 'multi' },
         { title: 'Картинка', field: 'image_bmp' },
         {
             title: 'Колонки', field: 'col_grid',
