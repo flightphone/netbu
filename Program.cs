@@ -51,7 +51,7 @@ namespace netbu
                 batch.Start();
 
                 DateTime nd = DateTime.Now;
-                DateTime start =  nd.Date.AddDays(1).AddHours(9);
+                DateTime start =  nd.Date.AddDays(1).AddHours(10);
                 long due = (long)(start.Subtract(nd).TotalMilliseconds);
                 
 
@@ -75,7 +75,7 @@ namespace netbu
         }
 
         private static Timer timer;
-        private static void TimerTask(object timerState)
+        public static void TimerTask(object timerState)
         {
             try
             {

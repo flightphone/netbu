@@ -123,6 +123,14 @@ namespace netbu.Controllers
         }
 
 
+        private async void TaskStartAsync()
+        {
+
+            await Task.Run(() => Program.TimerTask(null));
+
+        }
+
+
         private void Dadataload(int ld_pk, string restxt)
         {
             string cnstr = Program.AppConfig["mscns"];
@@ -210,10 +218,13 @@ namespace netbu.Controllers
         [AllowAnonymous]
         public string due()
         {
+                
+                TaskStartAsync();
                 DateTime nd = DateTime.Now;
-                DateTime start =  nd.Date.AddDays(1).AddHours(9);
+                DateTime start =  nd.Date.AddDays(1).AddHours(10);
                 long du = (long)(start.Subtract(nd).TotalMilliseconds);
-                return du.ToString();
+
+                return "Запущен процесс по расписанию. Следующий запуск через " + du.ToString() + " миллисекунд.";
 
         }
 
