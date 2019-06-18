@@ -208,6 +208,16 @@ namespace netbu.Controllers
 
 
         [AllowAnonymous]
+        public string due()
+        {
+                DateTime nd = DateTime.Now;
+                DateTime start =  nd.Date.AddDays(1).AddHours(9);
+                long du = (long)(start.Subtract(nd).TotalMilliseconds);
+                return du.ToString();
+
+        }
+
+        [AllowAnonymous]
         public string update()
         {
             string res = "На сервере запущен процесс загрузки с dadata";

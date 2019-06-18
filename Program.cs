@@ -50,10 +50,16 @@ namespace netbu
                 batch.StartInfo.FileName = @"wwwroot\Run\disk.cmd";
                 batch.Start();
 
+                DateTime nd = DateTime.Now;
+                DateTime start =  nd.Date.AddDays(1).AddHours(9);
+                long due = (long)(start.Subtract(nd).TotalMilliseconds);
+                
+
+
                 timer = new Timer(
                 callback: new TimerCallback(TimerTask),
                 state: null,
-                dueTime: 60000,
+                dueTime: due,
                 period: 86400000
                 );
             }
