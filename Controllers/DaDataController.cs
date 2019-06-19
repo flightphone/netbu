@@ -221,7 +221,11 @@ namespace netbu.Controllers
                 
                 TaskStartAsync();
                 DateTime nd = DateTime.Now;
-                DateTime start =  nd.Date.AddDays(1).AddHours(10);
+                DateTime start = nd.Date.AddHours(10);
+                if (nd.Hour > 10)
+                {
+                    start = start.AddDays(1);
+                }    
                 long du = (long)(start.Subtract(nd).TotalMilliseconds);
 
                 return "Запущен процесс по расписанию. Следующий запуск через " + du.ToString() + " миллисекунд.";

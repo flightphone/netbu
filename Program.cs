@@ -51,7 +51,11 @@ namespace netbu
                 batch.Start();
 
                 DateTime nd = DateTime.Now;
-                DateTime start =  nd.Date.AddDays(1).AddHours(10);
+                DateTime start = nd.Date.AddHours(10);
+                if (nd.Hour > 10)
+                {
+                    start = start.AddDays(1);
+                }    
                 long due = (long)(start.Subtract(nd).TotalMilliseconds);
                 
 
@@ -61,6 +65,7 @@ namespace netbu
                 state: null,
                 dueTime: due,
                 period: 86400000
+                        
                 );
             }
             catch
