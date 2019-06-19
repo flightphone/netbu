@@ -87,9 +87,14 @@ namespace netbu
             {; }
         }
 
+
+        public static System.Diagnostics.Process nodesv;
+
         public static IConfiguration AppConfig { get; set; }
 
         public static bool isPostgres { get; set; }
         public static bool FlagDadataUpdate = false;
+
+        public static bool isNodeStart = false;
     }
 }
