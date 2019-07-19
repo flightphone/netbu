@@ -186,7 +186,8 @@ namespace netbu.Controllers
                     
                 }
 
-                sql = sql.Replace("[Account]", account);
+                if (sql.Trim().ToLower().Substring(0, 6)=="select")
+                    sql = sql.Replace("[Account]", account);
 
                 Int64 total = 0;
                 var sqltotal = sql;

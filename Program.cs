@@ -43,55 +43,28 @@ namespace netbu
                 WebRequest.DefaultWebProxy = wp;
                 //GlobalProxySelection.Select = wp;
             }
+            StartMethod();
+
+            return WebHost.CreateDefaultBuilder(args)
+                .UseConfiguration(config)
+                .UseStartup<Startup>();
+        }
+      
+        private static void StartMethod()
+        {
             //Мапим диск
             try
             {
                 System.Diagnostics.Process batch = new System.Diagnostics.Process();
                 batch.StartInfo.FileName = @"wwwroot\Run\disk.cmd";
                 batch.Start();
-
-                DateTime nd = DateTime.Now;
-                DateTime start = nd.Date.AddHours(10);
-                if (nd.Hour > 10)
-                {
-                    start = start.AddDays(1);
-                }    
-                long due = (long)(start.Subtract(nd).TotalMilliseconds);
-                
-
-
-                timer = new Timer(
-                callback: new TimerCallback(TimerTask),
-                state: null,
-                dueTime: due,
-                period: 86400000
-                        
-                );
-            }
-            catch
-            {; }
-
-
-
-
-            return WebHost.CreateDefaultBuilder(args)
-                .UseConfiguration(config)
-                .UseStartup<Startup>();
-        }
-
-        private static Timer timer;
-        public static void TimerTask(object timerState)
-        {
-            try
-            {
-                System.Diagnostics.Process batch = new System.Diagnostics.Process();
-                batch.StartInfo.FileName = @"C:\Projects2018\task.cmd";
-                batch.Start();
+              
             }
             catch
             {; }
         }
 
+       
 
         public static System.Diagnostics.Process nodesv;
 

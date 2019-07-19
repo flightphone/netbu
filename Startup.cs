@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+//using Microsoft.Extensions.Hosting;
+using BackgroundTasksSample.Services;
 
 namespace netbu {
     public class Startup {
@@ -26,10 +28,13 @@ namespace netbu {
             services.AddMvc ().AddJsonOptions (options => {
                 options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver ();
             });
+            //Задача по таймеру    
+            //services.AddHostedService<TimedHostedService>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure (IApplicationBuilder app, IHostingEnvironment env) {
+        public void Configure (IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IHostingEnvironment env) {
             if (env.IsDevelopment ()) {
                 app.UseDeveloperExceptionPage ();
             }

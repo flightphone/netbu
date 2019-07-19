@@ -13,6 +13,8 @@ using System.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Primitives;
 using System.Threading.Tasks;
+using System.Threading;
+using System.Diagnostics;
 using suggestionscsharp;
 
 
@@ -107,7 +109,7 @@ namespace netbu.Controllers
                 Program.FlagDadataUpdate = false;
                 cn.Close();
             }
-            catch 
+            catch
             {
                 Program.FlagDadataUpdate = false;
                 cn.Close();
@@ -123,13 +125,34 @@ namespace netbu.Controllers
         }
 
 
+        
+        private void TaskStart()
+        {
+            try
+            {
+                System.Diagnostics.Process batch = new System.Diagnostics.Process();
+                batch.StartInfo.FileName = @"C:\Projects2018\task.cmd";
+                batch.Start();
+            }
+            catch
+            {; }
+        }
+
         private async void TaskStartAsync()
         {
 
-            await Task.Run(() => Program.TimerTask(null));
+            await Task.Run(() => TaskStart());
 
         }
+        
 
+        [AllowAnonymous]
+        public string updatecur()
+        {
+            TaskStartAsync();
+            return "Запущен процесс обновления валют" ;
+        }
+        
 
         private void Dadataload(int ld_pk, string restxt)
         {
@@ -215,22 +238,7 @@ namespace netbu.Controllers
         }
 
 
-        [AllowAnonymous]
-        public string due()
-        {
-                
-                TaskStartAsync();
-                DateTime nd = DateTime.Now;
-                DateTime start = nd.Date.AddHours(10);
-                if (nd.Hour > 10)
-                {
-                    start = start.AddDays(1);
-                }    
-                long du = (long)(start.Subtract(nd).TotalMilliseconds);
-
-                return "Запущен процесс по расписанию. Следующий запуск через " + du.ToString() + " миллисекунд.";
-
-        }
+        
 
         [AllowAnonymous]
         public string update()
