@@ -132,6 +132,28 @@ namespace netbu.Controllers
                 return Redirect("~/Docfiles/dir?id=" + id + "&id64=" + id64);
             }
         }
+
+
+
+        public async Task<ActionResult> openсomment(string cnt_sid, int ag_id, string ag_type)
+        {
+            SqlDataAdapter da = new SqlDataAdapter("p_cntsession", Program.AppConfig["mscns"]);
+            da.SelectCommand.CommandType = CommandType.StoredProcedure;
+            da.SelectCommand.Parameters.AddWithValue("@cnt_sid", cnt_sid);
+            DataTable res = new DataTable();
+            da.Fill(res);
+            if (res.Rows.Count == 0)
+            {
+                return Redirect("~/Access.html?ReturnUrl=/Docfiles/comments?ag_id=" + ag_id.ToString() + "&ag_type=" + ag_type);
+            }
+            else
+            {
+                string account = res.Rows[0]["username"].ToString();
+                await Authenticate(account); // аутентификация
+                return Redirect("~/Docfiles/comments?ag_id=" + ag_id.ToString() + "&ag_type=" + ag_type);
+            }
+        }
+
         [Authorize]
         [Route("/pg/runsql")]
         public JsonResult runsql()

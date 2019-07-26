@@ -32,7 +32,54 @@ var contractors_editor = {
 
 var fi_contractors = {
     __proto__: finder,
-    editor_class: contractors_editor
+    editor_class: contractors_editor,
+
+
+    addTool:function(sender, toolbar)
+    {
+
+        sender.combut = $('<a>').appendTo(toolbar);
+        sender.combut.linkbutton({
+            iconCls: 'tree-file',
+            text: 'Замечания',
+            plain: true,
+            onClick: function () 
+            {
+                //sender.editor.deleterecord(sender.editor);
+                var row = sender.MainTab.datagrid('getSelected');
+                if (!row) {
+                    $.messager.alert(sender.t_rpdeclare.descr, 'Выберете запись', 'info');
+                    return;
+                }
+                var node_text = 'Замечания(контрагенты) ' +  row['contractor_id'].toString();
+                var node_id = 'contractor_id_' + row['contractor_id'].toString();
+                var tab = $('#tabs').tabs('getTab', node_text);
+                if (tab)
+                    $('#tabs').tabs('select', node_text);
+                else {
+                    let form1 = Object.create(simpleHtml);
+                    let link1 = '/Docfiles/comments?ag_id=' + row['contractor_id'].toString() + '&ag_type=cnt';
+                    //let link1 = 'http://localhost:5000/index.html?exclusiveFolder=/' + row['agr_key'].toString() + '/';
+                    form1.page = link1;
+                    form1.absid = 'app.forms.form' + node_id.toString();
+                    form1.node = node_id.toString();
+                    app.forms['form' + node_id.toString()] = form1;
+                    var cnt = form1.template();
+                    $('#tabs').tabs('add', {
+                        title: node_text,
+                        content: cnt,
+                        closable: true,
+                        selected: true,
+                        fit: true
+                    });
+                    form1.start();
+               }
+            }
+        });
+
+    }
+
+
 };
 
 var fi_agreements = {
@@ -44,7 +91,8 @@ var fi_agreements = {
             iconCls: 'tree-file',
             text: 'Файлы',
             plain: true,
-            onClick: function () {
+            onClick: function () 
+            {
                 //sender.editor.deleterecord(sender.editor);
                 var row = sender.MainTab.datagrid('getSelected');
                 if (!row) {
@@ -73,13 +121,53 @@ var fi_agreements = {
                         fit: true
                     });
                     form1.start();
-                }
-
-
+               }
             }
         });
+
+
+        
+        sender.combut = $('<a>').appendTo(toolbar);
+        sender.combut.linkbutton({
+            iconCls: 'tree-file',
+            text: 'Замечания',
+            plain: true,
+            onClick: function () 
+            {
+                //sender.editor.deleterecord(sender.editor);
+                var row = sender.MainTab.datagrid('getSelected');
+                if (!row) {
+                    $.messager.alert(sender.t_rpdeclare.descr, 'Выберете запись', 'info');
+                    return;
+                }
+                var node_text = 'Замечания ' +  row['agr_key'].toString();
+                var node_id = 'agr_' + row['agr_key'].toString();
+                var tab = $('#tabs').tabs('getTab', node_text);
+                if (tab)
+                    $('#tabs').tabs('select', node_text);
+                else {
+                    let form1 = Object.create(simpleHtml);
+                    let link1 = '/Docfiles/comments?ag_id=' + row['agr_key'].toString() + '&ag_type=agr';
+                    //let link1 = 'http://localhost:5000/index.html?exclusiveFolder=/' + row['agr_key'].toString() + '/';
+                    form1.page = link1;
+                    form1.absid = 'app.forms.form' + node_id.toString();
+                    form1.node = node_id.toString();
+                    app.forms['form' + node_id.toString()] = form1;
+                    var cnt = form1.template();
+                    $('#tabs').tabs('add', {
+                        title: node_text,
+                        content: cnt,
+                        closable: true,
+                        selected: true,
+                        fit: true
+                    });
+                    form1.start();
+               }
+            }
+        });
+
     }
-};
+}
 
 var DaDataLoads = {
     __proto__: finder,
