@@ -260,6 +260,29 @@ var app = {
 
 
 
+    },
+    showLink : function(node_text, node_id, link1){
+        var tab = $('#tabs').tabs('getTab', node_text);
+                if (tab)
+                    $('#tabs').tabs('select', node_text);
+                else {
+                    let form1 = Object.create(simpleHtml);
+                    //let link1 = '/Docfiles/dir?id=' + row['agr_key'].toString() + '/';
+                    //let link1 = 'http://localhost:5000/index.html?exclusiveFolder=/' + row['agr_key'].toString() + '/';
+                    form1.page = link1;
+                    form1.absid = 'app.forms.form' + node_id.toString();
+                    form1.node = node_id.toString();
+                    app.forms['form' + node_id.toString()] = form1;
+                    var cnt = form1.template();
+                    $('#tabs').tabs('add', {
+                        title: node_text,
+                        content: cnt,
+                        closable: true,
+                        selected: true,
+                        fit: true
+                    });
+                    form1.start();
+               }
     }
 };
 
@@ -557,7 +580,7 @@ var finder = {
                     if ($(this).attr('FieldName').toLowerCase() == 'image_bmp') {
                         fm = function (value, row, index) {
                             if (value)
-                                return '<img src="data:image/gif;base64,' + value + '"/>';
+                                return '<img style="max-width:48px;max-height:48px" src="data:image/gif;base64,' + value + '"/>';
                             else
                                 return value;
                         }
