@@ -21,7 +21,19 @@ namespace netbu.Controllers
     public class DocfilesController : Controller
     {
 
-
+        [AllowAnonymous]
+        public ActionResult photo(string id)
+        {
+            string path = Program.AppConfig["photofiles"] + @"\" + id;
+            string ctype = "image/jpeg";
+            if (System.IO.File.Exists(path))
+            {
+                byte[] buf = System.IO.File.ReadAllBytes(path);
+                return File(buf, ctype);
+            }    
+            else
+                return NotFound();
+        }
 
         public ActionResult file(string id, string id64)
         {
