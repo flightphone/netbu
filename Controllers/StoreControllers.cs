@@ -85,6 +85,9 @@ namespace netbu.Controllers
                 ar = FieldMapTable.Select("IdDeclare > 0 and GroupDec = '" + fld.GroupDec + "'");
                 fld.IdDeclare = ar[0]["idDeclare"].ToString();
                 fld.ClassName = ar[0]["ClassName"].ToString();
+                fld.Title = dec.ListField[ar[0]["dstField"].ToString()].Title;
+                dec.ListField[ar[0]["dstField"].ToString()].Vis = "0";
+                fld.Vis = "1";
                 ar = FieldMapTable.Select("dstField <> '" + fld.FieldName + "' and GroupDec = '" + fld.GroupDec + "'");
                 fld.LookUp = new Dictionary<string, string>();
                 for (int i=0; i < ar.Length; i++)
