@@ -76,6 +76,8 @@ var fi_agreements = {
             onClick: function () 
             {
                 //sender.editor.deleterecord(sender.editor);
+                //console.debug(JSON.stringify(sender.editor.save2json(sender.editor)));
+                //console.debug(sender.editor.save2json(sender.editor));
                 var row = sender.MainTab.datagrid('getSelected');
                 if (!row) {
                     $.messager.alert(sender.t_rpdeclare.descr, 'Выберете запись', 'info');

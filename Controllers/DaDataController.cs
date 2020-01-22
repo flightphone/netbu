@@ -105,6 +105,7 @@ namespace netbu.Controllers
                     cmd.Parameters.AddWithValue("@ls_short_with_opf", ls_short_with_opf);
                     cmd.Parameters.AddWithValue("@ls_load_status", ls_load_status);
                     cmd.ExecuteNonQuery();
+                    Thread.Sleep(2000);
                 }
                 Program.FlagDadataUpdate = false;
                 cn.Close();
@@ -215,6 +216,7 @@ namespace netbu.Controllers
                     cmd.Parameters.AddWithValue("@ls_short_with_opf", ls_short_with_opf);
                     cmd.Parameters.AddWithValue("@ls_load_status", ls_load_status);
                     cmd.ExecuteNonQuery();
+                    //Thread.Sleep(1050);
                 }
                 cmderr.Parameters.AddWithValue("ld_pk", ld_pk);
                 cmderr.Parameters.AddWithValue("ld_status", "OK");

@@ -197,6 +197,22 @@ var tc_class = {
         s = s.replace('Content', ed);
         return s;
     },
+    save2json: function(sender){
+        res = [];
+        for (var i = 0; i < sender.fields.length; i++)
+        {
+            var a = {};
+            a.field = sender.fields[i].field;
+            a.title = sender.fields[i].title;
+            a.DisplayFormat = sender.fields[i].DisplayFormat;
+            a.group = sender.fields[i].group;
+            a.tp = sender.fields[i].tp;
+            a.precision = sender.fields[i].precision;
+            a.joinRow = sender.fields[i].joinRow;
+            res.push(a);
+        }
+        return res;
+    },
     start: function (sender) {
 //Define
         if (sender.fields.length == 0) {

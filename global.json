@@ -5,12 +5,15 @@
   "cns":"Host=localhost;Username=postgres;Password=aA12345678;Database=uFlights",
   "mscns": "data source=localhost\\SQLEXPRESS8;User ID=sa;Password=aA12345678;database=uFlights",
   "isP": "tsql",
-  "dadataurl": "https://suggestions.dadata.ru/suggestions/api/4_1/rs/findById/party",
+  "olddadataurl": "https://suggestions.dadata.ru/suggestions/api/4_1/rs/findById/party",
+  "dadataurl": "https://guard.dadata.ru/suggestions/api/4_1/rs/findById/party",
   "dadatakey": "6e6e0a986669c04a187d5c484d878d3c6e3a17e7",
   "proxy":"",
   "proxyport":"3128",
-  "proxylogin":"glonass\\manevich",
-  "proxypassword":"Pafos2018",
+  "proxylogin":"",
+  "proxypassword":"",
   "docfiles":"C:\\_UTG",
   "photofiles":"C:\\_UTG"
+
+  
 }

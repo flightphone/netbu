@@ -30,7 +30,7 @@ namespace netbu.Controllers
             {
                 byte[] buf = System.IO.File.ReadAllBytes(path);
                 return File(buf, ctype);
-            }    
+            }
             else
                 return NotFound();
         }
@@ -55,6 +55,22 @@ namespace netbu.Controllers
             if (ext == "pdf")
                 ctype = "application/pdf";
             */
+            //лог 18.12.2019
+            try
+            {
+                String sql = "p_cntfilehistory_add";
+                SqlDataAdapter da = new SqlDataAdapter(sql, Program.AppConfig["mscns"]);
+                da.SelectCommand.CommandType = CommandType.StoredProcedure;
+                da.SelectCommand.Parameters.AddWithValue("@fh_filename", path);
+                da.SelectCommand.Parameters.AddWithValue("@fh_account", User.Identity.Name);
+                DataTable head = new DataTable();
+                da.Fill(head);
+            }
+            catch
+            {; }
+            //лог 18.12.2019
+
+
             if (ext == "gif" || ext == "bmp" || ext == "jpg" || ext == "jpeg" || ext == "png")
                 ctype = "image/jpeg";
             if (ext == "tiff")
@@ -137,29 +153,31 @@ namespace netbu.Controllers
 
         }
 
-        public ActionResult getphoto (string audtuser){
+        public ActionResult getphoto(string audtuser)
+        {
             string sql = "select  top 1 image_bmp from dbo.cntEmployees (nolock) where AD_Name = @audtuser and isnull(image_bmp, '') <> ''";
             SqlDataAdapter da = new SqlDataAdapter(sql, Program.AppConfig["mscns"]);
             da.SelectCommand.Parameters.AddWithValue("@audtuser", audtuser);
             DataTable foto = new DataTable();
             da.Fill(foto);
             string ctype = "image/jpeg";
-            byte[] buf =  {};
+            byte[] buf = { };
             if (foto.Rows.Count > 0)
             {
                 buf = Convert.FromBase64String(foto.Rows[0][0].ToString());
             }
             else
             {
-                buf =  System.IO.File.ReadAllBytes(@"wwwroot\Image\avatar_blank.jpg");
+                buf = System.IO.File.ReadAllBytes(@"wwwroot\Image\avatar_blank.jpg");
             }
-            return File(buf, ctype);    
+            return File(buf, ctype);
 
         }
         public ActionResult comments(int ag_id, string ag_type, string cm_status, string cm_message)
         {
 
-            if (!string.IsNullOrEmpty(cm_message))    {
+            if (!string.IsNullOrEmpty(cm_message))
+            {
                 SqlDataAdapter de = new SqlDataAdapter("p_cntcomments_EDIT", Program.AppConfig["mscns"]);
                 de.SelectCommand.CommandType = CommandType.StoredProcedure;
                 de.SelectCommand.Parameters.AddWithValue("@cm_id", -1);
@@ -181,8 +199,8 @@ namespace netbu.Controllers
             da.SelectCommand.Parameters.AddWithValue("@ag_type", ag_type);
             DataTable head = new DataTable();
             DataTable comments = new DataTable();
-            da.Fill(0, 0, new DataTable[]{head, comments});
-            
+            da.Fill(0, 0, new DataTable[] { head, comments });
+
             ViewBag.info = head.Rows[0][0];
             ViewBag.rows = comments.Rows;
             ViewBag.ag_id = ag_id;
