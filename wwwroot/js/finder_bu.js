@@ -722,6 +722,10 @@ var finder = {
                     }
                     var node_text = sender.t_rpdeclare.descr + "_" + row[sender.t_rpdeclare.dispfield].toString() ;
                     var node_id = sender.t_rpdeclare.descr + "_" + row[sender.t_rpdeclare.keyfield].toString();
+                    //27/01/2020
+                    node_text = node_text.replace(/-/g, "_").replace(/ /g, "_");
+                    node_id = node_id.replace(/-/g, "_").replace(/ /g, "_");
+                    
                     var tab = $('#tabs').tabs('getTab', node_text);
                     if (tab)
                         $('#tabs').tabs('select', node_text);
