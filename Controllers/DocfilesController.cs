@@ -63,6 +63,7 @@ namespace netbu.Controllers
                 da.SelectCommand.CommandType = CommandType.StoredProcedure;
                 da.SelectCommand.Parameters.AddWithValue("@fh_filename", path);
                 da.SelectCommand.Parameters.AddWithValue("@fh_account", User.Identity.Name);
+                da.SelectCommand.Parameters.AddWithValue("@fh_action", "get");  //19/02/2020
                 DataTable head = new DataTable();
                 da.Fill(head);
             }
@@ -94,6 +95,24 @@ namespace netbu.Controllers
             {
                 string idf = id.Replace("/", @"\");
                 string path = Program.AppConfig["docfiles"] + @"\" + idf;
+
+                //лог 19.02.2020
+                try
+                {
+                    String sql = "p_cntfilehistory_add";
+                    SqlDataAdapter da = new SqlDataAdapter(sql, Program.AppConfig["mscns"]);
+                    da.SelectCommand.CommandType = CommandType.StoredProcedure;
+                    da.SelectCommand.Parameters.AddWithValue("@fh_filename", path);
+                    da.SelectCommand.Parameters.AddWithValue("@fh_account", User.Identity.Name);
+                    da.SelectCommand.Parameters.AddWithValue("@fh_action", "delete");
+                    DataTable head = new DataTable();
+                    da.Fill(head);
+                }
+                catch
+                {; }
+                //лог 19.02.2020
+
+
                 if (mode == "file")
                     System.IO.File.Delete(path);
                 else
@@ -129,12 +148,30 @@ namespace netbu.Controllers
             string res = "";
             id = WebUtility.HtmlDecode(id);
             string idf = id.Replace("/", @"\");
-            string path = Program.AppConfig["docfiles"] + @"/" + idf;
+            string path = Program.AppConfig["docfiles"] + @"\" + idf;  //  / заменили на \
             try
             {
+
+
                 if (files != null)
                     foreach (IFormFile img in files)
                     {
+
+                        //лог 19.02.2020
+                        try
+                        {
+                            String sql = "p_cntfilehistory_add";
+                            SqlDataAdapter da = new SqlDataAdapter(sql, Program.AppConfig["mscns"]);
+                            da.SelectCommand.CommandType = CommandType.StoredProcedure;
+                            da.SelectCommand.Parameters.AddWithValue("@fh_filename", path + img.FileName);
+                            da.SelectCommand.Parameters.AddWithValue("@fh_account", User.Identity.Name);
+                            da.SelectCommand.Parameters.AddWithValue("@fh_action", "add");
+                            DataTable head = new DataTable();
+                            da.Fill(head);
+                        }
+                        catch
+                        {; }
+                        //лог 19.02.2020
 
                         string FileName = img.FileName;
                         int n = (int)img.Length;
