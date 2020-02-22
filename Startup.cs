@@ -23,6 +23,10 @@ namespace netbu {
                 .AddCookie (options => //CookieAuthenticationOptions
                     {
                         options.LoginPath = new Microsoft.AspNetCore.Http.PathString ("/Access.html");
+                        //options.SlidingExpiration = true;
+                        options.ExpireTimeSpan = TimeSpan.FromDays(30);
+
+                        
                     });
 
             services.AddMvc ().AddJsonOptions (options => {

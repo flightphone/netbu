@@ -64,10 +64,19 @@ namespace netbu.Controllers
             // создаем объект ClaimsIdentity
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
             // установка аутентификационных куки
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
-            
-
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+            new ClaimsPrincipal(id),
+            new AuthenticationProperties  //запоминает пользователя
+            {
+                IsPersistent = true
+            });
         }
+
+        public async Task<ActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return Redirect("~/Access.html");
+        }
 
         [Route("ustore/gettree")]
         public async Task<JsonResult> gettree()
@@ -123,7 +132,7 @@ namespace netbu.Controllers
             da.Fill(res);
             if (res.Rows.Count == 0)
             {
-                return Redirect("~/Access.html?ReturnUrl=/Docfiles/dir?id=" + id + "&id64=" + id64);
+                return Redirect("~/Docfiles/dir?id=" + id + "&id64=" + id64);
             }
             else
             {
@@ -166,7 +175,7 @@ namespace netbu.Controllers
                 var cnstr = Program.isPostgres ? Program.AppConfig["cns"] : Program.AppConfig["mscns"];
                 var IdDeclare = Request.Form["IdDeclare"];
                 var account = User.Identity.Name;
-                
+
                 //Не передаем account
                 //var account = Request.Form["account"];
                 //var password = Request.Form["password"];
@@ -205,10 +214,10 @@ namespace netbu.Controllers
                         return Json(new { message = "Не найден IdDeclare: " + IdDeclare });
                     }
                     sql = redec.Rows[0]["decsql"].ToString();
-                    
+
                 }
 
-                if (sql.Trim().ToLower().Substring(0, 6)=="select")
+                if (sql.Trim().ToLower().Substring(0, 6) == "select")
                     sql = sql.Replace("[Account]", account);
 
                 Int64 total = 0;
