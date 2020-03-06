@@ -219,8 +219,8 @@ var app = {
     init: function () {
 
         //$('#winlogon').window('close');
-        this.account = ''; //$('#account').val();
-        this.password = ''; //$('#password').val();
+        //this.account = ''; //$('#account').val();
+        //this.password = ''; //$('#password').val();
 
 
         $('#tree').tree({

@@ -24,9 +24,11 @@ namespace netbu.Controllers
     {
 
          [Authorize]
-        public ActionResult Index()
+        public ActionResult Index(string id)
         {
-            return Redirect("~/index.html");
+            ViewBag.id = id;
+            ViewBag.account = User.Identity.Name;
+            return View();
         }
 
         [Route("ustore/tree.css")]
