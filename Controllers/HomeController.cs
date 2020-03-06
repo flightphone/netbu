@@ -23,11 +23,19 @@ namespace netbu.Controllers
     public class HomeController : Controller
     {
 
+         [Authorize]
+        public ActionResult Index()
+        {
+            return Redirect("~/index.html");
+        }
+
         [Route("ustore/tree.css")]
         public string treecss()
         {
             try
             {
+
+
                 var sql = "select idimage, image_bmp from t_sysmenuimage";
                 var cnstr = Program.isPostgres ? Program.AppConfig["cns"] : Program.AppConfig["mscns"];
 
@@ -57,6 +65,7 @@ namespace netbu.Controllers
 
         private async Task Authenticate(string userName)
         {
+           
             // создаем один claim
             var claims = new List<Claim> {
                 new Claim (ClaimsIdentity.DefaultNameClaimType, userName)
@@ -73,16 +82,47 @@ namespace netbu.Controllers
         }
 
         public async Task<ActionResult> Logout()
-        {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return Redirect("~/Access.html");
-        }
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return Redirect("~/Home/Login");
+        }
+        public ActionResult Login()
+        {
+            DBClient dc = new DBClient();
+            return View(dc);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Login(DBClient model, string returnUrl)
+        {
+            if (ModelState.IsValid)
+            {
+                DBClient dc = new DBClient();
+                if (dc.CheckLogon(model.UserName, model.Password))
+                {
+                    await Authenticate(model.UserName); // аутентификация
+                    return Redirect(returnUrl ?? Url.Action("Index", "Home"));
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Неправильный логин или пароль");
+                    return View();
+                }
+            }
+            else
+            {
+                return View();
+            }
+
+        }
 
         [Route("ustore/gettree")]
-        public async Task<JsonResult> gettree()
+        [Authorize]
+        public JsonResult gettree()
         {
             try
             {
+                /*
                 string account = Request.Form["account"];
                 var password = Request.Form["password"];
                 var tu = new treeutil();
@@ -92,6 +132,11 @@ namespace netbu.Controllers
                     return Json(new object[] { new { text = "Access denied." } });
                 }
                 await Authenticate(account); // аутентификация
+                */
+
+                string account = User.Identity.Name;
+                var tu = new treeutil();
+                
                 var data = new DataTable();
                 var cnstr = Program.isPostgres ? Program.AppConfig["cns"] : Program.AppConfig["mscns"]; ;
                 var sql = "select a.* , fn_getmenuimageid(a.caption) idimage from fn_mainmenu('ALL', @Account) a order by a.ordmenu, idmenu";

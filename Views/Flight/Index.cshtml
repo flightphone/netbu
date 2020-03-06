@@ -1,0 +1,787 @@
+﻿
+@using netbu.Models;
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    
+    <link href="../easyui/theme/easyui.css?v=1.5" rel="stylesheet" />
+    <link href="../easyui/theme/icon.css?v=2" rel="stylesheet" />
+    <script type="text/javascript" src="../easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../easyui/jquery.easyui.min.js?v=1.5"></script>
+    <script type="text/javascript" src="../easyui/locale/easyui-lang-ru.js?v=1.5"></script>
+    <script type="text/javascript" src="../easyui/datagrid-cellediting.js"></script>
+    <script type="text/javascript" src="../easyui/datagrid-filter.js"></script>
+    <script type="text/javascript" src="../easyui/easyTools.js"></script>
+
+
+    
+    <title>@ViewBag.Title</title>
+    
+    <style type="text/css">
+   *{
+	font-size:12px;
+}
+body {
+    font-family:verdana,helvetica,arial,sans-serif;
+    padding:5px;
+    font-size:12px;
+    margin:0;
+}
+        </style>
+    
+
+ 
+</head>
+<body >
+    <!--
+    <div id="Ftool" style="height:30px; vertical-align:central">
+            <a href="#" class="easyui-linkbutton" id="SaveBut" data-options="iconCls:'icon-save', plain:true, disabled:true"  onclick = "FCSave()" title="Сохранить"></a>
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-RunHS', plain:true" title = "Очистить список работ" onclick = "Reload()"></a>
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-print', plain:true"  onclick = "PrintTK()" title="Печать ТК">Печать ТК</a>
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-print', plain:true"  onclick = "PrintSOPP()" title="Печать СОПП">Печать СОПП</a>
+    </div>
+-->
+    <div id ="FlightCard" class="easyui-layout" fit="true" >
+		<div data-options="region:'west',split:true," style="width:550px;">
+            <table id="FC" class="easyui-treegrid" fit="true" showHeader="false"  
+            
+			data-options="
+				url: '/Flight/getFlight?FC_PK=@ViewBag.FC_PK',
+				method: 'get',
+				lines: false,
+				idField: 'FieldName',
+				treeField: 'FieldCaption',
+                onLoadSuccess: FC_Load
+			">
+		   <thead>
+			<tr>
+				<th data-options="field:'FieldCaption',formatter:format_2" width="50%" >Наименование</th>
+				<th data-options="field:'textValue',formatter:format_1" width="50%" >Значение</th>
+				
+			</tr>
+		</thead>
+	    </table>
+                
+
+		</div>
+        <div data-options="region:'center'"  id="OrderTab">    
+            <div id="tt" class="easyui-tabs" fit="true"  narrow="true" >
+                <div title="Услуги">
+                    <table id="OrderD" class="easyui-treegrid" fit="true" 
+			data-options="
+				url: '/Flight/getOrderD?FC_PK=@ViewBag.FC_PK',
+				method: 'get',
+				lines: false,
+				idField: 'QD_PK',
+				treeField: 'Caption',
+                onClickRow : onClickRowEdit,
+                onEndEdit: onEdit,
+                onDblClickRow: onDblOrderD          
+               
+			">
+		   <thead>
+			<tr>
+				<th data-options="field:'NN',formatter:format_4" width="5%" >NN</th>
+				<th data-options="field:'Caption',formatter:format_3" width="60%" >Название</th>
+                <th data-options="field:'QD_QTY',editor:'numberbox'" width="10%" >Кол-во</th>
+                <th data-options="field:'QD_Comment',editor:'text'" width="20%" >Комментарий</th>
+                <th data-options="field:'QD_isPosted',editor:{type:'checkbox',options:{on:'1',off:'0'}}" width="5%" ></th>
+				
+			</tr>
+		</thead>
+	    </table>
+
+                </div>
+                <div title="Файлы">
+                    <table class="easyui-datagrid" id ="Files"  
+                    
+		            	data-options="singleSelect:true,fit:true,url:'/Flight/getFiles?FC_PK=@ViewBag.FC_PK',method:'get',
+                        onDblClickRow: onDblFile" >
+		            <thead>
+			            <tr>
+                                <th data-options="field:'Caption'" width="20%" >Тип</th>
+                                <th data-options="field:'QD_SQTY'" width="60%" >Файл</th>
+                                <th data-options="field:'QD_Comment'" width="20%" >Комментарий</th>				            
+			            </tr>
+		            </thead>
+                    </table>
+                </div>
+                <div title="Tasks">
+                    <table class="easyui-datagrid" id ="RMS_Tasks"  
+		            	data-options="singleSelect:true,fit:true,url:'/Flight/getTasks?FC_PK=@ViewBag.FC_PK',method:'get'" >
+		            <thead>
+			            <tr>
+				             @textHelper.FromString(Html, ViewBag.FieldTask)
+			            </tr>
+		            </thead>
+                    </table>
+                </div>
+                <div title="Users">
+                    <table class="easyui-datagrid" id ="RMS_Users"  
+		            	data-options="singleSelect:true,fit:true,url:'/Flight/getUsers?FC_PK=@ViewBag.FC_PK',method:'get'" >
+		            <thead>
+			            <tr>
+				             @textHelper.FromString(Html, ViewBag.FieldUser)
+			            </tr>
+		            </thead>
+                    </table>
+                </div>
+            </div>                
+        </div>
+
+	<div id="UTGCargoPost" class="easyui-window" data-options="modal:true,closed:true,collapsible:false,minimizable:false,title:''" style="height:350px;width:1100px;padding: 5px">
+    </div>
+    <div id="UTGPaxFMCY" class="easyui-window" data-options="modal:true,closed:true,collapsible:false,minimizable:false,title:''" style="height:240px;width:800px;padding: 5px">
+    </div>
+    <div id="UTGCargo" class="easyui-window" data-options="modal:true,closed:true,collapsible:false,minimizable:false,title:''" style="height:200px;width:520px;padding: 5px">
+    </div>
+    <div id="HistoryWindow" class="easyui-window" data-options="modal:true,closed:true,collapsible:false,minimizable:false,title:''" style="height:500px;width:800px;padding: 5px; ">
+    </div>
+    <div id="FileWindow" class="easyui-window" data-options="modal:true,closed:true,collapsible:false,minimizable:false,title:'Загрузка файла'" style="height:200px;width:600px;padding: 5px; ">
+    <div class="easyui-layout" data-options="fit:true" >
+    <div data-options="region:'center'">
+        <form id="fileForm" method="post" enctype="multipart/form-data" >
+        <table style="width:100%">
+            <tr>
+                <td style="width:30%">
+Файл: <input type="hidden" name="FC_PK" value="@ViewBag.FC_PK" />
+                </td>
+                <td style="width:70%">
+                    <input class="easyui-filebox" name="LD_File" id="LD_File" style="width:100%" data-options="buttonText: 'Обзор'"/>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:30%">
+Комментарий:
+                </td>
+                <td style="width:70%">
+                    <input class="easyui-textbox" style="width:100%" name="LD_Comment"/>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:30%">
+Тип:
+                </td>
+                <td style="width:70%">
+     <select  name="LD_type"  class="textbox" style="margin-left: 0px; margin-right: 0px; padding-top: 0px; padding-bottom: 0px; height:19.7778px; line-height: 19.7778px; width: 100%;">
+     @textHelper.FromString(Html,ViewBag.FH_Type)
+     </select>
+
+                </td>
+            </tr>
+        </table>
+   </form>
+    </div>
+    <div data-options="region:'south',border:false" style="text-align:right;padding:5px 0 0;height:37px">
+        <a class="easyui-linkbutton" data-options="iconCls:'icon-ok'" href="javascript:void(0)" onclick="fileUpdate()" style="width:80px">Ok</a>
+        <a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" href="javascript:void(0)" onclick="$('#FileWindow').window('close')" style="width:80px">Отмена</a>
+    </div>
+    </div>
+    </div>
+
+
+     <div id="HistoryMenu" class="easyui-menu" style="width:230px;">
+     <div onclick="showHistory(203)">История изменений</div>       
+     <div onclick="showHistory(202)">История AODB</div>
+     </div>
+
+     <div id="OrderHistoryMenu" class="easyui-menu" style="width:250px;">
+     <div onclick="showOrderHistory()">История изменений услуги</div>       
+     <div onclick="showOrderHistoryALL()">Полная история изменений</div>
+     </div>
+
+
+    <div id="tbFiles" style="padding:3px">  
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="$('#FileWindow').window('open')">Добавить</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-delete'" onclick="deleteFile()">Удалить</a>
+    </div>
+
+	</div>
+    <script type="text/javascript">
+        var editingId = -1;
+        var flagUTGPaxFMCY = false;
+        var flagCupon = false;
+        var flagCargo = false;
+        var flagUTGCargoPost = false;
+        var fFlagEdit = false;
+
+       
+
+        var FlightRecord = {
+            FC_PK: '@ViewBag.FC_PK',
+            O_FC_flState: '@ViewBag.O_FC_flState',
+            FC_flDirection: '@ViewBag.FC_flDirection',
+            FC_Date: '@ViewBag.FC_Date'
+        };
+
+
+        function fileUpdate() {
+            $('#fileForm').form('submit', {
+                url:'/Flight/fileUpdate',
+                success: function(data){
+                    $('#FileWindow').window('close');
+                    $('#Files').datagrid('reload');
+                }
+            });
+        }
+
+        function FlagEdit() {
+            $('#SaveBut').linkbutton({ disabled: false });
+            //fFlagEdit = true;
+            
+            /*
+            window.onbeforeunload = function (e) {
+                    return 'Данные не сохранены. Покинуть страницу?';
+              
+            };
+            */
+        }
+
+        function FCSave() {
+
+            if (editingId != -1)
+                $('#OrderD').treegrid('endEdit', editingId);
+            editingId = -1;
+
+            var d = $('#OrderD').treegrid('getChanges');
+            FlightRecord.OrderD = d;
+
+            if (flagUTGPaxFMCY) {
+                var pax = $('#paxTable').datagrid('getRows');
+                FlightRecord.UTGPaxFMCY = pax;
+            }
+
+            if (flagCupon) {
+                var Cupon = $('#cuponTable').treegrid('getChanges');
+                FlightRecord.Cupon = Cupon;
+            }
+
+            if (flagCargo) {
+                var pax = $('#cargoTable').datagrid('getRows');
+                FlightRecord.UTGCargo = pax;
+            }
+
+            if (flagUTGCargoPost) {
+                var pax = $('#CargoTab').datagrid('getRows');
+                FlightRecord.UTGCargoPost = pax;
+            }
+
+            var str = JSON.stringify(FlightRecord);
+            //$.messager.alert('', str);
+            $.post("/Flight/Save", {Obj:str}, onSave);
+        }
+
+        var onSave = function (data) {
+            if (data != "OK") {
+                $.messager.alert('Ошибка.', data, 'error');
+            } else {
+                //window.onbeforeunload = null;
+                location.reload();
+            };
+        }
+
+
+
+        var PrintTK = function () {
+            $.post('/Flight/PrePrintMap', {
+                FC_PK: '@ViewBag.FC_PK',
+                RH_Category: 'Обслуживание ВС'
+            }, onPrint);
+        }
+
+
+        var PrintSOPP = function () {
+            $.post('/Flight/PrePrintMap', {
+                FC_PK: '@ViewBag.FC_PK',
+                RH_Category: 'Посадка (контроль)'
+            }, onPrint);
+        }
+
+        var onPrint = function (data) {
+            //var res = JSON.parse(data);
+            var res = data;
+            if (res.n == "0")
+                $.messager.alert('Ошибка', 'Не найден регламент категории "' + res.RH_Category + '"', 'error');
+            else
+                if (res.n == "1")
+                    location.href = '/Flight/PrintMap?FC_PK=@ViewBag.FC_PK&RH_Category=' + res.RH_Category + '&MH_RH=0';
+                else {
+                    initObject = {
+                        WinID: 'HistoryWindow',
+                        onSelect: function (r) {
+                            location.href = '/Flight/PrintMap?FC_PK=@ViewBag.FC_PK&RH_Category=&MH_RH=' + r.RH_PK;
+                        }
+                    };
+                    $('#HistoryWindow').window({
+                        title: 'Регламенты'
+                    });
+                    $('#HistoryWindow').window('open');
+                    $('#HistoryWindow').window('refresh', '/WebFinder/OKCancel?IdDeclare=1322&parent=initObject&RH=' + res.RH_PK);
+                }
+
+
+        }
+
+        function onClickRowEdit(row)
+        {
+            
+            if (editingId != row.QD_PK) {
+                if (editingId != -1)
+                    $('#OrderD').treegrid('endEdit', editingId);
+                if (row.QD_PK.indexOf("00000000") > -1
+                    | (FlightRecord.O_FC_flState!='План' & row._parentId!='00000000-0000-0000-0000-000000000003')
+                    ) {
+                    editingId = '-1';
+                    return;
+                }
+                else {
+                    editingId = row.QD_PK;
+                    $('#OrderD').treegrid('beginEdit', editingId);
+                }
+            }
+        }
+
+
+        function onEdit(index, row, changes)
+        {
+            var d = $('#OrderD').treegrid('getChanges');
+            if (d.length > 0)
+                FlagEdit();
+        }
+
+        function showHistory(IdDeclare) {
+            var node = $('#FC').treegrid('getSelected');
+            if (node) {
+                $('#HistoryWindow').window({
+                    title: node.FieldCaption
+                });
+                $('#HistoryWindow').window('open');
+                $('#HistoryWindow').window('refresh', '/WebFinder?IdDeclare=' + IdDeclare + '&FC_PK=@ViewBag.FC_PK&FC_Field=' + node.FieldName);
+            }
+        }
+
+
+        function showOrderHistory() {
+            var node = $('#OrderD').treegrid('getSelected');
+            if (node) {
+                $('#HistoryWindow').window({
+                    title: node.Caption
+                });
+                $('#HistoryWindow').window('open');
+                $('#HistoryWindow').window('refresh', '/WebFinder?IdDeclare=201&QD_PK=' + node.QD_PK);
+            }
+        }
+
+        function showOrderHistoryALL() {
+
+                $('#HistoryWindow').window({
+                    title: 'Полная история изменений'
+                });
+                $('#HistoryWindow').window('open');
+                $('#HistoryWindow').window('refresh', '/WebFinder?IdDeclare=1222&FC_PK=@ViewBag.FC_PK&SV_CATEGORY=-1');
+       
+        }
+
+        function deleteFile() {
+            var row = $('#Files').datagrid('getSelected');
+            if (row)
+                $.messager.confirm("Файлы", 'Удалить файл из базы?', function (r) {
+                    if (r) {
+                        $.post('/Flight/deleteFile', { LD_PK: row.LD_PK },
+                        function (data) {
+                            if (data == "OK")
+                            {
+                                var rowindex = $('#Files').datagrid('getRowIndex', row);
+                                $('#Files').datagrid('deleteRow', rowindex);
+                            }
+                            else
+                                $.messager.alert('Ошибка', data, 'error');
+                        });
+                }
+                });
+
+        }
+
+
+        function Reload() {
+            if (FlightRecord.O_FC_flState != 'План')
+                return;
+            $.messager.confirm("Карточка рейсов", 'Очистить текущий список работ?', function (r) {
+                if (r) {
+                    $.post('/Flight/Reload', { FC_PK: '@ViewBag.FC_PK' }, 
+                        function (data) {
+                            if (data == "OK")
+                                location.reload();
+                            else
+                                $.messager.alert('Ошибка', data, 'error');
+                        });
+                }
+            });
+        }
+//=================================================================================================================================
+        var InitObject;
+
+        var FC_Load = function (row, data) {
+            if (FlightRecord.O_FC_flState != 'План')
+                return;
+           
+
+            $('#FC_Customer').textbox({
+                icons: [
+                    {
+                        iconCls:'icon-search',
+                        handler: showCustomer
+                    }]
+            });
+
+            $('#FC_ListService').textbox({
+                icons: [
+                    {
+                        iconCls: 'icon-search',
+                        handler: showListService
+                    }]
+            });
+
+            $('#FC_alCodeICAO').textbox({
+                icons: [
+                    {
+                        iconCls: 'icon-search',
+                        handler: showalCodeICAO
+                    }]
+            });
+
+            $('#FC_ACRegAODB').textbox({
+                icons: [
+                    {
+                        iconCls: 'icon-search',
+                        handler: showACRegAODB
+                    }]
+            });
+
+            $('#FC_OriginAODB').textbox({
+                icons: [
+                    {
+                        iconCls: 'icon-search',
+                        handler: showOriginAODB
+                    }]
+            });
+
+            $('#FC_DestAODB').textbox({
+                icons: [
+                    {
+                        iconCls: 'icon-search',
+                        handler: showDestAODB
+                    }]
+            });
+
+            $('#FC_Parent').textbox({
+                icons: [
+                     {
+                         iconCls: 'icon-clear',
+                         handler: clearParent
+                     },
+                    {
+                        iconCls: 'icon-search',
+                        handler: showParent
+                    }]
+            });
+
+            $('#FC_RelatFlight').textbox({
+                icons: [
+                    {
+                        iconCls: 'icon-clear',
+                        handler: clearRelatFlight
+                    },
+                    {
+                        iconCls: 'icon-search',
+                        handler: showRelatFlight
+                    }]
+            });
+
+            $('#FC_SpecCond').textbox({
+                onChange: function (newValue, oldValue) {
+                    FlightRecord.FC_SpecCond = newValue;
+                    FlagEdit();
+                }
+            });
+
+            $('#FC_DelayCodeFin').textbox({
+                onChange: function (newValue, oldValue) {
+                    FlightRecord.FC_DelayCodeFin = newValue;
+                    FlagEdit();
+                }
+            });
+
+            $('#FC_DelayMinute').numberbox({
+                onChange: function (newValue, oldValue) {
+                    FlightRecord.FC_DelayMinute = newValue;
+                    FlagEdit();
+                }
+            });
+
+        }
+
+        var showCustomer = function (e) {
+            initObject = {
+                WinID: 'HistoryWindow',
+                onSelect: function (r) {
+                    $(e.data.target).textbox('setValue', r.Disp);
+                    FlightRecord.FC_CU = r.AL_PK;
+                    FlagEdit();
+                }
+            };
+            $('#HistoryWindow').window({
+                title: 'Заказчики'
+            });
+            $('#HistoryWindow').window('open');
+            $('#HistoryWindow').window('refresh', '/WebFinder/OKCancel?IdDeclare=136&parent=initObject');
+        }
+        var showListService = function (e) {
+            initObject = {
+                WinID: 'HistoryWindow',
+                onSelect: function (r) {
+                    $(e.data.target).textbox('setValue', r.Disp);
+                    FlightRecord.FC_LS = r.AL_PK;
+                    FlagEdit();
+                }
+            };
+            $('#HistoryWindow').window({
+                title: 'Набор услуг'
+            });
+            $('#HistoryWindow').window('open');
+            $('#HistoryWindow').window('refresh', '/WebFinder/OKCancel?IdDeclare=136&parent=initObject');
+        }
+
+        var showalCodeICAO = function (e) {
+            initObject = {
+                WinID: 'HistoryWindow',
+                onSelect: function (r) {
+                    $(e.data.target).textbox('setValue', r.Disp);
+                    FlightRecord.FC_AL = r.AL_PK;
+                    FlagEdit();
+                }
+            };
+            $('#HistoryWindow').window({
+                title: 'Авиакомпании'
+            });
+            $('#HistoryWindow').window('open');
+            $('#HistoryWindow').window('refresh', '/WebFinder/OKCancel?IdDeclare=136&parent=initObject');
+        }
+
+
+        var showACRegAODB = function (e) {
+            initObject = {
+                WinID: 'HistoryWindow',
+                onSelect: function (r) {
+                    $(e.data.target).textbox('setValue', r.Disp);
+                    FlightRecord.FC_AR = r.AR_PK;
+                    FlagEdit();
+                }
+            };
+            $('#HistoryWindow').window({
+                title: 'Номера ВС'
+            });
+            $('#HistoryWindow').window('open');
+            $('#HistoryWindow').window('refresh', '/WebFinder/OKCancel?IdDeclare=138&parent=initObject');
+        }
+
+        var showOriginAODB = function (e) {
+            initObject = {
+                WinID: 'HistoryWindow',
+                onSelect: function (r) {
+                    $(e.data.target).textbox('setValue', r.Disp);
+                    FlightRecord.FC_AP_Orig = r.AP_PK;
+                    FlagEdit();
+                }
+            };
+            $('#HistoryWindow').window({
+                title: 'Аэропорты'
+            });
+            $('#HistoryWindow').window('open');
+            $('#HistoryWindow').window('refresh', '/WebFinder/OKCancel?IdDeclare=137&parent=initObject');
+        }
+
+        var showDestAODB = function (e) {
+            initObject = {
+                WinID: 'HistoryWindow',
+                onSelect: function (r) {
+                    $(e.data.target).textbox('setValue', r.Disp);
+                    FlightRecord.FC_AP_Dest = r.AP_PK;
+                    FlagEdit();
+                }
+            };
+            $('#HistoryWindow').window({
+                title: 'Аэропорты'
+            });
+            $('#HistoryWindow').window('open');
+            $('#HistoryWindow').window('refresh', '/WebFinder/OKCancel?IdDeclare=137&parent=initObject');
+        }
+
+
+        var showParent = function (e) {
+            initObject = {
+                WinID: 'HistoryWindow',
+                onSelect: function (r) {
+                    $(e.data.target).textbox('setValue', r.AD_FlNumber);
+                    FlightRecord.FC_Parent = r.AD_PK;
+                    FlagEdit();
+                }
+            };
+            $('#HistoryWindow').window({
+                title: 'Связанный рейс'
+            });
+            $('#HistoryWindow').window('open');
+            if (FlightRecord.FC_flDirection == 'Вылет')
+                $('#HistoryWindow').window('refresh', '/WebFinder/OKCancel?IdDeclare=133&parent=initObject&AD_Date=' + FlightRecord.FC_Date);
+            else
+                $('#HistoryWindow').window('refresh', '/WebFinder/OKCancel?IdDeclare=132&parent=initObject&AD_Date=' + FlightRecord.FC_Date);
+        }
+
+        var showRelatFlight = function (e) {
+            initObject = {
+                WinID: 'HistoryWindow',
+                onSelect: function (r) {
+                    $(e.data.target).textbox('setValue', r.AD_FlNumber);
+                    FlightRecord.FC_RelatFlight = r.AD_PK;
+                    FlagEdit();
+                }
+            };
+            $('#HistoryWindow').window({
+                title: 'Вылетной рейс'
+            });
+            $('#HistoryWindow').window('open');
+            $('#HistoryWindow').window('refresh', '/WebFinder/OKCancel?IdDeclare=133&parent=initObject&AD_Date=' + FlightRecord.FC_Date);
+            
+        }
+
+        var clearParent = function (e) {
+                    $(e.data.target).textbox('setValue', '');
+                    FlightRecord.FC_Parent = '00000000-0000-0000-0000-000000000000';
+                    FlagEdit();
+            
+        };
+
+        var clearRelatFlight = function (e) {
+            $(e.data.target).textbox('setValue', '');
+            FlightRecord.FC_RelatFlight = '00000000-0000-0000-0000-000000000000';
+            FlagEdit();
+
+        };
+        
+
+//====================================================================================================================================
+        function FC_onContextMenu(e, row) {
+            if (row)
+                if (row.FieldName.indexOf("group") == -1) {
+                e.preventDefault();
+                $(this).treegrid('select', row.FieldName);
+                $('#HistoryMenu').menu('show', {
+                    left: e.pageX,
+                    top: e.pageY
+                });
+            }
+        }
+
+
+        function Order_onContextMenu(e, row) {
+            if (row)
+                if (row.QD_PK.indexOf("00000000") == -1) {
+                    onClickRowEdit(row);
+                    e.preventDefault();
+                    $(this).treegrid('select', row.QD_PK);
+                    $('#OrderHistoryMenu').menu('show', {
+                        left: e.pageX,
+                        top: e.pageY
+                    });
+                }
+        }
+
+
+        function format_1(value, row) {
+            var res = value;
+
+            if (row.FieldName == "FC_flState")
+                res = '@(ViewBag.FC_flState)';
+            if (FlightRecord.O_FC_flState == 'План') {
+                if (row.FieldName == "FC_Cancel")
+                    res = '@(ViewBag.FC_Cancel)';
+                if (row.FieldName == "FC_needHandle")
+                    res = '@(ViewBag.FC_needHandle)';
+                if (row.FieldName == "FC_flCategory")
+                    res = '@(ViewBag.FC_flCategory)';
+                if (row.FieldName == "FC_flType")
+                    res = '@(ViewBag.FC_flType)';
+                if (row.FieldName == "FCRM")
+                    res = '@(ViewBag.FC_RM)';
+
+            
+                if (row.FieldName == "FC_Customer" | row.FieldName == "FC_ListService" | row.FieldName == "FC_alCodeICAO"
+                    | row.FieldName == "FC_alCodeICAO" | row.FieldName == "FC_ACRegAODB" | row.FieldName == "FC_OriginAODB" 
+                    | row.FieldName == "FC_DestAODB" | row.FieldName == "FC_SpecCond" | row.FieldName == "FC_DelayCodeFin" | row.FieldName == "FC_DelayMinute"
+                    | row.FieldName == "FC_Parent"
+                    )
+                    res = '<input id="' + row.FieldName + '" style="width:100%" value=\'' + value + '\'/>';
+
+                if (FlightRecord.FC_flDirection == 'Прилет' & row.FieldName == "FC_RelatFlight")
+                    res = '<input id="' + row.FieldName + '" style="width:100%" value=\'' + value + '\'/>';
+
+            }
+            return res;
+        }
+
+        function format_2(value, row)
+        {
+            var res = value;
+            if (row.FieldName.indexOf("group") > -1)
+                res = '<div style="font-weight:bold">' + value + '</div>';
+            return res;
+        }
+
+        function format_3(value, row) {
+            var res = value;
+            if (row.QD_PK.indexOf("00000000") > -1)
+                res = '<div style="font-weight:bold">' + value + '</div>';
+            return res;
+        }
+        
+        function format_4(value, row) {
+            var res = value;
+            if (row.SV_IsRequired == "1" & row.QD_isPosted == "0")
+                res = '<div style="background-color:coral">' + value + '</div>';
+            return res;
+        }
+
+           
+       var onDblFile = function (rowIndex, rowData) {
+                location.href = "/Flight/getFile?LD_PK=" + rowData.LD_PK + "&QD_SQTY=" + rowData.QD_SQTY;
+            }
+       
+
+        
+        var onDblOrderD =  function (row) {
+                var cns = row.ClassName.split(".");
+                cn = cns[cns.length - 1];
+                if (cn != "UTGService") {
+                    if ($('#' + cn).window('options').title == '') {
+                        $('#' + cn).window({
+                            title: row.Caption,
+                            href: '/' + cn + '?FC_PK=@ViewBag.FC_PK&QD_PK=' + row.QD_PK + '&k=' + Math.random()
+                        });
+                        $('#' + cn).window('open');
+                        //$('#' + cn).window('refresh', '/' + cn + '?FC_PK=@ViewBag.FC_PK&QD_PK=' + row.QD_PK + '&k=' + Math.random());
+                    } else {
+                        $('#' + cn).window('open');
+                    }
+                    
+                }
+            }
+        
+        
+        //UTGCargoPost
+        
+    </script>
+</body>
+    
+</html>

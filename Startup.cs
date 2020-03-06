@@ -22,7 +22,7 @@ namespace netbu {
             services.AddAuthentication (CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie (options => //CookieAuthenticationOptions
                     {
-                        options.LoginPath = new Microsoft.AspNetCore.Http.PathString ("/Access.html");
+                        options.LoginPath = new Microsoft.AspNetCore.Http.PathString ("/Home/Login");
                         //options.SlidingExpiration = true;
                         options.ExpireTimeSpan = TimeSpan.FromDays(30);
 
@@ -43,7 +43,7 @@ namespace netbu {
                 app.UseDeveloperExceptionPage ();
             }
             app.UseCors (builder => builder.AllowAnyOrigin ().AllowAnyHeader ().AllowAnyMethod ());
-            app.UseDefaultFiles ();
+            //app.UseDefaultFiles ();
             app.UseStaticFiles ();
             /* 
             string docfiles = Program.AppConfig["docfiles"];

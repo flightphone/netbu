@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
 using Microsoft.Extensions.Logging;
 using System.Net;
+using netbu.Models;
 
 namespace netbu
 {
@@ -52,6 +53,8 @@ namespace netbu
       
         private static void StartMethod()
         {
+            
+            DBClient.CnStr = Program.AppConfig["mscns"];
             //Мапим диск
             try
             {

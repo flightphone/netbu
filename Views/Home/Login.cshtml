@@ -1,0 +1,146 @@
+﻿@model netbu.Models.DBClient
+
+@{
+    Layout = null;
+}
+
+
+
+<html lang="ru">
+  <head>
+  <meta charset="utf-8">
+  <meta content="width=200, initial-scale=1" name="viewport">
+  
+  <title>Вход – uSmart Аккаунты</title>
+  
+  <style>
+  h1, h2 {
+  -webkit-animation-duration: 0.1s;
+  -webkit-animation-name: fontfix;
+  -webkit-animation-iteration-count: 1;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-delay: 0;
+  }
+    
+  </style>
+
+<style>
+  html, body {
+  font-family: Arial, sans-serif;
+  background: #fff;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  position: absolute;
+  height: 100%;
+  min-width: 100%;
+  font-size: 13px;
+  color: #404040;
+  direction: ltr;
+  -webkit-text-size-adjust: none;
+  }
+  button,
+  input[type=button],
+  input[type=submit],
+  input[type=text],
+  input[type=password] {
+  font-family: Arial, sans-serif;
+  height: 34px;
+  font-size: 16px;
+  }
+  
+  .banner {
+  text-align: center;
+  }
+  .card {
+  background-color: #f7f7f7;
+  padding: 20px 25px 30px;
+  margin: 0 auto 25px;
+  width: 304px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  }
+  
+  .main {
+  padding-bottom: 100px;
+  } 
+  
+.content {
+  padding: 0 44px;
+  }
+
+
+
+
+/* For modern browsers */
+  .clearfix:before,
+  .clearfix:after {
+  content: "";
+  display: table;
+  }
+  .clearfix:after {
+  clear: both;
+  }
+  /* For IE 6/7 (trigger hasLayout) */
+  .clearfix {
+  zoom:1;
+  }
+
+
+
+ .signin-card {
+  width: 274px;
+  padding: 40px 40px;
+  }
+  .signin-card .profile-img {
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 10px;
+  display: block;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  }
+ 
+  .signin-card input[type=email],
+  .signin-card input[type=password],
+  .signin-card input[type=text],
+  .signin-card input[type=submit] {
+  width: 100%;
+  display: block;
+  margin-bottom: 10px;
+  z-index: 1;
+  position: relative;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  }
+
+
+</style>
+  </head>
+  <body>
+  <div class="banner">
+  <h1>Вход в систему uSmart</h1>
+  </div>
+  <div  class="main content clearfix">
+
+<div class="card signin-card">
+  <div id="cc_iframe_parent"></div>
+
+    <div>
+        
+        @using(Html.BeginForm()) {
+            @Html.ValidationSummary(true)
+            @Html.EditorForModel()
+            <p><input type="submit" value="Войти" class="rc-button rc-button-submit" /></p>
+        }
+    </div>
+</div>
+</div>
+</body>
+</html>

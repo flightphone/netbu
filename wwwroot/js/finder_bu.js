@@ -211,26 +211,28 @@ var app = {
             fit: true,
             href: 'content.html',
             onLoad: function () {
-                //app.init();
+                app.init();
             }
 
         });
     },
     init: function () {
 
-        $('#winlogon').window('close');
-        this.account = $('#account').val();
-        this.password = $('#password').val();
+        //$('#winlogon').window('close');
+        this.account = ''; //$('#account').val();
+        this.password = ''; //$('#password').val();
 
 
         $('#tree').tree({
             fit: true,
             url: 'ustore/gettree',
             method: 'post',
+            /*
             queryParams: {
                 account: this.account,
                 password: this.password
             },
+            */
             onSelect: this.treeSelect,
             onLoadSuccess: function (node, data) {
                 $.post('/pg/runsql', {

@@ -29,12 +29,16 @@ namespace netbu.Controllers
             try
             {
                 String sql = "p_cuno_update_usd";
+                if (cur=="rur")
+                    sql = "p_cuno_update_rur";
                 SqlDataAdapter da = new SqlDataAdapter(sql, Program.AppConfig["mscns"]);
                 da.SelectCommand.CommandType = CommandType.StoredProcedure;
                 DataTable head = new DataTable();
                 da.Fill(head);
 
                 sql = "select * from v_cuno_file_usd";
+                if (cur=="rur")
+                    sql = "select * from v_cuno_file_rur";
                 da = new SqlDataAdapter(sql, Program.AppConfig["mscns"]);
                 DataTable body = new DataTable();
                 da.Fill(body);
@@ -56,8 +60,10 @@ namespace netbu.Controllers
                 }
                 else
                 {
-                    string path = Program.AppConfig["cuno_usd_files"] + @"\" 
-                    + ((DateTime)head.Rows[0][0]).ToString("UTG_yyyyMMddHHmmss") + ".txt";
+                    string path = Program.AppConfig["cuno_usd_files"] + @"\"; 
+                    if (cur=="rur")
+                        path = Program.AppConfig["cuno_rur_files"] + @"\"; 
+                    path = path + ((DateTime)head.Rows[0][0]).ToString("UTG_yyyyMMddHHmmss") + ".txt";
                     System.IO.File.WriteAllText(path, resFile, Encoding.GetEncoding(1251));
                 }
             }

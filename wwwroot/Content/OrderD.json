@@ -1,0 +1,5 @@
+
+	{"QD_PK":"00000000-0000-0000-0000-000000000000","NN":"", "Caption":"Список работ","QD_QTY":"","QD_Comment":"","QD_isPosted":"","iconCls":"icon-blank"},
+	{"QD_PK":"00000000-0000-0000-0000-000000000001","NN":"", "Caption":"Необязательные услуги","QD_QTY":"","QD_Comment":"","QD_isPosted":"","iconCls":"icon-blank","state":"closed"},
+	{"QD_PK":"00000000-0000-0000-0000-000000000002","NN":"", "Caption":"Справочная информация","QD_QTY":"","QD_Comment":"","QD_isPosted":"","iconCls":"icon-blank","state":"closed"},
+	{"QD_PK":"00000000-0000-0000-0000-000000000003","NN":"", "Caption":"Дополнительная информация","QD_QTY":"","QD_Comment":"","QD_isPosted":"","iconCls":"icon-blank","state":"closed"}
