@@ -863,7 +863,7 @@ namespace netbu.Models
 
                 result = "[" + sb.ToString() + "]";
             }
-            catch (Exception e)
+            catch 
             {; }
             return result;
 
