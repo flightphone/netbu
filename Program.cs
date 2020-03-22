@@ -61,7 +61,6 @@ namespace netbu
                 System.Diagnostics.Process batch = new System.Diagnostics.Process();
                 batch.StartInfo.FileName = @"wwwroot\Run\disk.cmd";
                 batch.Start();
-              
             }
             catch
             {; }
