@@ -23,7 +23,7 @@ namespace netbu.Controllers
     public class HomeController : Controller
     {
 
-         [Authorize]
+        [Authorize]
         public ActionResult Index(string id)
         {
             ViewBag.id = id;
@@ -31,7 +31,59 @@ namespace netbu.Controllers
             return View();
         }
 
-        [Route("ustore/tree.css")]
+    #region secret
+        [Route("ustore/gettree")]
+        [Authorize]
+        public JsonResult gettree()
+        {
+            try
+            {
+                /*
+                string account = Request.Form["account"];
+                var password = Request.Form["password"];
+                var tu = new treeutil();
+
+                if (!tu.checkAccess(account, password))
+                {
+                    return Json(new object[] { new { text = "Access denied." } });
+                }
+                await Authenticate(account); // аутентификация
+                */
+
+                string account = User.Identity.Name;
+                var tu = new treeutil();
+
+                var data = new DataTable();
+                var cnstr = Program.isPostgres ? Program.AppConfig["cns"] : Program.AppConfig["mscns"]; ;
+                var sql = "select a.* , fn_getmenuimageid(a.caption) idimage from fn_mainmenu('ALL', @Account) a order by a.ordmenu, idmenu";
+                if (!Program.isPostgres)
+                    sql = "select a.* , dbo.fn_getmenuimageid(a.caption) idimage from fn_mainmenu('WEB', @Account) a order by a.ordmenu, idmenu";
+                if (Program.isPostgres)
+                {
+                    var da = new NpgsqlDataAdapter(sql, cnstr);
+                    da.SelectCommand.Parameters.AddWithValue("@Account", account);
+                    da.Fill(data);
+                }
+                else
+                {
+                    var da = new SqlDataAdapter(sql, cnstr);
+                    da.SelectCommand.Parameters.AddWithValue("@Account", account);
+                    da.Fill(data);
+                }
+
+                var rootItem = new treeItem("root");
+                rootItem.children = new List<object>();
+
+                tu.CreateItems("Root/", rootItem, data);
+                return Json(rootItem.children);
+            }
+            catch (Exception e)
+            {
+                return Json(new object[] { new { text = e.Message } });
+            }
+        }
+
+        [Route("/ustore/tree.css")]
         public string treecss()
         {
             try
@@ -65,150 +117,6 @@ namespace netbu.Controllers
             }
         }
 
-        private async Task Authenticate(string userName)
-        {
-           
-            // создаем один claim
-            var claims = new List<Claim> {
-                new Claim (ClaimsIdentity.DefaultNameClaimType, userName)
-            };
-            // создаем объект ClaimsIdentity
-            ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-            // установка аутентификационных куки
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-            new ClaimsPrincipal(id),
-            new AuthenticationProperties  //запоминает пользователя
-            {
-                IsPersistent = true
-            });
-        }
-
-        public async Task<ActionResult> Logout()
-        {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return Redirect("~/Home/Login");
-        }
-        public ActionResult Login()
-        {
-            DBClient dc = new DBClient();
-            return View(dc);
-        }
-
-        [HttpPost]
-        public async Task<ActionResult> Login(DBClient model, string returnUrl)
-        {
-            if (ModelState.IsValid)
-            {
-                DBClient dc = new DBClient();
-                if (dc.CheckLogon(model.UserName, model.Password))
-                {
-                    await Authenticate(model.UserName); // аутентификация
-                    return Redirect(returnUrl ?? Url.Action("Index", "Home"));
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Неправильный логин или пароль");
-                    return View();
-                }
-            }
-            else
-            {
-                return View();
-            }
-
-        }
-
-        [Route("ustore/gettree")]
-        [Authorize]
-        public JsonResult gettree()
-        {
-            try
-            {
-                /*
-                string account = Request.Form["account"];
-                var password = Request.Form["password"];
-                var tu = new treeutil();
-
-                if (!tu.checkAccess(account, password))
-                {
-                    return Json(new object[] { new { text = "Access denied." } });
-                }
-                await Authenticate(account); // аутентификация
-                */
-
-                string account = User.Identity.Name;
-                var tu = new treeutil();
-                
-                var data = new DataTable();
-                var cnstr = Program.isPostgres ? Program.AppConfig["cns"] : Program.AppConfig["mscns"]; ;
-                var sql = "select a.* , fn_getmenuimageid(a.caption) idimage from fn_mainmenu('ALL', @Account) a order by a.ordmenu, idmenu";
-                if (!Program.isPostgres)
-                    sql = "select a.* , dbo.fn_getmenuimageid(a.caption) idimage from fn_mainmenu('WEB', @Account) a order by a.ordmenu, idmenu";
-                if (Program.isPostgres)
-                {
-                    var da = new NpgsqlDataAdapter(sql, cnstr);
-                    da.SelectCommand.Parameters.AddWithValue("@Account", account);
-                    da.Fill(data);
-                }
-                else
-                {
-                    var da = new SqlDataAdapter(sql, cnstr);
-                    da.SelectCommand.Parameters.AddWithValue("@Account", account);
-                    da.Fill(data);
-                }
-
-                var rootItem = new treeItem("root");
-                rootItem.children = new List<object>();
-
-                tu.CreateItems("Root/", rootItem, data);
-                return Json(rootItem.children);
-            }
-            catch (Exception e)
-            {
-                return Json(new object[] { new { text = e.Message } });
-            }
-        }
-
-
-        public async Task<ActionResult> opendir(string cnt_sid, string id, string id64)
-        {
-            SqlDataAdapter da = new SqlDataAdapter("p_cntsession", Program.AppConfig["mscns"]);
-            da.SelectCommand.CommandType = CommandType.StoredProcedure;
-            da.SelectCommand.Parameters.AddWithValue("@cnt_sid", cnt_sid);
-            DataTable res = new DataTable();
-            da.Fill(res);
-            if (res.Rows.Count == 0)
-            {
-                return Redirect("~/Docfiles/dir?id=" + id + "&id64=" + id64);
-            }
-            else
-            {
-                string account = res.Rows[0]["username"].ToString();
-                await Authenticate(account); // аутентификация
-                return Redirect("~/Docfiles/dir?id=" + id + "&id64=" + id64);
-            }
-        }
-
-
-
-        public async Task<ActionResult> openсomment(string cnt_sid, int ag_id, string ag_type)
-        {
-            SqlDataAdapter da = new SqlDataAdapter("p_cntsession", Program.AppConfig["mscns"]);
-            da.SelectCommand.CommandType = CommandType.StoredProcedure;
-            da.SelectCommand.Parameters.AddWithValue("@cnt_sid", cnt_sid);
-            DataTable res = new DataTable();
-            da.Fill(res);
-            if (res.Rows.Count == 0)
-            {
-                return Redirect("~/Access.html?ReturnUrl=/Docfiles/comments?ag_id=" + ag_id.ToString() + "&ag_type=" + ag_type);
-            }
-            else
-            {
-                string account = res.Rows[0]["username"].ToString();
-                await Authenticate(account); // аутентификация
-                return Redirect("~/Docfiles/comments?ag_id=" + ag_id.ToString() + "&ag_type=" + ag_type);
-            }
-        }
 
         [Authorize]
         [Route("/pg/runsql")]
@@ -536,6 +444,103 @@ namespace netbu.Controllers
             }
 
         }
+
+    #endregion
+
+
+        private async Task Authenticate(string userName)
+        {
+
+            // создаем один claim
+            var claims = new List<Claim> {
+                new Claim (ClaimsIdentity.DefaultNameClaimType, userName)
+            };
+            // создаем объект ClaimsIdentity
+            ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
+            // установка аутентификационных куки
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+            new ClaimsPrincipal(id),
+            new AuthenticationProperties  //запоминает пользователя
+            {
+                IsPersistent = true
+            });
+        }
+
+        public async Task<ActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return Redirect("~/Home/Login");
+        }
+        public ActionResult Login()
+        {
+            DBClient dc = new DBClient();
+            return View(dc);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Login(DBClient model, string returnUrl)
+        {
+            if (ModelState.IsValid)
+            {
+                DBClient dc = new DBClient();
+                if (dc.CheckLogon(model.UserName, model.Password))
+                {
+                    await Authenticate(model.UserName); // аутентификация
+                    return Redirect(returnUrl ?? Url.Action("Index", "Home"));
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Неправильный логин или пароль");
+                    return View();
+                }
+            }
+            else
+            {
+                return View();
+            }
+
+        }
+
+        public async Task<ActionResult> opendir(string cnt_sid, string id, string id64)
+        {
+            SqlDataAdapter da = new SqlDataAdapter("p_cntsession", Program.AppConfig["mscns"]);
+            da.SelectCommand.CommandType = CommandType.StoredProcedure;
+            da.SelectCommand.Parameters.AddWithValue("@cnt_sid", cnt_sid);
+            DataTable res = new DataTable();
+            da.Fill(res);
+            if (res.Rows.Count == 0)
+            {
+                return Redirect("~/Docfiles/dir?id=" + id + "&id64=" + id64);
+            }
+            else
+            {
+                string account = res.Rows[0]["username"].ToString();
+                await Authenticate(account); // аутентификация
+                return Redirect("~/Docfiles/dir?id=" + id + "&id64=" + id64);
+            }
+        }
+
+
+
+        public async Task<ActionResult> openсomment(string cnt_sid, int ag_id, string ag_type)
+        {
+            SqlDataAdapter da = new SqlDataAdapter("p_cntsession", Program.AppConfig["mscns"]);
+            da.SelectCommand.CommandType = CommandType.StoredProcedure;
+            da.SelectCommand.Parameters.AddWithValue("@cnt_sid", cnt_sid);
+            DataTable res = new DataTable();
+            da.Fill(res);
+            if (res.Rows.Count == 0)
+            {
+                return Redirect("~/Access.html?ReturnUrl=/Docfiles/comments?ag_id=" + ag_id.ToString() + "&ag_type=" + ag_type);
+            }
+            else
+            {
+                string account = res.Rows[0]["username"].ToString();
+                await Authenticate(account); // аутентификация
+                return Redirect("~/Docfiles/comments?ag_id=" + ag_id.ToString() + "&ag_type=" + ag_type);
+            }
+        }
+
 
         [Route("/usmart/getcntinfo/{inn}")]
         public ActionResult getcntinfo(string inn)
