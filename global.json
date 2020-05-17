@@ -18,6 +18,7 @@
   "cuno_rur_files":"C:\\_UTG\\cuno\\rur",
   "ldap_server":"84.201.148.147",
   "ldap_root":"dc=example,dc=org",
-  "ldap_port":"389"
+  "ldap_port":"389",
+  "domain": ""
 
 }

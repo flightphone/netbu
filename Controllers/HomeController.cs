@@ -488,7 +488,8 @@ namespace netbu.Controllers
                     string ldap_root = Program.AppConfig["ldap_root"];
                     int ldap_port = int.Parse(Program.AppConfig["ldap_port"]);
                     string ldap_user = "cn=" + model.UserName + "," + ldap_root;
-
+                    if (!string.IsNullOrEmpty(Program.AppConfig["domain"]))
+                        ldap_user = Program.AppConfig["domain"] + @"\" + model.UserName;
                     try
                     {
                         LdapConnection ldapConn = new LdapConnection();
