@@ -2,21 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.IO;
-using System.Net;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using netbu.Models;
 using Newtonsoft.Json;
 using Npgsql;
 using Microsoft.AspNetCore.Authorization;
-using suggestionscsharp;
+using Novell.Directory.Ldap;
 
 namespace netbu.Controllers
 {
@@ -31,7 +28,7 @@ namespace netbu.Controllers
             return View();
         }
 
-    #region secret
+        #region secret
         [Route("ustore/gettree")]
         [Authorize]
         public JsonResult gettree()
@@ -445,7 +442,7 @@ namespace netbu.Controllers
 
         }
 
-    #endregion
+        #endregion
 
 
         private async Task Authenticate(string userName)
@@ -483,7 +480,26 @@ namespace netbu.Controllers
             if (ModelState.IsValid)
             {
                 DBClient dc = new DBClient();
-                if (dc.CheckLogon(model.UserName, model.Password))
+                bool auth = dc.CheckLogon(model.UserName, model.Password);
+                if (!auth)
+                {
+                    //Пробуем через LDAP
+                    string ldap_server = Program.AppConfig["ldap_server"];
+                    string ldap_root = Program.AppConfig["ldap_root"];
+                    int ldap_port = int.Parse(Program.AppConfig["ldap_port"]);
+                    string ldap_user = "cn=" + model.UserName + "," + ldap_root;
+
+                    try
+                    {
+                        LdapConnection ldapConn = new LdapConnection();
+                        ldapConn.Connect(ldap_server, ldap_port);
+                        ldapConn.Bind(ldap_user, model.Password);
+                        auth = true;
+                    }
+                    catch
+                    {; }
+                }
+                if (auth)
                 {
                     await Authenticate(model.UserName); // аутентификация
                     return Redirect(returnUrl ?? Url.Action("Index", "Home"));
