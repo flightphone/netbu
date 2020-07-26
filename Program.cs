@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using System.Net;
 using netbu.Models;
+using WpfBu.Models;
 
 namespace netbu
 {
@@ -48,6 +49,13 @@ namespace netbu
         {
             
             DBClient.CnStr = Program.AppConfig["mscns"];
+            //Для React
+            MainObj.Account = "malkin";
+            MainObj.ConnectionString = DBClient.CnStr;
+            MainObj.IsPostgres = false;
+            
+
+
             //Мапим диск
             try
             {
