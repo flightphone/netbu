@@ -3,6 +3,7 @@ using WpfBu.Models;
 using System;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Text;
 
 namespace netbu.Controllers
 {
@@ -35,6 +36,23 @@ namespace netbu.Controllers
             {
                 return Json(new { Error = e.Message });
             }
+        }
+
+        public ActionResult CSV(string id, string Fc)
+        {
+            var F = new Finder();
+            F.Mode = "csv";
+            if (!string.IsNullOrEmpty(Fc))
+            {
+                List<FinderField> Fcols =JsonConvert.DeserializeObject<List<FinderField>>(Fc);
+                F.Fcols = Fcols;
+            }
+            F.start(id);
+            string s = F.ExportCSV();
+            string ctype = "application/octet-stream";
+            byte[] buf = Encoding.UTF8.GetBytes(s);
+                return File(buf, ctype, $"data_{id}.csv");
+            
         }
     }
 }

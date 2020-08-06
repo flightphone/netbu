@@ -200,7 +200,8 @@ namespace WpfBu.Models
 
             if (Fcols == null)
                 CreateColumns(paramvalue);
-            UpdateTab();
+            if (Mode!="csv")
+                UpdateTab();
             if (Mode == "new")
                 CreateEditor();
             //CreateMenu();
@@ -736,7 +737,7 @@ namespace WpfBu.Models
                 return s;
             });
 
-            var ords = Fcols.Where(f => f.SortOrder > 0).OrderBy(f => f.SortOrder).Select(f =>
+            var ords = Fcols.Where(f => f.SortOrder > 0 && f.Sort != "Нет").OrderBy(f => f.SortOrder).Select(f =>
             {
                 string s = "";
                 if (f.Sort == "По возрастанию")
@@ -773,57 +774,34 @@ namespace WpfBu.Models
 
         private string rwCSV(DataRow rw)
         {
-            string s = @"""" + rw[Fcols[0].FieldName].ToString().Replace(@"""", @"""""") + @"""";
-            for (int j = 1; j < Fcols.Count; j++)
+            return string.Join(";", Fcols.Select(f =>
             {
-                s += @";""" + rw[Fcols[j].FieldName].ToString().Replace(@"""", @"""""") + @"""";
-            }
-            return s;
+                return @"""" + rw[f.FieldName].ToString().Replace(@"""", @"""""") + @"""";
+            }));
         }
-        /*
-        public void ExportCSV()
+
+        public string ExportCSV()
         {
-            SaveFileDialog SD = new SaveFileDialog()
-            {
-                Filter = "Файлы csv|*.csv"
-            };
-            if (!((bool)SD.ShowDialog()))
-            {
-                return;
-            }
-            string FileName = SD.FileName;
+
             StringBuilder Res = new StringBuilder();
-            var cols = MainGrid.Columns.Select(f => {
-                return @"""" + f.Header.ToString().Replace(@"""", @"""""") + @"""";
-                });
+            var cols = Fcols.Select(f =>
+            {
+                return @"""" + f.FieldCaption.ToString().Replace(@"""", @"""""") + @"""";
+            });
 
             string s = string.Join(';', cols);
             Res.AppendLine(s);
 
-            if (!pagination)
+            DataTable data = UpdateCSV();
+            for (int i = 0; i < data.Rows.Count; i++)
             {
-                for (int i = 0; i < MainView.Count; i++)
-                {
-                    DataRow rw = MainView[i].Row;
-                    s = rwCSV(rw);
-                    Res.AppendLine(s);
-                }
+                DataRow rw = data.Rows[i];
+                s = rwCSV(rw);
+                Res.AppendLine(s);
             }
-            else
-            {
-                DataTable data = UpdateCSV();
-                for (int i = 0; i < data.Rows.Count; i++)
-                {
-                    DataRow rw = data.Rows[i];
-                    s = rwCSV(rw);
-                    Res.AppendLine(s);
-                }
-            }
-            File.WriteAllText(FileName, Res.ToString().Trim());
-            //System.Diagnostics.Process batch = new System.Diagnostics.Process();
-            //batch.StartInfo.FileName = FileName;
-            //batch.Start();
+            return Res.ToString();
+            
         }
-        */
+
     }
 }
