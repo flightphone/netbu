@@ -30,7 +30,7 @@ namespace netbu.Controllers
 
         #region secret
         [Route("ustore/gettree")]
-        [Authorize]
+        //[Authorize]
         public JsonResult gettree()
         {
             try
@@ -47,15 +47,15 @@ namespace netbu.Controllers
                 await Authenticate(account); // аутентификация
                 */
 
-                string account = User.Identity.Name;
-                //string account = "malkin";
+                //string account = User.Identity.Name;
+                string account = "malkin";
                 var tu = new treeutil();
 
                 var data = new DataTable();
                 var cnstr = Program.isPostgres ? Program.AppConfig["cns"] : Program.AppConfig["mscns"]; ;
                 var sql = "select a.* , fn_getmenuimageid(a.caption) idimage from fn_mainmenu('ALL', @Account) a order by a.ordmenu, idmenu";
                 if (!Program.isPostgres)
-                    sql = "select a.* , dbo.fn_getmenuimageid(a.caption) idimage from fn_mainmenu('WEB', @Account) a order by a.ordmenu, idmenu";
+                    sql = "select a.* , dbo.fn_getmenuimageid(a.caption) idimage from fn_mainmenu('ALL', @Account) a order by a.ordmenu, idmenu";
                 if (Program.isPostgres)
                 {
                     var da = new NpgsqlDataAdapter(sql, cnstr);

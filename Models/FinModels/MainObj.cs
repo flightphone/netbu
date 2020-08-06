@@ -4,9 +4,16 @@ using System.Text;
 using System.Data;
 using System.Data.SqlClient;
 using Npgsql;
+using System.Linq;
 
 namespace WpfBu.Models
 {
+    public class FinQuery
+    {
+        public string id {get; set;} 
+        public string mode {get; set;} 
+        public string page {get; set;}
+    }
     public class MainObj
     {
         public static string ConnectionString { get; set; }
@@ -18,6 +25,14 @@ namespace WpfBu.Models
 
     public class DBUtil
     {
+        public List<string> DataColumn(DataTable data)
+        {
+            List<string> res = new List<string>();
+            DataColumn[] a = new DataColumn[data.Columns.Count];
+            data.Columns.CopyTo(a, 0);
+            res.AddRange(a.Select((c) => c.ColumnName));
+            return res;
+        }
         public List<Dictionary<string, object>> DataToJson(DataTable res)
         {
             List<Dictionary<string, object>> rows = new List<Dictionary<string, object>>();
