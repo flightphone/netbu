@@ -9,7 +9,7 @@ namespace netbu.Controllers
 {
     public class ReactController : Controller
     {
-        public JsonResult FinderStart(string id, string mode, string page, string Fc)
+        public JsonResult FinderStart(string id, string mode, string page, string Fc, string TextParams, string SQLParams)
         {
             var F = new Finder();
             F.nrows = 30;
@@ -23,9 +23,19 @@ namespace netbu.Controllers
 
             if (!string.IsNullOrEmpty(Fc))
             {
-                List<FinderField> Fcols =JsonConvert.DeserializeObject<List<FinderField>>(Fc);
-                F.Fcols = Fcols;
+                F.Fcols = JsonConvert.DeserializeObject<List<FinderField>>(Fc);
             }
+
+            if (!string.IsNullOrEmpty(TextParams))
+            {
+                F.TextParams = JsonConvert.DeserializeObject<Dictionary<string, string>>(TextParams);
+            }
+
+            if (!string.IsNullOrEmpty(SQLParams))
+            {
+                F.SQLParams = JsonConvert.DeserializeObject<Dictionary<string, object>>(SQLParams);
+            }
+
 
             try
             {
@@ -38,7 +48,7 @@ namespace netbu.Controllers
             }
         }
 
-        public ActionResult CSV(string id, string Fc)
+        public ActionResult CSV(string id, string Fc, string TextParams, string SQLParams)
         {
             var F = new Finder();
             F.Mode = "csv";
@@ -47,6 +57,18 @@ namespace netbu.Controllers
                 List<FinderField> Fcols =JsonConvert.DeserializeObject<List<FinderField>>(Fc);
                 F.Fcols = Fcols;
             }
+
+            if (!string.IsNullOrEmpty(TextParams))
+            {
+                F.TextParams = JsonConvert.DeserializeObject<Dictionary<string, string>>(TextParams);
+            }
+
+            if (!string.IsNullOrEmpty(SQLParams))
+            {
+                F.SQLParams = JsonConvert.DeserializeObject<Dictionary<string, object>>(SQLParams);
+            }
+
+            
             F.start(id);
             string s = F.ExportCSV();
             string ctype = "application/octet-stream";
