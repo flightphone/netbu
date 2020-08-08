@@ -147,7 +147,7 @@ namespace WpfBu.Models
 
         public Editor ReferEdit { get; set; }
         #endregion
-
+        public string Account {get; set; }
         public override void start(object o)
         {
 
@@ -193,8 +193,8 @@ namespace WpfBu.Models
             if (DefaultValues == null)
                 DefaultValues = new Dictionary<string, object>();
 
-            DefaultValues.Add("audtuser", MainObj.Account);
-            DefaultValues.Add("last_change_user", MainObj.Account);
+            DefaultValues.Add("audtuser", Account);
+            DefaultValues.Add("last_change_user", Account);
 
 
 
@@ -562,7 +562,7 @@ namespace WpfBu.Models
         public DataTable UpdateCSV()
         {
             string PrepareSQL = SQLText;
-            PrepareSQL = PrepareSQL.Replace("[Account]", MainObj.Account);
+            PrepareSQL = PrepareSQL.Replace("[Account]", Account);
             if (TextParams != null)
                 foreach (string k in TextParams.Keys)
                 {
@@ -608,7 +608,7 @@ namespace WpfBu.Models
             */
 
             string PrepareSQL = SQLText;
-            PrepareSQL = PrepareSQL.Replace("[Account]", MainObj.Account);
+            PrepareSQL = PrepareSQL.Replace("[Account]", Account);
             if (TextParams != null)
                 foreach (string k in TextParams.Keys)
                 {

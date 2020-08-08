@@ -4,14 +4,19 @@ using System;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
 
 namespace netbu.Controllers
 {
+   //[Authorize]
     public class ReactController : Controller
     {
         public JsonResult FinderStart(string id, string mode, string page, string Fc, string TextParams, string SQLParams)
         {
             var F = new Finder();
+            //F.Account = User.Identity.Name;
+            F.Account = "malkin";
+
             F.nrows = 30;
             if (!string.IsNullOrEmpty(mode))
                 F.Mode = mode;
@@ -51,6 +56,9 @@ namespace netbu.Controllers
         public ActionResult CSV(string id, string Fc, string TextParams, string SQLParams)
         {
             var F = new Finder();
+            //F.Account = User.Identity.Name;
+            F.Account = "malkin";
+            
             F.Mode = "csv";
             if (!string.IsNullOrEmpty(Fc))
             {

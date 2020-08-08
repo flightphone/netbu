@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using netbu.Models;
+using WpfBu.Models;
 using Newtonsoft.Json;
 using Npgsql;
 using Microsoft.AspNetCore.Authorization;
@@ -25,6 +26,7 @@ namespace netbu.Controllers
         {
             ViewBag.id = id;
             ViewBag.account = User.Identity.Name;
+            //MainObj.Account = User.Identity.Name;
             return View();
         }
 
@@ -35,18 +37,7 @@ namespace netbu.Controllers
         {
             try
             {
-                /*
-                string account = Request.Form["account"];
-                var password = Request.Form["password"];
-                var tu = new treeutil();
-
-                if (!tu.checkAccess(account, password))
-                {
-                    return Json(new object[] { new { text = "Access denied." } });
-                }
-                await Authenticate(account); // аутентификация
-                */
-
+                
                 //string account = User.Identity.Name;
                 string account = "malkin";
                 var tu = new treeutil();
@@ -55,7 +46,7 @@ namespace netbu.Controllers
                 var cnstr = Program.isPostgres ? Program.AppConfig["cns"] : Program.AppConfig["mscns"]; ;
                 var sql = "select a.* , fn_getmenuimageid(a.caption) idimage from fn_mainmenu('ALL', @Account) a order by a.ordmenu, idmenu";
                 if (!Program.isPostgres)
-                    sql = "select a.* , dbo.fn_getmenuimageid(a.caption) idimage from fn_mainmenu('ALL', @Account) a order by a.ordmenu, idmenu";
+                    sql = "select a.* , dbo.fn_getmenuimageid(a.caption) idimage from fn_mainmenu('WEB', @Account) a order by a.ordmenu, idmenu";
                 if (Program.isPostgres)
                 {
                     var da = new NpgsqlDataAdapter(sql, cnstr);

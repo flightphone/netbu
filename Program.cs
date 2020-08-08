@@ -50,7 +50,6 @@ namespace netbu
             
             DBClient.CnStr = Program.AppConfig["mscns"];
             //Для React
-            MainObj.Account = "malkin";
             MainObj.ConnectionString = DBClient.CnStr;
             MainObj.IsPostgres = false;
             
