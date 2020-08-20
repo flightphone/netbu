@@ -13,7 +13,8 @@ namespace WpfBu.Models
         public string IdDeclare { get; set; }
         public string classname { get; set; }
         public Dictionary<string, string> fields { get; set; }
-        public string textField { get; set; }
+        public string keyField {get; set;}
+        public string valField { get; set; }
         public RootForm FindConrol { get; set; }
     }
     public class FinderField //: INotifyPropertyChanged

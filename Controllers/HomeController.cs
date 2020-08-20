@@ -21,7 +21,7 @@ namespace netbu.Controllers
     public class HomeController : Controller
     {
 
-        [Authorize]
+        //[Authorize]
         public ActionResult Index(string id)
         {
             ViewBag.id = id;

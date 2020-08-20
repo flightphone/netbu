@@ -254,10 +254,10 @@ namespace WpfBu.Models
                         fc = new Finder();
                         fc.OKFun = true;
                         if (ClassName == "Bureau.Finder")
-                            fc.nrows = 100;
+                            fc.nrows = 30;
                         else
                             fc.nrows = 7;
-
+                        fc.Account = ReferFinder.Account;    
                         fc.start(jr.IdDeclare);
                         /*
                         fc.MenuControl.ButOK.Tag = i;
@@ -290,6 +290,10 @@ namespace WpfBu.Models
 
                     if (ClassName == "Bureau.GridCombo")
                     {
+                        DataRow[] c = sysFieldMap.Select($"groupdec = '{GroupDec}' and keyfield = 1");
+                        jr.keyField = c[0]["srcfield"].ToString();
+                        jr.valField = c[0]["dstfield"].ToString();
+
                         /*
                         fe = new ComboBox()
                         {
