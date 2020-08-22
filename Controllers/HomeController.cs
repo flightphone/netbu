@@ -43,7 +43,7 @@ namespace netbu.Controllers
                 var tu = new treeutil();
 
                 var data = new DataTable();
-                var cnstr = Program.isPostgres ? Program.AppConfig["cns"] : Program.AppConfig["mscns"]; ;
+                var cnstr = Program.isPostgres ? Program.AppConfig["cns"] : Program.AppConfig["mscns"]; 
                 var sql = "select a.* , fn_getmenuimageid(a.caption) idimage from fn_mainmenu('ALL', @Account) a order by a.ordmenu, idmenu";
                 if (!Program.isPostgres)
                     sql = "select a.* , dbo.fn_getmenuimageid(a.caption) idimage from fn_mainmenu('WEB', @Account) a order by a.ordmenu, idmenu";

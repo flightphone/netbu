@@ -28,7 +28,7 @@ namespace netbu.Controllers
                 }
                 else
                 {
-                    if (fname == KeyF && string.IsNullOrEmpty(WorkRow[fname].ToString()))
+                    if (string.IsNullOrEmpty(WorkRow[fname].ToString()))
                     {
                         Param.Add(pname, DBNull.Value);
                     }
