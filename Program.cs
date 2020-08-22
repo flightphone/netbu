@@ -48,10 +48,11 @@ namespace netbu
         private static void StartMethod()
         {
             
-            DBClient.CnStr = Program.AppConfig["mscns"];
+            MainObj.IsPostgres = isPostgres;
+            DBClient.CnStr = (isPostgres) ? AppConfig["cns"] : AppConfig["mscns"];
             //Для React
             MainObj.ConnectionString = DBClient.CnStr;
-            MainObj.IsPostgres = false;
+            
             
 
 

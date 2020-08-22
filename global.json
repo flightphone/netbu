@@ -2,7 +2,7 @@
   "sdk": {
     "version": "2.1.402"
   },
-  "cns":"Host=localhost;Username=postgres;Password=aA12345678;Database=uFlights",
+  "cns":"Host=localhost;Username=postgres;Password=aA12345678;Database=uflights",
   "mscns": "data source=localhost\\SQLEXPRESS8;User ID=sa;Password=aA12345678;database=uFlights",
   "isP": "tsql",
   "olddadataurl": "https://suggestions.dadata.ru/suggestions/api/4_1/rs/findById/party",
