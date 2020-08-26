@@ -45,18 +45,7 @@ namespace netbu {
             app.UseCors (builder => builder.AllowAnyOrigin ().AllowAnyHeader ().AllowAnyMethod ());
             //app.UseDefaultFiles ();
             app.UseStaticFiles ();
-            /* 
-            string docfiles = Program.AppConfig["docfiles"];
-            app.UseStaticFiles (new StaticFileOptions {
-                FileProvider = new PhysicalFileProvider (docfiles),
-                    RequestPath = "/docfiles"
-            });
-
-            app.UseDirectoryBrowser (new DirectoryBrowserOptions {
-                FileProvider = new PhysicalFileProvider (docfiles),
-                    RequestPath = "/docfiles"
-            });
-            */
+           
             //Аутентификация
             app.UseAuthentication();
 
