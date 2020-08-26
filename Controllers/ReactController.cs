@@ -19,22 +19,35 @@ namespace netbu.Controllers
             var Param = new Dictionary<string, object>();
             foreach (string fname in WorkRow.Keys)
             {
-                string pname = "@_" + fname;
+                string pname;
                 string pval = WorkRow[fname].ToString();
                 DateTime dval;
-                if (DateTime.TryParse(pval, out dval))
+                if (!MainObj.IsPostgres)
                 {
-                    Param.Add(pname, dval);
-                }
-                else
-                {
-                    if (string.IsNullOrEmpty(WorkRow[fname].ToString()))
+                    pname = "@_" + fname;
+                    if (DateTime.TryParse(pval, out dval))
                     {
-                        Param.Add(pname, DBNull.Value);
+                        Param.Add(pname, dval);
                     }
                     else
                     {
-                        Param.Add(pname, WorkRow[fname]);
+                        if (string.IsNullOrEmpty(WorkRow[fname].ToString()))
+                        {
+                            Param.Add(pname, DBNull.Value);
+                        }
+                        else
+                        {
+                            Param.Add(pname, WorkRow[fname]);
+                        }
+                    }
+                }
+                else
+                {
+                    if (string.IsNullOrEmpty(pval))
+                        pname = "null";
+                    else
+                    {
+                        pname = $"'{pval.Replace("'", "''")}'";
                     }
                 }
                 string val = "";

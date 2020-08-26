@@ -680,7 +680,7 @@ namespace WpfBu.Models
                 if (page > MaxPage)
                     _page = (int)MaxPage;
 
-                if (MaxPage > 0 && _page == 0)
+                if (_page == 0 )
                     _page = 1;
 
                 TotalTab = MainObj.Dbutil.DataToJson(TTable);
