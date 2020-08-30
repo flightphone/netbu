@@ -8,16 +8,10 @@ using System.Linq;
 
 namespace WpfBu.Models
 {
-    public class FinQuery
-    {
-        public string id {get; set;} 
-        public string mode {get; set;} 
-        public string page {get; set;}
-    }
+    
     public class MainObj
     {
         public static string ConnectionString { get; set; }
-        public static string Account { get; set; }
         public static DBUtil Dbutil { get; set; }
         public static bool IsPostgres { get; set; }
 

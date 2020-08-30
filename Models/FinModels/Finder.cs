@@ -23,8 +23,6 @@ namespace WpfBu.Models
 
         private string _FindString = "";
         public Finder Parent { get; set; }
-        //public event PropertyChangedEventHandler PropertyChanged;
-
         public string FieldName { get; set; }
         public string FieldCaption { get; set; }
         public int Width { get; set; }
@@ -36,7 +34,6 @@ namespace WpfBu.Models
             set
             {
                 _FindString = value;
-                //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FindString)));
             }
         }
         public string Sort
@@ -83,13 +80,6 @@ namespace WpfBu.Models
 
 
         #region prop
-        //public DataGrid MainGrid { get; set; }
-
-        //public DataView MainView { get; set; }
-
-        //public DataTable TotalTable { get; set; }
-
-        //public DataTable data { get; set; }
         public string Mode { get; set; }
         public List<Dictionary<string, object>> MainTab { get; set; }
         public List<Dictionary<string, object>> TotalTab { get; set; }
@@ -117,10 +107,6 @@ namespace WpfBu.Models
         public int MaxSortOrder { get; set; }
 
         public List<FinderField> Fcols { get; set; }
-
-        //public FilterList FilterControl { get; set; }
-        //public FinderMenu MenuControl { get; set; }
-
         public Dictionary<string, string> TextParams { get; set; }
 
         public Dictionary<string, object> SQLParams { get; set; }
@@ -181,12 +167,7 @@ namespace WpfBu.Models
             DispField = rd["dispfield"].ToString();
             KeyValue = rd["keyvalue"].ToString();
             SaveFieldList = rd["savefieldlist"].ToString();
-            /*
-            if (rd["dectype"] == DBNull.Value)
-                nrows = 7;
-            else
-                nrows = (int)rd["dectype"];
-            */
+            
             if (nrows == 0)
                 nrows = 30;
             pagination = (nrows >= 30);
@@ -205,22 +186,9 @@ namespace WpfBu.Models
                 UpdateTab();
             if (Mode == "new")
                 CreateEditor();
-            //CreateMenu();
-            //CreateFilter();
-            //CreateContent();
-
-
-
         }
 
         #region startinit
-        /*
-        public virtual void AddInit(FinderMenu fm, Finder form)
-        { 
-        
-        }
-        */
-
         public virtual void CreateEditor()
         {
             if (!string.IsNullOrEmpty(EditProc) && !OKFun)
@@ -231,215 +199,10 @@ namespace WpfBu.Models
 
         }
 
-        /*
-                public void OpenDetail()
-                {
-                    if (MainGrid.SelectedItem == null)
-                    {
-                        MessageBox.Show("Выберете запись", "Детали");
-                        return;
-                    }
-                    DataRow rw = ((DataRowView)MainGrid.SelectedItem).Row;
-
-
-                    Finder res;
-                    string idchiled = this.id + "_" + rw[KeyF].ToString();
-
-                    if (Parent.formList.ContainsKey(idchiled))
-                    {
-                        res = (Finder)Parent.formList[idchiled];
-                    }
-                    else
-                    {
-                        res = new Finder
-                        {
-                            id = idchiled,
-                            Parent = this.Parent
-                        };
-                        res.TextParams = new Dictionary<string, string>() { { KeyF, rw[KeyF].ToString() } };
-                        res.DefaultValues = new Dictionary<string, object>() { { KeyF, rw[KeyF] } };
-                        res.start(KeyValue);
-                        res.Descr = res.Descr + " (" + rw[DispField].ToString() + ")";
-                        res.text = res.Descr;
-                        Parent.formList.Add(idchiled, res);
-                        Parent.WinListSource.Add(res);
-                    }
-
-                    Parent.userMenu.Content = res.userMenu;
-                    Parent.userContent.Content = res.userContent;
-                    Parent.CurrentId = idchiled;
-
-                }
-                public virtual void CreateMenu()
-                {
-
-
-                    userMenu = new ContentControl();
-
-                    FinderMenu fm = new FinderMenu()
-                    {
-                        DataContext = this
-                    };
-
-                    if (!OKFun)
-                    {
-                        fm.ButOK.Visibility = Visibility.Collapsed;
-                        fm.ButCancel.Visibility = Visibility.Collapsed;
-                    }
-                    else
-                    {
-                        fm.ButCSV.Visibility = Visibility.Collapsed;
-                    }
-
-                    if (string.IsNullOrEmpty(EditProc) || OKFun)
-                    {
-                        fm.EditPanel.Visibility = Visibility.Collapsed;
-                    }
-                    else
-                    {
-                        fm.AddBut.Click += (object sender, RoutedEventArgs e) =>
-                        {
-                            ReferEdit.Add();
-                        };
-                        fm.EditBut.Click += (object sender, RoutedEventArgs e) =>
-                        {
-                            ReferEdit.Edit();
-                        };
-                        fm.DelBut.Click += (object sender, RoutedEventArgs e) =>
-                        {
-                            ReferEdit.Delete();
-                        };
-                        MainGrid.MouseDoubleClick += (object sender, System.Windows.Input.MouseButtonEventArgs e) =>
-                            ReferEdit.Edit();
-                    }
-
-                    fm.ButUpdate.Click += (object sender, RoutedEventArgs e) =>
-                    {
-                        UpdateTab();
-                    };
-
-                    fm.ButPage.Click += (object sender, RoutedEventArgs e) =>
-                    {
-                        fm.PopupPage.IsPopupOpen = true;
-                    };
-
-                    if (pagination)
-                    {
-
-                        fm.ButLeft.Click += (object sender, RoutedEventArgs e) =>
-                        {
-                            if (_page > 1)
-                                _page--;
-                            UpdateTab();
-                        };
-
-                        fm.ButFirst.Click += (object sender, RoutedEventArgs e) =>
-                        {
-                            _page = 1;
-                            UpdateTab();
-                        };
-
-
-                        fm.ButRight.Click += (object sender, RoutedEventArgs e) =>
-                        {
-                            _page++;
-                            UpdateTab();
-                        };
-
-                        fm.ButLast.Click += (object sender, RoutedEventArgs e) =>
-                        {
-                            _page = (int)MaxPage;
-                            UpdateTab();
-                        };
-                    }
-                    else
-                    {
-                        fm.NavPanel.Visibility = Visibility.Collapsed;
-                    }
-                    fm.ButCSV.Click += (object sender, RoutedEventArgs e) =>
-                    {
-                        ExportCSV();
-                    };
-
-                    if (!string.IsNullOrEmpty(KeyValue) && !OKFun)
-                    {
-
-                        fm.ButDetail.Click += (object sender, RoutedEventArgs e) =>
-                            OpenDetail();
-
-
-                        if (string.IsNullOrEmpty(EditProc))
-                        {
-                            MainGrid.MouseDoubleClick += (object sender, System.Windows.Input.MouseButtonEventArgs e) =>
-                            OpenDetail();
-                        }
-
-                    }
-                    else
-                        fm.ButDetail.Visibility = Visibility.Collapsed;
-
-                    fm.FilterBut.Click += (object sender, RoutedEventArgs e) => {
-                        userContent.Content = FilterControl;
-                    };
-                    fm.ClearBut.Click += (object sender, RoutedEventArgs e) => {
-                        MaxSortOrder = 0;
-                        foreach (var f in Fcols)
-                        {
-                            f.FindString = "";
-                            f.Sort = "Нет";
-                        }
-                        CompilerFilterOrder();
-                        SetFilterOrder();
-                    };
-                    AddInit(fm, this);
-                    MenuControl = fm;
-                    userMenu.Content = MenuControl;
-
-
-                }
-
-
-                public virtual void CreateContent()
-                {
-                    userContent = new ContentControl
-                    {
-                        Content = MainGrid
-                    };
-                }
-
-                public void CreateFilter()
-                {
-                    FilterControl = new FilterList()
-                    {
-                        DataContext = this
-                    };
-                    FilterControl.CancelBut.Click += (object sender, RoutedEventArgs e)=>
-                        {
-                            userContent.Content = MainGrid;
-                        };
-                    FilterControl.OkBut.Click += (object sender, RoutedEventArgs e) =>
-                    {
-                        SetFilterOrder();
-                        userContent.Content = MainGrid;
-                    };
-
-                }
-                */
-
         public void CreateColumns(string s)
         {
             MaxSortOrder = 0;
             Fcols = new List<FinderField>();
-            /*
-            MainGrid = new DataGrid()
-            {
-                IsReadOnly = true,
-                CanUserAddRows = false,
-                CanUserDeleteRows = false,
-                CanUserSortColumns = false,
-                AutoGenerateColumns = false
-            };
-            */
             if (string.IsNullOrEmpty(s))
                 return;
             XmlDocument xm = new XmlDocument();
@@ -485,81 +248,10 @@ namespace WpfBu.Models
             }
 
 
-            /*
-            MainGrid.LoadingRow += MainGrid_LoadingRow;
-
-            foreach (FinderField f in Fcols)
-            {
-                if (f.Visible)
-                {
-                    Binding bn = new Binding(f.FieldName);
-                    bn.StringFormat = f.DisplayFormat;
-                    MainGrid.Columns.Add(new System.Windows.Controls.DataGridTextColumn()
-                    {
-                        Header = f.FieldCaption,
-                        Binding = bn,
-                        MaxWidth = 500
-                    });
-                }
-            }
-            */
-
-        }
-
-        /*
-        private void MainGrid_LoadingRow(object sender, DataGridRowEventArgs e)
-        {
             
-            DataRowView item = e.Row.Item as DataRowView;
-            if (item != null)
-            {
-                DataRow row = item.Row;
-                int c = 0;
-                if (row.Table.Columns.Contains("Color"))
-                    if (row["Color"] != DBNull.Value)
-                        c = (int)row["Color"];
-                
-                if (row.Table.Columns.Contains("color"))
-                    if (row["color"] != DBNull.Value)
-                        c = (int)row["color"];
-                if (c != 0)
-                {
-                    System.Drawing.Color dc = System.Drawing.Color.FromArgb(c);
-                    e.Row.Background = new SolidColorBrush(Color.FromRgb(dc.R, dc.G, dc.B));
-                    
-                }    
-            }
-        }
-        */
-        /*
-        public virtual void UpdateTotal()
-        {
-            string res = "";
-            if (!pagination)
-                res = "число записей: " + MainView.Count.ToString();
-            else
-            {
-                Int64 total = 0;
-                if (MainObj.IsPostgres)
-                    total = (Int64)TotalTable.Rows[0]["n_total"];
-                else
-                    total = (Int32)TotalTable.Rows[0]["n_total"];
-
-                if (page > 0)
-                    res = string.Format("{0} - {1}/{2}", (page - 1) * nrows + 1, ((page * nrows) < total) ? (page * nrows) : total, total);
-                else
-                    res = "0 записей";
-            }
-            TotalString = res;
-            if ( MenuControl != null)
-            {
-                MenuControl.TotalString.Text = TotalString;
-                MenuControl.page.Text = page.ToString();
-                MenuControl.MaxPage.Text = MaxPage.ToString();
-            }
 
         }
-        */
+
         public DataTable UpdateCSV()
         {
             string PrepareSQL = SQLText;
@@ -603,10 +295,6 @@ namespace WpfBu.Models
         {
             DataTable TTable = null;
             DataTable data = null;
-            /*
-            if (userContent!=null)
-                userContent.Content = MainGrid;
-            */
 
             string PrepareSQL = SQLText;
             PrepareSQL = PrepareSQL.Replace("[Account]", Account);
@@ -720,9 +408,6 @@ namespace WpfBu.Models
 
             MainTab = MainObj.Dbutil.DataToJson(data);
             ColumnTab = MainObj.Dbutil.DataColumn(data);
-            //MainView = data.DefaultView;
-            //MainGrid.ItemsSource = MainView;
-            //UpdateTotal();
         }
         #endregion
         public void CompilerFilterOrder()
@@ -769,8 +454,6 @@ namespace WpfBu.Models
             }
 
         }
-
-        //public IEnumerable<string> Foods => new[] { "Нет", "По возрастанию", "По убыванию" };
 
 
         private string rwCSV(DataRow rw)
