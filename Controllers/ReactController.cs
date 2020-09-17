@@ -158,7 +158,7 @@ namespace netbu.Controllers
             F.start(id);
             string s = F.ExportCSV();
             string ctype = "application/octet-stream";
-            byte[] buf = Encoding.UTF8.GetBytes(s);
+            byte[] buf = Encoding.GetEncoding(1251).GetBytes(s);
             return File(buf, ctype, $"data_{id}.csv");
 
         }

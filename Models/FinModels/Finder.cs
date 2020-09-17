@@ -13,7 +13,7 @@ namespace WpfBu.Models
         public string IdDeclare { get; set; }
         public string classname { get; set; }
         public Dictionary<string, string> fields { get; set; }
-        public string keyField {get; set;}
+        public string keyField { get; set; }
         public string valField { get; set; }
         public RootForm FindConrol { get; set; }
     }
@@ -80,6 +80,9 @@ namespace WpfBu.Models
 
 
         #region prop
+
+        public string IdDeclare { get; set; }
+
         public string Mode { get; set; }
         public List<Dictionary<string, object>> MainTab { get; set; }
         public List<Dictionary<string, object>> TotalTab { get; set; }
@@ -92,6 +95,8 @@ namespace WpfBu.Models
         public string DelProc { get; set; }
 
         public string TableName { get; set; }
+
+
 
         public string SaveFieldList { get; set; }
 
@@ -134,10 +139,14 @@ namespace WpfBu.Models
 
         public Editor ReferEdit { get; set; }
         #endregion
-        public string Account {get; set; }
+        public string Account { get; set; }
+
+        public string IdDeclareSet { get; set; }
+        public Finder Setting { get; set; }
         public override void start(object o)
         {
 
+            IdDeclare = o.ToString();
             string sql;
             if (MainObj.IsPostgres)
                 sql = "select iddeclare, decname, descr, dectype, decsql, keyfield, dispfield, keyvalue, dispvalue, keyparamname, dispparamname, isbasename, descript, addkeys, tablename, editproc, delproc, image_bmp, savefieldlist, p.paramvalue from t_rpdeclare d left join t_sysparams p on 'GridFind' || d.decname = p.paramname where iddeclare = ";
@@ -167,7 +176,12 @@ namespace WpfBu.Models
             DispField = rd["dispfield"].ToString();
             KeyValue = rd["keyvalue"].ToString();
             SaveFieldList = rd["savefieldlist"].ToString();
+
+
+            //параметры 17.09.2020
+            IdDeclareSet = rd["dispparamname"].ToString();
             
+
             if (nrows == 0)
                 nrows = 30;
             pagination = (nrows >= 30);
@@ -178,11 +192,24 @@ namespace WpfBu.Models
             DefaultValues.Add("audtuser", Account);
             DefaultValues.Add("last_change_user", Account);
 
-
+            if (Mode=="new" && !string.IsNullOrEmpty(IdDeclareSet) && SQLParams == null)    
+            {
+                //Создаем параметры 17.09.2020
+                Setting = new Finder();
+                Setting.Mode = "new";
+                Setting.nrows = 7;
+                Setting.Account = Account;
+                Setting.start(IdDeclareSet);
+                SQLParams = new Dictionary<string, object>();
+                foreach(string f in Setting.ReferEdit.SaveFieldList)
+                {
+                    SQLParams.Add("@" + f, Setting.MainTab[0][f]);
+                }
+            }
 
             if (Fcols == null)
                 CreateColumns(paramvalue);
-            if (Mode!="csv")
+            if (Mode != "csv")
                 UpdateTab();
             if (Mode == "new")
                 CreateEditor();
@@ -248,7 +275,7 @@ namespace WpfBu.Models
             }
 
 
-            
+
 
         }
 
@@ -368,7 +395,7 @@ namespace WpfBu.Models
                 if (page > MaxPage)
                     _page = (int)MaxPage;
 
-                if (_page == 0 )
+                if (_page == 0)
                     _page = 1;
 
                 TotalTab = MainObj.Dbutil.DataToJson(TTable);
@@ -484,7 +511,7 @@ namespace WpfBu.Models
                 Res.AppendLine(s);
             }
             return Res.ToString();
-            
+
         }
 
     }
