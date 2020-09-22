@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data;
 using Microsoft.AspNetCore.Authorization;
+using System.Text.RegularExpressions;
 
 namespace netbu.Controllers
 {
@@ -17,14 +18,22 @@ namespace netbu.Controllers
             Dictionary<string, object> WorkRow = JsonConvert.DeserializeObject<Dictionary<string, object>>(SQLParams);
             var vals = new List<string>();
             var Param = new Dictionary<string, object>();
+            Regex re = new Regex(@"[-+]?[0-9]*\.?,?[0-9]*");
             foreach (string fname in WorkRow.Keys)
             {
                 string pname;
                 string pval = WorkRow[fname].ToString();
                 DateTime dval;
+                Double duval;
+
                 if (!MainObj.IsPostgres)
                 {
                     pname = "@_" + fname;
+                    if (re.IsMatch(pval) && Double.TryParse(pval.Replace(".", ","), out duval))
+                    {
+                        Param.Add(pname, duval);
+                    }
+                    else
                     if (DateTime.TryParse(pval, out dval))
                     {
                         Param.Add(pname, dval);
@@ -117,6 +126,21 @@ namespace netbu.Controllers
             if (!string.IsNullOrEmpty(SQLParams))
             {
                 F.SQLParams = JsonConvert.DeserializeObject<Dictionary<string, object>>(SQLParams);
+                Dictionary<string, object> parseParam = new Dictionary<string, object>();
+                foreach (string k in F.SQLParams.Keys)
+                {
+                    DateTime dval;
+                    string val = F.SQLParams[k].ToString();
+                    if (DateTime.TryParse(val, out dval))
+                    {
+                        parseParam.Add(k, dval);
+                    }
+                    else
+                    {
+                        parseParam.Add(k, F.SQLParams[k]);
+                    }
+                }
+                F.SQLParams = parseParam;
             }
 
 
@@ -152,6 +176,21 @@ namespace netbu.Controllers
             if (!string.IsNullOrEmpty(SQLParams))
             {
                 F.SQLParams = JsonConvert.DeserializeObject<Dictionary<string, object>>(SQLParams);
+                Dictionary<string, object> parseParam = new Dictionary<string, object>();
+                foreach (string k in F.SQLParams.Keys)
+                {
+                    DateTime dval;
+                    string val = F.SQLParams[k].ToString();
+                    if (DateTime.TryParse(val, out dval))
+                    {
+                        parseParam.Add(k, dval);
+                    }
+                    else
+                    {
+                        parseParam.Add(k, F.SQLParams[k]);
+                    }
+                }
+                F.SQLParams = parseParam;
             }
 
 
