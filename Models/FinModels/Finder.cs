@@ -5,6 +5,16 @@ using System.Data;
 using System.Xml;
 using System.Linq;
 
+/*
+Новые конструкции
+17.09.2020  
+Если в t_rpDeclare заполнено поле DispParamName , то по IdDeclare = DispParamName
+создается новый Finder и присваивается полю Setting . По полям первой строки таблицы
+Setting.MainTab заполняются параметры @ в запросе исходного Finder. Для возможности
+изменить параметры Setting.EditProc!='', Setting.SaveFieldList!='' . 
+Для Setting  можно заполнять таблицу t_sysFieldMap
+*/
+
 namespace WpfBu.Models
 {
 

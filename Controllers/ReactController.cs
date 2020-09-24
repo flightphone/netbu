@@ -18,7 +18,7 @@ namespace netbu.Controllers
             Dictionary<string, object> WorkRow = JsonConvert.DeserializeObject<Dictionary<string, object>>(SQLParams);
             var vals = new List<string>();
             var Param = new Dictionary<string, object>();
-            Regex re = new Regex(@"[-+]?[0-9]*\.?,?[0-9]*");
+            Regex re = new Regex(@"[-+]?[0-9]*[\.,][0-9]*");
             foreach (string fname in WorkRow.Keys)
             {
                 string pname;
