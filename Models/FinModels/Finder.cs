@@ -13,6 +13,9 @@ using System.Linq;
 Setting.MainTab заполняются параметры @ в запросе исходного Finder. Для возможности
 изменить параметры Setting.EditProc!='', Setting.SaveFieldList!='' . 
 Для Setting  можно заполнять таблицу t_sysFieldMap
+
+25.09.2020
+В Finder's редактора передаются TextParams основного Finder
 */
 
 namespace WpfBu.Models

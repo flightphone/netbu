@@ -60,6 +60,8 @@ namespace WpfBu.Models
                         else
                             fc.nrows = 7;
                         fc.Account = ReferFinder.Account;
+                        //Передаем текстовые параметры основного Finder    
+                        fc.TextParams = ReferFinder.TextParams;
                         fc.start(jr.IdDeclare);
                         jr.FindConrol = fc;
 
