@@ -12,7 +12,41 @@ using suggestionscsharp;
 namespace netbu.Models
 {
 
-    class dadataINN {
+    class dadataINN
+    {
+        public string sendtele(string channelID, string UserToken, string content)
+        {
+            string responseText = "";
+            try
+            {
+                string teleurl = "http://services.utg.group/telegram/api/Channel/publish";
+                var httpRequest = (HttpWebRequest)WebRequest.Create(teleurl);
+                httpRequest.Method = "POST";
+                httpRequest.ContentType = "application/json";
+                httpRequest.Headers.Add("UserToken", UserToken);
+                var serializer = new JsonSerializer();
+                using (var w = new StreamWriter(httpRequest.GetRequestStream()))
+                {
+                    using (JsonWriter writer = new JsonTextWriter(w))
+                    {
+                        serializer.Serialize(writer, new { channelID = channelID, content = content });
+                    }
+                }
+
+                HttpWebResponse httpResponse = (HttpWebResponse)httpRequest.GetResponse();
+                using (var r = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    responseText = r.ReadToEnd();
+                }
+            }
+            catch (Exception e)
+            {
+                responseText = e.Message;
+            }
+            return responseText;
+        }
+
+
         public string getjson(string inn)
         {
             if (string.IsNullOrEmpty(inn))
@@ -53,7 +87,8 @@ namespace netbu.Models
                 else
                     return suggs.suggestions[0].data;
             }
-            catch {
+            catch
+            {
                 return null;
             }
         }
@@ -142,7 +177,7 @@ namespace netbu.Models
                         ListCaption.Add(ItemCaption);
                         treeItem ilist = new treeItem(ItemCaption);
                         ilist.id = (k == bi.Length - 1) ? mi["idmenu"].ToString() : mi["idmenu"].ToString() + "_node";
-                        ilist.attributes = new Dictionary<string, string>() {{"link1",  mi["link1"].ToString()}, {"params", mi["params"].ToString() }};
+                        ilist.attributes = new Dictionary<string, string>() { { "link1", mi["link1"].ToString() }, { "params", mi["params"].ToString() } };
                         if ((int)mi["idimage"] > 0)
                             ilist.iconCls = "tree-" + mi["idimage"].ToString();
 
@@ -160,5 +195,5 @@ namespace netbu.Models
         }
     }
 
-    
+
 }
