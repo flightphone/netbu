@@ -54,6 +54,7 @@ namespace netbu.Controllers
                 SqlDataAdapter da = new SqlDataAdapter(sql, cnstr);
                 da.SelectCommand.CommandType = CommandType.StoredProcedure;
                 da.SelectCommand.Parameters.AddWithValue("@FC_PK", fc_pk);
+                da.SelectCommand.CommandTimeout = 0;
                 DataTable res = new DataTable();
                 da.Fill(res);
                 
