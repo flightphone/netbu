@@ -37,54 +37,61 @@ namespace netbu.Controllers
 
         public ActionResult file(string id, string id64)
         {
-
-            if (!string.IsNullOrEmpty(id64))
-            {
-                id64 = id64.Replace(" ", "+");
-                id = Encoding.UTF8.GetString(Convert.FromBase64String(id64));
-            }
-            else
-                id = WebUtility.HtmlDecode(id);
-
-
-            string idf = id.Replace("/", @"\");
-            string path = Program.AppConfig["docfiles"] + @"\" + idf;
-            string ext = Path.GetExtension(path).ToLower().Replace(".", "");
-            string ctype = "application/octet-stream";
-            /*
-            if (ext == "pdf")
-                ctype = "application/pdf";
-            */
-            //лог 18.12.2019
             try
             {
-                String sql = "p_cntfilehistory_add";
-                SqlDataAdapter da = new SqlDataAdapter(sql, Program.AppConfig["mscns"]);
-                da.SelectCommand.CommandType = CommandType.StoredProcedure;
-                da.SelectCommand.Parameters.AddWithValue("@fh_filename", path);
-                da.SelectCommand.Parameters.AddWithValue("@fh_account", User.Identity.Name);
-                da.SelectCommand.Parameters.AddWithValue("@fh_action", "get");  //19/02/2020
-                DataTable head = new DataTable();
-                da.Fill(head);
+                if (!string.IsNullOrEmpty(id64))
+                {
+                    id64 = id64.Replace(" ", "+");
+                    id = Encoding.UTF8.GetString(Convert.FromBase64String(id64));
+                }
+                else
+                    id = WebUtility.HtmlDecode(id);
+
+
+                string idf = id.Replace("/", @"\");
+                string path = Program.AppConfig["docfiles"] + @"\" + idf;
+                string ext = Path.GetExtension(path).ToLower().Replace(".", "");
+                string ctype = "application/octet-stream";
+                /*
+                if (ext == "pdf")
+                    ctype = "application/pdf";
+                */
+                //лог 18.12.2019
+                try
+                {
+                    String sql = "p_cntfilehistory_add";
+                    SqlDataAdapter da = new SqlDataAdapter(sql, Program.AppConfig["mscns"]);
+                    da.SelectCommand.CommandType = CommandType.StoredProcedure;
+                    da.SelectCommand.Parameters.AddWithValue("@fh_filename", path);
+                    da.SelectCommand.Parameters.AddWithValue("@fh_account", User.Identity.Name);
+                    da.SelectCommand.Parameters.AddWithValue("@fh_action", "get");  //19/02/2020
+                    DataTable head = new DataTable();
+                    da.Fill(head);
+                }
+                catch
+                {; }
+                //лог 18.12.2019
+
+
+                if (ext == "gif" || ext == "bmp" || ext == "jpg" || ext == "jpeg" || ext == "png")
+                    ctype = "image/jpeg";
+                if (ext == "tiff")
+                    ctype = "image/tiff";
+
+                if (ctype == "application/octet-stream")
+                    return PhysicalFile(path, ctype, Path.GetFileName(path));
+                else
+                {
+                    byte[] buf = System.IO.File.ReadAllBytes(path);
+                    return File(buf, ctype);
+                }
+
             }
-            catch
-            {; }
-            //лог 18.12.2019
-
-
-            if (ext == "gif" || ext == "bmp" || ext == "jpg" || ext == "jpeg" || ext == "png")
-                ctype = "image/jpeg";
-            if (ext == "tiff")
-                ctype = "image/tiff";
-
-            if (ctype == "application/octet-stream")
-                return PhysicalFile(path, ctype, Path.GetFileName(path));
-            else
+            catch (Exception ex)
             {
-                byte[] buf = System.IO.File.ReadAllBytes(path);
-                return File(buf, ctype);
+                string mes = "Ошибка приложения. " + ex.Message;
+                return Content(mes);
             }
-
 
         }
         public JsonResult delete_file(string id, string mode)
@@ -249,38 +256,47 @@ namespace netbu.Controllers
 
         public ActionResult dir(string id, string id64)
         {
-            if (!string.IsNullOrEmpty(id64))
+            try
             {
-                id64 = id64.Replace(" ", "+");
-                id = Encoding.UTF8.GetString(Convert.FromBase64String(id64));
+
+                if (!string.IsNullOrEmpty(id64))
+                {
+                    id64 = id64.Replace(" ", "+");
+                    id = Encoding.UTF8.GetString(Convert.FromBase64String(id64));
+                }
+                else
+                    id = WebUtility.HtmlDecode(id);
+
+                string idf = id.Replace("/", @"\");
+                string[] paths = id.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                string parent = "";
+                if (paths.Length > 1)
+                    parent = string.Join("/", paths, 0, paths.Length - 1) + "/";
+                string path = Program.AppConfig["docfiles"] + @"\" + idf;
+
+                if (!Directory.Exists(path))
+                    Directory.CreateDirectory(path);
+
+                DirectoryInfo di = new DirectoryInfo(path);
+                //DirectoryInfo[] dirs = di.GetDirectories();
+                //FileInfo[] files = di.GetFiles();
+                //Доступ
+                int fileacc = dadataINN.FileAccess(User.Identity.Name, paths[0]);
+                ViewBag.fileacc = fileacc;
+
+                ViewBag.di = di;
+                //ViewBag.dirs = dirs;
+                //ViewBag.files = files;
+                ViewBag.id = id;
+                ViewBag.parent = parent;
+
+                return View();
             }
-            else
-                id = WebUtility.HtmlDecode(id);
-
-            string idf = id.Replace("/", @"\");
-            string[] paths = id.Split("/", StringSplitOptions.RemoveEmptyEntries);
-            string parent = "";
-            if (paths.Length > 1)
-                parent = string.Join("/", paths, 0, paths.Length - 1) + "/";
-            string path = Program.AppConfig["docfiles"] + @"\" + idf;
-
-            if (!Directory.Exists(path))
-                Directory.CreateDirectory(path);
-
-            DirectoryInfo di = new DirectoryInfo(path);
-            //DirectoryInfo[] dirs = di.GetDirectories();
-            //FileInfo[] files = di.GetFiles();
-            //Доступ
-            int fileacc = dadataINN.FileAccess(User.Identity.Name, paths[0]);
-            ViewBag.fileacc = fileacc;
-
-            ViewBag.di = di;
-            //ViewBag.dirs = dirs;
-            //ViewBag.files = files;
-            ViewBag.id = id;
-            ViewBag.parent = parent;
-
-            return View();
+            catch (Exception ex)
+            {
+                string mes = "Ошибка приложения. " + ex.Message;
+                return Content(mes);
+            }
         }
     }
 }
