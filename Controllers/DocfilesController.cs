@@ -12,6 +12,7 @@ using System.IO;
 using System.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Primitives;
+using System.Threading.Tasks;
 
 
 
@@ -20,6 +21,46 @@ namespace netbu.Controllers
     [Authorize]
     public class DocfilesController : Controller
     {
+        [AllowAnonymous]
+        public IActionResult fcheck()
+        {
+            filecheckAsync();
+            return Content("Process started");
+        }
+        private async void filecheckAsync()
+        {
+            await Task.Run(() => filecheck());
+        }
+        private void filecheck()
+        {
+            try
+            {
+                string sqlu = "update cntfilehistory set fh_vol = @fh_vol where fh_pk = @fh_pk";
+                SqlConnection cn = new SqlConnection(Program.AppConfig["mscns"]);
+                SqlCommand cmd = new SqlCommand(sqlu, cn);
+                string sql = "select fh_pk,  fh_filename from cntfilehistory(nolock) where fh_vol is null";
+                SqlDataAdapter da = new SqlDataAdapter(sql, Program.AppConfig["mscns"]);
+                DataTable res = new DataTable();
+                da.Fill(res);
+
+                cn.Open();
+                foreach (DataRow rw in res.Rows)
+                {
+                    try
+                    {
+                        var filename = rw["fh_filename"].ToString();
+                        var fi = new FileInfo(filename);
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@fh_vol", fi.Length);
+                        cmd.Parameters.AddWithValue("@fh_pk", rw["fh_pk"]);
+                        cmd.ExecuteNonQuery();
+                    }
+                    catch {; }
+                }
+                cn.Close();
+            }
+            catch {; }
+        }
 
         [AllowAnonymous]
         public ActionResult photo(string id)
@@ -35,7 +76,7 @@ namespace netbu.Controllers
                 return NotFound();
         }
 
-        public ActionResult file(string id, string id64)
+        public IActionResult file(string id, string id64)
         {
             try
             {
@@ -56,28 +97,17 @@ namespace netbu.Controllers
                 if (ext == "pdf")
                     ctype = "application/pdf";
                 */
-                //лог 18.12.2019
-                try
-                {
-                    String sql = "p_cntfilehistory_add";
-                    SqlDataAdapter da = new SqlDataAdapter(sql, Program.AppConfig["mscns"]);
-                    da.SelectCommand.CommandType = CommandType.StoredProcedure;
-                    da.SelectCommand.Parameters.AddWithValue("@fh_filename", path);
-                    da.SelectCommand.Parameters.AddWithValue("@fh_account", User.Identity.Name);
-                    da.SelectCommand.Parameters.AddWithValue("@fh_action", "get");  //19/02/2020
-                    DataTable head = new DataTable();
-                    da.Fill(head);
-                }
-                catch
-                {; }
-                //лог 18.12.2019
-
+                //async log 17/10/2020
+                filelogAsync(path, "get");
 
                 if (ext == "gif" || ext == "bmp" || ext == "jpg" || ext == "jpeg" || ext == "png")
                     ctype = "image/jpeg";
                 if (ext == "tiff")
                     ctype = "image/tiff";
 
+                //17.10.2020
+                return PhysicalFile(path, ctype, Path.GetFileName(path));
+                /*
                 if (ctype == "application/octet-stream")
                     return PhysicalFile(path, ctype, Path.GetFileName(path));
                 else
@@ -85,6 +115,7 @@ namespace netbu.Controllers
                     byte[] buf = System.IO.File.ReadAllBytes(path);
                     return File(buf, ctype);
                 }
+                */
 
             }
             catch (Exception ex)
@@ -92,6 +123,32 @@ namespace netbu.Controllers
                 string mes = "Ошибка приложения. " + ex.Message;
                 return Content(mes);
             }
+
+        }
+
+        //async log 17/10/2020
+        private async void filelogAsync(string path, string action)
+        {
+            await Task.Run(() => filelog(path, action));
+        }
+
+        private void filelog(string path, string action)
+        {
+            //лог 18.12.2019
+            try
+            {
+                String sql = "p_cntfilehistory_add";
+                SqlDataAdapter da = new SqlDataAdapter(sql, Program.AppConfig["mscns"]);
+                da.SelectCommand.CommandType = CommandType.StoredProcedure;
+                da.SelectCommand.Parameters.AddWithValue("@fh_filename", path);
+                da.SelectCommand.Parameters.AddWithValue("@fh_account", User.Identity.Name);
+                da.SelectCommand.Parameters.AddWithValue("@fh_action", action);  //19/02/2020
+                DataTable head = new DataTable();
+                da.Fill(head);
+            }
+            catch
+            {; }
+            //лог 18.12.2019
 
         }
         public JsonResult delete_file(string id, string mode)
@@ -197,7 +254,7 @@ namespace netbu.Controllers
 
         }
 
-        public ActionResult getphoto(string audtuser)
+        public IActionResult getphoto(string audtuser)
         {
             string sql = "select  top 1 image_bmp from dbo.cntEmployees (nolock) where AD_Name = @audtuser and isnull(image_bmp, '') <> ''";
             SqlDataAdapter da = new SqlDataAdapter(sql, Program.AppConfig["mscns"]);
@@ -217,9 +274,10 @@ namespace netbu.Controllers
             return File(buf, ctype);
 
         }
-        public ActionResult comments(int ag_id, string ag_type, string cm_status, string cm_message)
+        public IActionResult comments(int ag_id, string ag_type, string cm_status, string cm_message)
         {
-
+           try
+           {     
             if (!string.IsNullOrEmpty(cm_message))
             {
                 SqlDataAdapter de = new SqlDataAdapter("p_cntcomments_EDIT", Program.AppConfig["mscns"]);
@@ -252,9 +310,14 @@ namespace netbu.Controllers
             ViewBag.user = User.Identity.Name;
 
             return View();
+           }
+           catch (Exception ex)
+           {
+               return Content(ex.Message);
+           }
         }
 
-        public ActionResult dir(string id, string id64)
+        public IActionResult dir(string id, string id64)
         {
             try
             {

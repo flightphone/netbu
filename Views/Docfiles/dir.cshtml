@@ -263,10 +263,13 @@ function handleFiles(files) {
     }
 
     @{
+        
         if ((ViewBag.fileacc & 1) == 1) 
         {
         foreach (FileInfo fi in ViewBag.di.GetFiles())
         {
+            //var fi1 = new FileInfo("привет ура.yy");
+            //long z = fi1.Length;
             <tr class="files js-navigation-container js-active-navigation-container">
             <td class="name"><a href="/Docfiles/file?id64=@(Convert.ToBase64String(Encoding.UTF8.GetBytes(ViewBag.id + fi.Name), Base64FormattingOptions.None))" class="icon file1">@(fi.Name)</a></td>
             <td class="length">@(fi.Length.ToString("#,##"))</td>

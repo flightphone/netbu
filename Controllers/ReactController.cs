@@ -155,7 +155,7 @@ namespace netbu.Controllers
             }
         }
 
-        public ActionResult CSV(string id, string Fc, string TextParams, string SQLParams)
+        public IActionResult CSV(string id, string Fc, string TextParams, string SQLParams)
         {
             var F = new Finder();
             //F.Account = User.Identity.Name;
