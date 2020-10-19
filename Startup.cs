@@ -41,9 +41,11 @@ namespace netbu
         public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
         {
             //17/10/2020 выводим ошибки в прод. для диагностики
-            //if (env.IsDevelopment ()) {
-            //app.UseDeveloperExceptionPage();
-            //}
+            
+            if (env.IsDevelopment ()) {
+                app.UseDeveloperExceptionPage();
+            }
+            else
             
             app.UseExceptionHandler(errorApp =>
                {
@@ -51,12 +53,18 @@ namespace netbu
                    {
                         context.Response.StatusCode = 500;
                         context.Response.ContentType = "text/html";
+                        
                         var err =
                             context.Features.Get<IExceptionHandlerFeature>();
+                        
                         string html = @"<!DOCTYPE html><html lang=""ru""><head><meta charset=""utf-8""><title>Ошибка</title></head><body>" +
                         "Error: " + err.Error.Message + "<br/>" + err.Error.StackTrace + "</bode></html>";
-                        await context.Response.WriteAsync(html);    
-                        string mes = $"{err.Error.Message} - {DateTime.Now}\r\n";
+                        
+                        if (env.IsDevelopment ()) {
+                            await context.Response.WriteAsync(html);
+                        }
+                        
+                        string mes = $"{err.Error.Message}\r\n{err.Error.StackTrace} - {DateTime.Now}\r\n\r\n";
                         await File.AppendAllTextAsync("netbu_error.log", mes);
                     });
                });

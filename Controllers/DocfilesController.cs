@@ -18,9 +18,16 @@ using System.Threading.Tasks;
 
 namespace netbu.Controllers
 {
+    
     [Authorize]
     public class DocfilesController : Controller
     {
+        private IHostingEnvironment _env;
+        public DocfilesController(IHostingEnvironment env)
+        {
+            _env = env;
+        }    
+
         [AllowAnonymous]
         public IActionResult fcheck()
         {
@@ -75,7 +82,13 @@ namespace netbu.Controllers
             else
                 return NotFound();
         }
-
+        public IActionResult errorlog()
+        {
+            var webRoot = _env.WebRootPath;
+            var path = webRoot +  @"\..\netbu_error.log";
+            string ctype = "application/octet-stream";
+            return PhysicalFile(path, ctype, "netbu_error.log");
+        }
         public IActionResult file(string id, string id64)
         {
             try
