@@ -496,15 +496,15 @@ namespace WpfBu.Models
         }
 
 
-        private string rwCSV(DataRow rw)
+        private string rwCSV(DataRow rw, char r)
         {
-            return string.Join(";", Fcols.Select(f =>
+            return string.Join(r, Fcols.Select(f =>
             {
                 return @"""" + rw[f.FieldName].ToString().Replace(@"""", @"""""") + @"""";
             }));
         }
 
-        public string ExportCSV()
+        public string ExportCSV(char r)
         {
 
             StringBuilder Res = new StringBuilder();
@@ -513,14 +513,15 @@ namespace WpfBu.Models
                 return @"""" + f.FieldCaption.ToString().Replace(@"""", @"""""") + @"""";
             });
 
-            string s = string.Join(';', cols);
+
+            string s = string.Join(r, cols);
             Res.AppendLine(s);
 
             DataTable data = UpdateCSV();
             for (int i = 0; i < data.Rows.Count; i++)
             {
                 DataRow rw = data.Rows[i];
-                s = rwCSV(rw);
+                s = rwCSV(rw, r);
                 Res.AppendLine(s);
             }
             return Res.ToString();

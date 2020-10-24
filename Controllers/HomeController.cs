@@ -38,8 +38,9 @@ namespace netbu.Controllers
             try
             {
                 
-                //string account = User.Identity.Name;
-                string account = "malkin";
+                string account = User.Identity.Name;
+                if (string.IsNullOrEmpty(account))
+                    account = "malkin";
                 var tu = new treeutil();
 
                 var data = new DataTable();

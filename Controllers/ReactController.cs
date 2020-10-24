@@ -101,8 +101,9 @@ namespace netbu.Controllers
         public JsonResult FinderStart(string id, string mode, string page, string Fc, string TextParams, string SQLParams)
         {
             var F = new Finder();
-            //F.Account = User.Identity.Name;
-            F.Account = "malkin";
+            F.Account = User.Identity.Name;
+            if (string.IsNullOrEmpty(F.Account))
+                F.Account = "malkin";
 
             F.nrows = 30;
             if (!string.IsNullOrEmpty(mode))
@@ -155,11 +156,15 @@ namespace netbu.Controllers
             }
         }
 
-        public IActionResult CSV(string id, string Fc, string TextParams, string SQLParams)
+        public IActionResult CSV(string id, string Fc, string TextParams, string SQLParams, string format)
         {
+            if (string.IsNullOrEmpty(format))
+                format = "csv";
+
             var F = new Finder();
-            //F.Account = User.Identity.Name;
-            F.Account = "malkin";
+            F.Account = User.Identity.Name;
+            if (string.IsNullOrEmpty(F.Account))
+                F.Account = "malkin";
 
             F.Mode = "csv";
             if (!string.IsNullOrEmpty(Fc))
@@ -195,10 +200,13 @@ namespace netbu.Controllers
 
 
             F.start(id);
-            string s = F.ExportCSV();
+            char r = ';';
+            if (format != "csv")
+                r = '\t';
+            string s = F.ExportCSV(r);
             string ctype = "application/octet-stream";
             byte[] buf = Encoding.GetEncoding(1251).GetBytes(s);
-            return File(buf, ctype, $"data_{id}.csv");
+            return File(buf, ctype, $"data_{id}.{format}");
 
         }
     }

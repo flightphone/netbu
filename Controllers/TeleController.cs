@@ -1,15 +1,8 @@
 using System;
 using System.Data;
-using System.Text;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Hosting;
 using netbu.Models;
-using System.IO;
-using System.Net;
 using System.Threading.Tasks;
-using System.Diagnostics;
 using System.Data.SqlClient;
 
 namespace netbu.Controllers
