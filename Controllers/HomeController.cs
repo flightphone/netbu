@@ -21,12 +21,11 @@ namespace netbu.Controllers
     public class HomeController : Controller
     {
 
-        //[Authorize]
+        [Authorize]
         public ActionResult Index(string id)
         {
             ViewBag.id = id;
             ViewBag.account = User.Identity.Name;
-            //MainObj.Account = User.Identity.Name;
             return View();
         }
 
@@ -47,7 +46,7 @@ namespace netbu.Controllers
                 var cnstr = Program.isPostgres ? Program.AppConfig["cns"] : Program.AppConfig["mscns"]; 
                 var sql = "select a.* , fn_getmenuimageid(a.caption) idimage from fn_mainmenu('ALL', @Account) a order by a.ordmenu, idmenu";
                 if (!Program.isPostgres)
-                    sql = "select a.* , dbo.fn_getmenuimageid(a.caption) idimage from fn_mainmenu('WEB', @Account) a order by a.ordmenu, idmenu";
+                    sql = "select a.* , dbo.fn_getmenuimageid(a.caption) idimage from fn_mainmenu('ALL', @Account) a order by a.ordmenu, idmenu";
                 if (Program.isPostgres)
                 {
                     var da = new NpgsqlDataAdapter(sql, cnstr);
