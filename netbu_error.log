@@ -286,3 +286,14 @@ Could not find file 'D:\Projects\netbu\привет ура.yy'.
    at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
    at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.Invoke(HttpContext context) - 19.10.2020 15:17:13
 
+Value cannot be null.
+Parameter name: path1
+   at System.IO.Path.Combine(String path1, String path2)
+   at netbu.Controllers.CunoController.savefile(String id, String format, String path, String dateformat, String pref) in D:\Projects\netbu\Controllers\CunoController.cs:line 43 - 29.10.2020 11:16:00
+
+There is no row at position 0.
+   at System.Data.RBTree`1.GetNodeByIndex(Int32 userIndex)
+   at System.Data.DataRowCollection.get_Item(Int32 index)
+   at WpfBu.Models.Finder.start(Object o) in D:\Projects\netbu\Models\FinModels\Finder.cs:line 171
+   at netbu.Controllers.CunoController.savefile(String id, String format, String path, String dateformat, String pref) in D:\Projects\netbu\Controllers\CunoController.cs:line 36 - 29.10.2020 11:17:09
+
