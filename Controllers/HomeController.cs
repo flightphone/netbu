@@ -46,7 +46,8 @@ namespace netbu.Controllers
                 var cnstr = Program.isPostgres ? Program.AppConfig["cns"] : Program.AppConfig["mscns"]; 
                 var sql = "select a.* , fn_getmenuimageid(a.caption) idimage from fn_mainmenu('ALL', @Account) a order by a.ordmenu, idmenu";
                 if (!Program.isPostgres)
-                    sql = "select a.* , dbo.fn_getmenuimageid(a.caption) idimage from fn_mainmenu('ALL', @Account) a order by a.ordmenu, idmenu";
+                    //sql = "select a.* , dbo.fn_getmenuimageid(a.caption) idimage from fn_mainmenu('ALL', @Account) a order by a.ordmenu, idmenu";
+                    sql = "exec p_fn_getmenuimageid @Account";
                 if (Program.isPostgres)
                 {
                     var da = new NpgsqlDataAdapter(sql, cnstr);
