@@ -104,6 +104,10 @@ namespace netbu.Controllers
 
                 string idf = id.Replace("/", @"\");
                 string path = Program.AppConfig["docfiles"] + @"\" + idf;
+                //Ищем на альтернативном сервере 01.12.2020
+                //if (!System.IO.File.Exists(path))
+                //    path = Program.AppConfig["docfiles2"] + @"\" + idf;
+
                 string ext = Path.GetExtension(path).ToLower().Replace(".", "");
                 string ctype = "application/octet-stream";
                 /*
@@ -172,6 +176,9 @@ namespace netbu.Controllers
             {
                 string idf = id.Replace("/", @"\");
                 string path = Program.AppConfig["docfiles"] + @"\" + idf;
+                 //Ищем на альтернативном сервере 01.12.2020
+                //if (!System.IO.File.Exists(path))
+                //    path = Program.AppConfig["docfiles2"] + @"\" + idf;
 
                 //лог 19.02.2020
                 try
@@ -209,7 +216,12 @@ namespace netbu.Controllers
             try
             {
                 string idf = id.Replace("/", @"\");
-                string path = Program.AppConfig["docfiles"] + @"\" + idf + @"\" + dir;
+                string path = Program.AppConfig["docfiles"] + @"\" + idf; 
+                //Ищем на альтернативном сервере 01.12.2020
+                //if (!Directory.Exists(path))
+                //    path = Program.AppConfig["docfiles2"] + @"\" + idf;
+                
+                path = path + @"\" + dir;
                 if (!Directory.Exists(path))
                     Directory.CreateDirectory(path);
             }
@@ -226,6 +238,10 @@ namespace netbu.Controllers
             id = WebUtility.HtmlDecode(id);
             string idf = id.Replace("/", @"\");
             string path = Program.AppConfig["docfiles"] + @"\" + idf;  //  / заменили на \
+            //Ищем на альтернативном сервере 01.12.2020
+            //if (!Directory.Exists(path))
+            //    path = Program.AppConfig["docfiles2"] + @"\" + idf;
+
             try
             {
 
@@ -349,6 +365,10 @@ namespace netbu.Controllers
                 if (paths.Length > 1)
                     parent = string.Join("/", paths, 0, paths.Length - 1) + "/";
                 string path = Program.AppConfig["docfiles"] + @"\" + idf;
+
+                //Ищем на альтернативном сервере 01.12.2020
+                //if (!Directory.Exists(path))
+                //    path = Program.AppConfig["docfiles2"] + @"\" + idf;
 
                 if (!Directory.Exists(path))
                     Directory.CreateDirectory(path);

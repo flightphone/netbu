@@ -75,7 +75,7 @@ namespace netbu.Controllers
 
         //Private Project
 
-        public string update(string cur, string mode)
+        public IActionResult update(string cur, string mode)
         {
             string res = "OK";
 
@@ -110,6 +110,14 @@ namespace netbu.Controllers
                 if (mode == "show")
                 {
                     res = resFile;
+                    return Content(res);
+                } else
+                if (mode=="file")
+                {
+                    byte[] buf = Encoding.GetEncoding(1251).GetBytes(resFile);
+                    string fname = ((DateTime)head.Rows[0][0]).ToString("UTG_yyyyMMddHHmmss") + ".txt";
+                    string ctype = "application/octet-stream";
+                    return File(buf, ctype, fname);
                 }
                 else
                 {
@@ -118,13 +126,15 @@ namespace netbu.Controllers
                         path = Program.AppConfig["cuno_rur_files"] + @"\";
                     path = path + ((DateTime)head.Rows[0][0]).ToString("UTG_yyyyMMddHHmmss") + ".txt";
                     System.IO.File.WriteAllText(path, resFile, Encoding.GetEncoding(1251));
+                    return Content(res);
                 }
             }
             catch (Exception e)
             {
                 res = "error:" + e.Message;
+                return Content(res);
             }
-            return res;
+            
         }
 
 

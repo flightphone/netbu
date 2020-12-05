@@ -156,7 +156,7 @@ namespace netbu.Controllers
             }
         }
 
-        public IActionResult CSV(string id, string Fc, string TextParams, string SQLParams, string format)
+        public IActionResult CSV(string id, string Fc, string TextParams, string SQLParams, string format, string dateformat, string pref)
         {
             if (string.IsNullOrEmpty(format))
                 format = "csv";
@@ -206,7 +206,11 @@ namespace netbu.Controllers
             string s = F.ExportCSV(r);
             string ctype = "application/octet-stream";
             byte[] buf = Encoding.GetEncoding(1251).GetBytes(s);
-            return File(buf, ctype, $"data_{id}.{format}");
+            string filename = $"data_{id}.{format}";
+            if (!string.IsNullOrEmpty(dateformat))
+                filename = pref + DateTime.Now.ToString(dateformat) + "." + format;
+            
+            return File(buf, ctype, filename);
 
         }
     }
