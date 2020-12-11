@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using System.Text;
 using System.Net;
 using netbu.Models;
 using WpfBu.Models;
@@ -65,6 +66,10 @@ namespace netbu
             }
             catch
             {; }
+
+            //Кодировки
+            //Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
         }
 
        
