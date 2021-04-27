@@ -75,6 +75,7 @@ namespace WpfBu.Models
             else
             {
                 var da = new SqlDataAdapter(sql, MainObj.ConnectionString);
+                da.SelectCommand.CommandTimeout = 0;
                 if (par != null)
                     foreach (string s in par.Keys)
                         da.SelectCommand.Parameters.AddWithValue(s, par[s]);

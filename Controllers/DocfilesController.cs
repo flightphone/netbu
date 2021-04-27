@@ -346,8 +346,10 @@ namespace netbu.Controllers
            }
         }
 
-        public IActionResult dir(string id, string id64)
+        public IActionResult dir(string id, string id64, string caption)
         {
+            if (string.IsNullOrEmpty(caption))
+                caption="";
             try
             {
 
@@ -355,9 +357,15 @@ namespace netbu.Controllers
                 {
                     id64 = id64.Replace(" ", "+");
                     id = Encoding.UTF8.GetString(Convert.FromBase64String(id64));
+
+                    caption = caption.Replace(" ", "+");
+                    caption = Encoding.UTF8.GetString(Convert.FromBase64String(caption));
                 }
                 else
+                {
                     id = WebUtility.HtmlDecode(id);
+                    caption = WebUtility.HtmlDecode(caption);
+                }    
 
                 string idf = id.Replace("/", @"\");
                 string[] paths = id.Split("/", StringSplitOptions.RemoveEmptyEntries);
@@ -380,11 +388,18 @@ namespace netbu.Controllers
                 int fileacc = dadataINN.FileAccess(User.Identity.Name, paths[0]);
                 ViewBag.fileacc = fileacc;
 
+                string pagetitle = id;
+                if (!string.IsNullOrEmpty(caption))
+                pagetitle = pagetitle.Replace(paths[0], caption);
+
+
                 ViewBag.di = di;
                 //ViewBag.dirs = dirs;
                 //ViewBag.files = files;
                 ViewBag.id = id;
                 ViewBag.parent = parent;
+                ViewBag.caption = caption;
+                ViewBag.pagetitle = pagetitle;
 
                 return View();
             }

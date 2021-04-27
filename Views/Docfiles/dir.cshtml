@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="../github/github.css">
   <script type="text/javascript" src="../easyui/jquery.min.js"></script>
   <script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
-  <title>@(ViewBag.id)</title>
+  <title>@(ViewBag.pagetitle)</title>
   <style>
     
     td.length { text-align:right; 
@@ -195,10 +195,10 @@ function handleFiles(files) {
                 </span>
                 </span>
                 <span class="separator">/</span>
-        -->        
-                <strong class="final-path">@ViewBag.id</strong>
-                
-                <!--<span class="separator">/</span>-->
+        -->    
+        
+             <strong class="final-path">@ViewBag.pagetitle</strong>
+          <!--<span class="separator">/</span>-->
                 
     </div>
   </div>   
@@ -227,7 +227,7 @@ function handleFiles(files) {
         if (!string.IsNullOrEmpty(ViewBag.parent))
         {
             <tr class="files js-navigation-container js-active-navigation-container">
-                <td class="name"><a href="/Docfiles/dir?id64=@(Convert.ToBase64String(Encoding.UTF8.GetBytes(ViewBag.parent), Base64FormattingOptions.None))" class="icon up">...</a></td>
+                <td class="name"><a href="/Docfiles/dir?id64=@(Convert.ToBase64String(Encoding.UTF8.GetBytes(ViewBag.parent), Base64FormattingOptions.None))&caption=@(Convert.ToBase64String(Encoding.UTF8.GetBytes(ViewBag.caption), Base64FormattingOptions.None))" class="icon up">...</a></td>
                 <td></td>
                 <td class="modified"></td>
             </tr>
@@ -241,7 +241,7 @@ function handleFiles(files) {
         foreach (DirectoryInfo di in ViewBag.di.GetDirectories())
         {
             <tr class="files js-navigation-container js-active-navigation-container">
-                <td class="name"><a href='/Docfiles/dir?id64=@(Convert.ToBase64String(Encoding.UTF8.GetBytes(ViewBag.id + di.Name + "/"), Base64FormattingOptions.None))' class="icon dir">@(di.Name)</a></td>
+                <td class="name"><a href='/Docfiles/dir?id64=@(Convert.ToBase64String(Encoding.UTF8.GetBytes(ViewBag.id + di.Name + "/"), Base64FormattingOptions.None))&caption=@(Convert.ToBase64String(Encoding.UTF8.GetBytes(ViewBag.caption), Base64FormattingOptions.None))' class="icon dir">@(di.Name)</a></td>
                 <td></td>
                 
                 

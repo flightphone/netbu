@@ -50,7 +50,8 @@ namespace netbu.Controllers
                 da.SelectCommand.CommandTimeout = 0;
                 DataTable res = new DataTable();
                 da.Fill(res);
-                
+           
+
                 SqlConnection cn = new SqlConnection(cnstr);
                 cn.Open();
                 SqlCommand cmd = new SqlCommand(sqlerr, cn);
