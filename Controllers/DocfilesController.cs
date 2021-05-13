@@ -385,7 +385,9 @@ namespace netbu.Controllers
                 //DirectoryInfo[] dirs = di.GetDirectories();
                 //FileInfo[] files = di.GetFiles();
                 //Доступ
-                int fileacc = dadataINN.FileAccess(User.Identity.Name, paths[0]);
+                int fileacc = dadataINN.FileAccess(
+				string.IsNullOrEmpty(User.Identity.Name)?"manevich":User.Identity.Name
+								, paths[0]);
                 ViewBag.fileacc = fileacc;
 
                 string pagetitle = id;
