@@ -105,7 +105,7 @@ namespace netbu.Controllers
             if (string.IsNullOrEmpty(F.Account))
                 F.Account = "malkin";
 
-            F.nrows = 30;
+            //F.nrows = 30;
             if (!string.IsNullOrEmpty(mode))
                 F.Mode = mode;
             else
