@@ -193,7 +193,9 @@ namespace WpfBu.Models
 
             //параметры 17.09.2020
             IdDeclareSet = rd["dispparamname"].ToString();
-            
+            //04.06.2021
+            if ((int)rd["dectype"] > 30)
+                nrows = (int)rd["dectype"];
 
             if (nrows == 0)
                 nrows = 30;
@@ -205,7 +207,7 @@ namespace WpfBu.Models
             DefaultValues.Add("audtuser", Account);
             DefaultValues.Add("last_change_user", Account);
 
-            if (Mode=="new" && !string.IsNullOrEmpty(IdDeclareSet) && SQLParams == null)    
+            if (Mode == "new" && !string.IsNullOrEmpty(IdDeclareSet) && SQLParams == null)
             {
                 //Создаем параметры 17.09.2020
                 Setting = new Finder();
@@ -214,7 +216,7 @@ namespace WpfBu.Models
                 Setting.Account = Account;
                 Setting.start(IdDeclareSet);
                 SQLParams = new Dictionary<string, object>();
-                foreach(string f in Setting.ReferEdit.SaveFieldList)
+                foreach (string f in Setting.ReferEdit.SaveFieldList)
                 {
                     SQLParams.Add("@" + f, Setting.MainTab[0][f]);
                 }
