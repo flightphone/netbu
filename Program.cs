@@ -74,7 +74,7 @@ namespace netbu
 
        
 
-        public static System.Diagnostics.Process nodesv;
+        
 
         public static IConfiguration AppConfig { get; set; }
 

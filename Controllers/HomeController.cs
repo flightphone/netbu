@@ -72,7 +72,7 @@ namespace netbu.Controllers
                 return Json(new object[] { new { text = e.Message } });
             }
         }
-
+        
         [Route("/ustore/tree.css")]
         public string treecss()
         {
@@ -381,6 +381,7 @@ namespace netbu.Controllers
             }
 
         }
+
 
         [Route("/pg/getid/{table_name}")]
         public JsonResult getid(string table_name)
