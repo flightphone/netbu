@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data;
 using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace netbu.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class DataController : Controller
     {
         public JsonResult getdata(string id, string mode, string page, string Fc, string TextParams, string SQLParams)

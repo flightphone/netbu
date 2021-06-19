@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using netbu.Models;
-using WpfBu.Models;
 using Newtonsoft.Json;
 using Npgsql;
 using Microsoft.AspNetCore.Authorization;
@@ -31,7 +30,7 @@ namespace netbu.Controllers
 
         #region secret
         [Route("ustore/gettree")]
-        //[Authorize]
+        [Authorize]
         public JsonResult gettree()
         {
             try
