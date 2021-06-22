@@ -156,6 +156,7 @@ namespace netbu.Controllers
             }
         }
 
+        [AllowAnonymous]
         public IActionResult CSV(string id, string Fc, string TextParams, string SQLParams, string format, string dateformat, string pref)
         {
             if (string.IsNullOrEmpty(format))
