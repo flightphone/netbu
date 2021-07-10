@@ -394,7 +394,7 @@ namespace WpfBu.Models
                 sums = SumFields.ToLowerInvariant().Split(",");
                 sqltotal = "select count(*) n_total";
                 for (var i = 0; i < sums.Length; i++)
-                    sqltotal = sqltotal + ", sum(" + sums[i] + ") " + sums[i];
+                    sqltotal = sqltotal + ", sum([" + sums[i] + "]) " + sums[i];
                 sqltotal = sqltotal + "  from (" + sql1 + ") a";
             }
             else
