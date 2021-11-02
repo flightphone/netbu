@@ -21,8 +21,10 @@ namespace netbu.Controllers
         //
         // GET: /Flight/
         [Authorize]
-        public ActionResult Index(Guid FC_PK)
+        public ActionResult Index(Guid FC_PK, string fl)
         {
+            if (string.IsNullOrEmpty(fl))
+                return Redirect("~/Print/tgo_pdf/" + FC_PK.ToString());
             string sql = "select * from dbo.v_FlightNumber where FC_PK = @FC_PK";
             SqlDataAdapter da = new SqlDataAdapter(sql, DBClient.CnStr);
             da.SelectCommand.Parameters.AddWithValue("@FC_PK", FC_PK);
@@ -96,7 +98,7 @@ namespace netbu.Controllers
             da.Fill(0, 0, new DataTable[] { HTab, FTab });
 
             string[] parentid = new string[] { "00000000-0000-0000-0000-000000000000", "00000000-0000-0000-0000-000000000001", "00000000-0000-0000-0000-000000000002", "00000000-0000-0000-0000-000000000003" };
-            string[] Captions = new string[] {"Список работ", "Необязательные услуги", "Справочная информация", "Дополнительная информация"};
+            string[] Captions = new string[] { "Список работ", "Необязательные услуги", "Справочная информация", "Дополнительная информация" };
             List<Dictionary<string, object>> rows = new List<Dictionary<string, object>>();
 
             for (int i = 0; i < parentid.Length; i++)
@@ -111,11 +113,11 @@ namespace netbu.Controllers
                 if (i > 0)
                 {
                     user.Add("state", "closed");
-                }    
-                rows.Add(user);    
+                }
+                rows.Add(user);
             }
 
-   
+
 
             for (int i = 0; i < FTab.Rows.Count; i++)
                 if ((int)FTab.Rows[i]["SV_CATEGORY"] < 4)
@@ -137,7 +139,7 @@ namespace netbu.Controllers
 
                 }
 
-             return Json(new { rows = rows });
+            return Json(new { rows = rows });
         }
 
         public string getTasks(Guid FC_PK)

@@ -2,12 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Diagnostics;
 using System.Collections;
 using System.Data;
 using System.Xml;
 using System.Text.RegularExpressions;
 using System.IO.Compression;
 using Newtonsoft.Json;
+using WpfBu.Models;
+using System.Data.SqlClient;
 
 namespace netbu.Models
 {
@@ -40,13 +43,62 @@ namespace netbu.Models
             foreach (DataRow rw in Tab.Rows)
             {
                 s = @"""" + rw[0].ToString().TrimEnd().Replace(@"""", @"""""") + @"""";
-                for (int i = 1; i < Tab.Columns.Count; i++){
+                for (int i = 1; i < Tab.Columns.Count; i++)
+                {
                     s = s + ";" + @"""" + rw[i].ToString().TrimEnd().Replace(@"""", @"""""") + @"""";
                 }
-                Res.AppendLine(s);     
+                Res.AppendLine(s);
             }
-            
+
             return Res.ToString().Trim();
+        }
+        public byte[] PrintPdf(String RepName, DataRow printRow, List<DataTable> Tables)
+        {
+            //http://127.0.0.1:5000/Print/tgo_pdf/8ce3ecf0-0138-43ef-a822-b6c8f6af6baf
+            //http://127.0.0.1:5000/Print/tgo/8ce3ecf0-0138-43ef-a822-b6c8f6af6baf
+            string sql = $"select FileDat from ReportFile (nolock) where FileName = '{RepName}'";
+            SqlDataAdapter da = new SqlDataAdapter(sql, MainObj.ConnectionString);
+            DataTable dat = new DataTable();
+            da.Fill(dat);
+            if (dat.Rows.Count == 0)
+                return null;
+            byte[] buf = (byte[])dat.Rows[0][0];
+            string OutPath = $@"wwwroot\Reports\{Guid.NewGuid().ToString()}";
+            string zpFile = $@"{OutPath}\proj.zip";
+
+
+            Directory.CreateDirectory(OutPath);
+            File.WriteAllBytes(zpFile, buf);
+            FileInfo fi = new FileInfo(zpFile);
+            OutPath = fi.DirectoryName;
+            string texFile = $@"{OutPath}\{RepName.Replace(".zip", ".tex")}";
+            string pdfFile = $@"{OutPath}\{RepName.Replace(".zip", ".pdf")}";
+            ZipFile.ExtractToDirectory(zpFile, OutPath);
+
+            string texstr = File.ReadAllText(texFile);
+            texstr = texstr.Replace(@"\_", "_");
+            texstr = ReplaceFieldXML(texstr, printRow);
+
+            if (Tables != null)
+                for (int i = 0; i < Tables.Count; i++)
+                {
+                    DataTable printTab = Tables[i];
+                    texstr = SetTableTex(texstr, printTab, i);
+                }
+
+
+            texstr = texstr.Replace("_", @"\_");
+            File.WriteAllText(texFile, texstr);
+
+            ProcessStartInfo pi = new ProcessStartInfo();
+            pi.WorkingDirectory = OutPath;
+            pi.FileName = "xelatex";
+            pi.Arguments = $"-interaction nonstopmode {texFile}";
+            Process.Start(pi).WaitForExit();
+            byte[] res = File.ReadAllBytes(pdfFile);
+            Directory.Delete(OutPath, true);
+            return res;
+
         }
         public byte[] PrintDocx(String RepName, DataRow printRow, List<DataTable> Tables, Dictionary<string, byte[]> Images)
         {
@@ -54,26 +106,47 @@ namespace netbu.Models
             string FileName = @"wwwroot\Reports\rep" + Guid.NewGuid().ToString() + ".zip";
             string OutPath = @"wwwroot\Reports\" + RepName;
             string document = OutPath + @"\word\document.xml";
-            string ResWord = File.ReadAllText(document, Encoding.UTF8);
+            string ResWord;
+            //string ResWord = File.ReadAllText(document, Encoding.UTF8);
 
 
-            //Меняем поля
-            ResWord = ReplaceFieldXML(ResWord, printRow);
 
-            DataTable printTab;
-            if (Tables != null)
-                for (int i = 0; i < Tables.Count; i++)
-                {
-                    printTab = Tables[i];
-                    ResWord = SetTableDocx(ResWord, printTab);
-                }
 
-            ZipFile.CreateFromDirectory(OutPath, FileName);
+            //ZipFile.CreateFromDirectory(OutPath, FileName);
+            //File.Copy(@"D:\uProjects\CheckList\RegulationPrint\bin\Reports\Map.docx", FileName);
+            //Подгружаем файл из базы
+            string sql = $"select FileDat from ReportFile (nolock) where FileName = '{RepName}.docx'";
+            SqlDataAdapter da = new SqlDataAdapter(sql, MainObj.ConnectionString);
+            DataTable dat = new DataTable();
+            da.Fill(dat);
+            if (dat.Rows.Count == 0)
+                return null;
+            byte[] buf = (byte[])dat.Rows[0][0];
+            File.WriteAllBytes(FileName, buf);
+
             using (FileStream zipToOpen = new FileStream(FileName, FileMode.Open))
+            //using (MemoryStream zipToOpen = new MemoryStream(buf))
             {
                 using (ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Update))
                 {
                     ZipArchiveEntry doc = archive.GetEntry(@"word/document.xml");
+                    using (StreamReader sr = new StreamReader(doc.Open()))
+                    {
+                        ResWord = sr.ReadToEnd();
+                        //Меняем поля
+                        ResWord = ReplaceFieldXML(ResWord, printRow);
+
+                        DataTable printTab;
+                        if (Tables != null)
+                            for (int i = 0; i < Tables.Count; i++)
+                            {
+                                printTab = Tables[i];
+                                ResWord = SetTableDocx(ResWord, printTab);
+                            }
+
+                    }
+
+                    doc = archive.GetEntry(@"word/document.xml");
                     using (StreamWriter writer = new StreamWriter(doc.Open()))
                     {
                         writer.Write(ResWord);
@@ -83,9 +156,9 @@ namespace netbu.Models
                     foreach (string key in Images.Keys)
                     {
                         ZipArchiveEntry img = archive.GetEntry(@"word/media/" + key);
-                        if (img!=null)
+                        if (img != null)
                         {
-                            using(Stream s = img.Open())
+                            using (Stream s = img.Open())
                             {
                                 s.Write(Images[key], 0, Images[key].Length);
                                 s.Flush();
@@ -159,6 +232,42 @@ namespace netbu.Models
         private string xmlString(string s)
         {
             return s.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;");
+        }
+
+        public string SetTableTex(String ResFile, DataTable printTable, int indx)
+        {
+            string StartMarker = @"\startrow{" + indx.ToString() + "}";
+            string StopMarker = @"\stoprow{" + indx.ToString() + "}";
+
+            int StartInd = ResFile.IndexOf(StartMarker);
+            if (StartInd == -1)
+                return ResFile;
+
+            StartInd = StartInd + StartMarker.Length;
+            int StepInd = ResFile.IndexOf(StopMarker);
+            if (StepInd == -1)
+                return ResFile;
+
+
+
+
+
+            String StrartRes = ResFile.Substring(0, StartInd);
+            String FootRes = ResFile.Substring(StepInd);
+            String MidRes = ResFile.Substring(StartInd, StepInd - StartInd);
+
+
+
+            for (int i = 0; i < printTable.Rows.Count; i++)
+            {
+                StrartRes = StrartRes + ReplaceFieldXML(MidRes, printTable.Rows[i]);
+            }
+
+            StrartRes = StrartRes + FootRes;
+
+            return StrartRes;
+
+
         }
 
 

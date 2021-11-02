@@ -20,6 +20,53 @@ namespace netbu.Controllers
 {
     public class PrintController : Controller
     {
+        public ActionResult tgo_pdf(string id)
+        {
+
+            string FC_PK = id;
+            DataTable _MapH = new DataTable();
+            string sql = "select * from v_MapH_strong where FC_PK = @FC_PK and RH_Category = @RH_Category";
+            var cnstr = Program.AppConfig["mscns"];
+            string RH_Category = "Обслуживание ВС";
+            SqlDataAdapter _da = new SqlDataAdapter(sql, cnstr);
+            _da.SelectCommand.Parameters.AddWithValue("@FC_PK", FC_PK);
+            _da.SelectCommand.Parameters.AddWithValue("@RH_Category", RH_Category);
+            _da.Fill(_MapH);
+            if (_MapH.Rows.Count == 0)
+            {
+                return File(Encoding.UTF8.GetBytes("Не найден регламент."), "application/octet-stream", "Регламент не найден.txt");
+            }
+
+            DataTable MapH = new DataTable();
+            DataTable MapD = new DataTable();
+            SqlDataAdapter da = new SqlDataAdapter("p_prnMap", cnstr);
+            da.SelectCommand.CommandType = CommandType.StoredProcedure;
+            da.SelectCommand.Parameters.AddWithValue("@FC_PK", FC_PK);
+            da.SelectCommand.Parameters.AddWithValue("@RH_Category", RH_Category);
+            da.SelectCommand.Parameters.AddWithValue("@MH_RH", _MapH.Rows[0]["MH_RH"]);
+            DataTable[] par = { MapH, MapD };
+            da.Fill(0, 0, par);
+
+
+            if (MapH.Rows.Count == 0)
+            {
+                return File(Encoding.UTF8.GetBytes("Не найден регламент."), "application/octet-stream", "Регламент не найден.txt");
+            }
+
+            //string RH_Template = MapH.Rows[0]["MH_Template"].ToString().ToLower().Replace(".docx", ".zip");
+            string RH_Template = "Map.zip";
+
+            string FileName = MapH.Rows[0]["MH_ArrivalFlNumber"].ToString() + "_" + MapH.Rows[0]["MH_DepartFlNumber"].ToString();
+            List<DataTable> atab = new List<DataTable>() { MapD };
+            PrintDoc pd = new PrintDoc();
+            byte[] res = pd.PrintPdf(RH_Template, MapH.Rows[0], atab);
+            //Возвращаем pdf
+            return File(res, "application/octet-stream", FileName + ".pdf");
+
+
+
+        }
+
         public ActionResult tgo(string id)
         {
 
@@ -102,11 +149,9 @@ namespace netbu.Controllers
             List<DataTable> atab = new List<DataTable>() { MapD };
             PrintDoc pd = new PrintDoc();
             byte[] res = pd.PrintDocx(RH_Template, MapH.Rows[0], atab, Images);
-            
-            
             //Возвращаем word
             return File(res, "application/octet-stream", FileName + ".docx");
-            
+
             /*
             Dictionary<string, object> param = new Dictionary<string, object>();
             Dictionary<string, object> FileValue = new Dictionary<string, object>();
@@ -136,7 +181,7 @@ namespace netbu.Controllers
             ConvertApiResponse resp = JsonConvert.DeserializeObject<ConvertApiResponse>(responseText);
             return File(Convert.FromBase64String(resp.Files[0].FileData), "application/pdf", resp.Files[0].FileName);
              */
-            
+
         }
     }
 }
