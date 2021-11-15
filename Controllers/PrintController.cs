@@ -13,6 +13,7 @@ using System.Net;
 using Microsoft.Extensions.Primitives;
 using System.Drawing;
 using System.Drawing.Imaging;
+using WpfBu.Models;
 
 
 
@@ -20,6 +21,44 @@ namespace netbu.Controllers
 {
     public class PrintController : Controller
     {
+
+        public JsonResult upload(List<IFormFile> files)
+        {
+            string res = "";
+            try
+            {
+
+                if (files != null)
+                {
+                    SqlConnection cn = new SqlConnection(MainObj.ConnectionString);
+                    SqlCommand cmd = new SqlCommand("p_ReportFile_edit", cn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cn.Open();
+                    foreach (IFormFile img in files)
+                    {
+                        string FileName = img.FileName;
+                        int n = (int)img.Length;
+                        byte[] buf = new byte[n];
+                        Stream ms = img.OpenReadStream();
+                        ms.Read(buf, 0, n);
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@FileName", FileName);
+                        cmd.Parameters.AddWithValue("@FileDat", buf);
+                        cmd.ExecuteNonQuery();
+                    }
+                    cn.Close();
+                }
+
+            }
+            catch (Exception e)
+            {
+                res = e.Message;
+            }
+
+            return Json(new { error = res });
+
+        }
+
         public ActionResult tgo_pdf(string id)
         {
 

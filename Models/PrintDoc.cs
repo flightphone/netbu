@@ -54,8 +54,7 @@ namespace netbu.Models
         }
         public byte[] PrintPdf(String RepName, DataRow printRow, List<DataTable> Tables)
         {
-            //http://127.0.0.1:5000/Print/tgo_pdf/8ce3ecf0-0138-43ef-a822-b6c8f6af6baf
-            //http://127.0.0.1:5000/Print/tgo/8ce3ecf0-0138-43ef-a822-b6c8f6af6baf
+           
             string sql = $"select FileDat from ReportFile (nolock) where FileName = '{RepName}'";
             SqlDataAdapter da = new SqlDataAdapter(sql, MainObj.ConnectionString);
             DataTable dat = new DataTable();
@@ -76,8 +75,7 @@ namespace netbu.Models
             ZipFile.ExtractToDirectory(zpFile, OutPath);
 
             string texstr = File.ReadAllText(texFile);
-            texstr = texstr.Replace(@"\_", "_");
-            texstr = ReplaceFieldXML(texstr, printRow);
+            texstr = ReplaceFieldTex(texstr, printRow);
 
             if (Tables != null)
                 for (int i = 0; i < Tables.Count; i++)
@@ -86,8 +84,6 @@ namespace netbu.Models
                     texstr = SetTableTex(texstr, printTab, i);
                 }
 
-
-            texstr = texstr.Replace("_", @"\_");
             File.WriteAllText(texFile, texstr);
 
             ProcessStartInfo pi = new ProcessStartInfo();
@@ -192,6 +188,45 @@ namespace netbu.Models
             return FName;
             */
         }
+        public string esctex(string s)
+        {
+            return s.Replace("_", "\\_").Replace("%", "\\%").Replace("&", "\\&").Replace("#", "\\#");
+        }
+        public string ReplaceFieldTex(string ResFile, DataRow printRow)
+        {
+            DataTable PrintTab = printRow.Table;
+
+            for (int i = 0; i < PrintTab.Columns.Count; i++)
+            {
+
+                string cname = PrintTab.Columns[i].ColumnName.Replace("_", "\\_");    
+                if (PrintTab.Columns[i].DataType == Type.GetType("System.DateTime"))
+                {
+                    if (printRow[i] != DBNull.Value)
+                    {
+                        ResFile = ResFile.Replace("I" + cname + "I", ((DateTime)printRow[i]).TimeOfDay.ToString().Substring(0, 5));
+                        ResFile = ResFile.Replace("A" + cname + "A", ((DateTime)printRow[i]).ToShortDateString());
+                        ResFile = ResFile.Replace("[" + cname + "]", ((DateTime)printRow[i]).ToString());
+                    }
+                    else
+                    {
+                        ResFile = ResFile.Replace("I" + cname + "I", "");
+                        ResFile = ResFile.Replace("A" + cname + "A", "");
+                        ResFile = ResFile.Replace("[" + cname + "]", "");
+                    }
+                }
+                else
+                {
+
+                    ResFile = ResFile.Replace("I" + cname + "I", esctex(printRow[i].ToString()));
+                    ResFile = ResFile.Replace("A" + cname + "A", esctex(printRow[i].ToString()));
+                    ResFile = ResFile.Replace("[" + cname + "]", esctex(printRow[i].ToString()));
+
+                }
+            }
+
+            return ResFile;
+        }
 
         public string ReplaceFieldXML(string ResFile, DataRow printRow)
         {
@@ -260,7 +295,7 @@ namespace netbu.Models
 
             for (int i = 0; i < printTable.Rows.Count; i++)
             {
-                StrartRes = StrartRes + ReplaceFieldXML(MidRes, printTable.Rows[i]);
+                StrartRes = StrartRes + ReplaceFieldTex(MidRes, printTable.Rows[i]);
             }
 
             StrartRes = StrartRes + FootRes;
