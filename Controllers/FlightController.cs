@@ -23,8 +23,8 @@ namespace netbu.Controllers
         [Authorize]
         public ActionResult Index(Guid FC_PK, string fl)
         {
-            if (string.IsNullOrEmpty(fl))
-                return Redirect("~/Print/tgo_pdf/" + FC_PK.ToString());
+            //if (string.IsNullOrEmpty(fl))
+            //    return Redirect("~/Print/tgo_pdf/" + FC_PK.ToString());
             string sql = "select * from dbo.v_FlightNumber where FC_PK = @FC_PK";
             SqlDataAdapter da = new SqlDataAdapter(sql, DBClient.CnStr);
             da.SelectCommand.Parameters.AddWithValue("@FC_PK", FC_PK);

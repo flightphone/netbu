@@ -23,9 +23,10 @@ namespace netbu.Controllers
         [Authorize]
         public ActionResult Index(string id)
         {
-            ViewBag.id = id;
-            ViewBag.account = User.Identity.Name;
-            return View();
+            //ViewBag.id = id;
+            //ViewBag.account = User.Identity.Name;
+            //return View();
+            return Redirect("~/index.html");
         }
 
         #region secret
