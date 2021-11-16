@@ -190,7 +190,17 @@ namespace netbu.Models
         }
         public string esctex(string s)
         {
-            return s.Replace("_", "\\_").Replace("%", "\\%").Replace("&", "\\&").Replace("#", "\\#");
+            return s
+            .Replace("\\", "")
+            .Replace("^", "")
+            .Replace("~", "-")
+            .Replace("_", "\\_")
+            .Replace("%", "\\%")
+            .Replace("&", "\\&")
+            .Replace("$", "\\$")
+            .Replace("{", "\\{")
+            .Replace("}", "\\}")
+            .Replace("#", "\\#");
         }
         public string ReplaceFieldTex(string ResFile, DataRow printRow)
         {
