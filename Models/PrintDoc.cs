@@ -11,6 +11,7 @@ using System.IO.Compression;
 using Newtonsoft.Json;
 using WpfBu.Models;
 using System.Data.SqlClient;
+using System.Net;
 
 namespace netbu.Models
 {
@@ -54,7 +55,7 @@ namespace netbu.Models
         }
         public byte[] PrintPdf(String RepName, DataRow printRow, List<DataTable> Tables)
         {
-           
+
             string sql = $"select FileDat from ReportFile (nolock) where FileName = '{RepName}'";
             SqlDataAdapter da = new SqlDataAdapter(sql, MainObj.ConnectionString);
             DataTable dat = new DataTable();
@@ -62,6 +63,48 @@ namespace netbu.Models
             if (dat.Rows.Count == 0)
                 return null;
             byte[] buf = (byte[])dat.Rows[0][0];
+
+            //Сами не компилируем
+            string FileName = @"wwwroot\Reports\rep" + Guid.NewGuid().ToString() + ".zip";
+            File.WriteAllBytes(FileName, buf);
+
+            string texstr;
+            using (FileStream zipToOpen = new FileStream(FileName, FileMode.Open))
+            {
+                using (ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Update))
+                {
+                    string texFile = RepName.Replace(".zip", ".tex");
+                    ZipArchiveEntry doc = archive.GetEntry(texFile);
+                    using (StreamReader sr = new StreamReader(doc.Open()))
+                    {
+                        texstr = sr.ReadToEnd();
+                        texstr = ReplaceFieldTex(texstr, printRow);
+
+                        if (Tables != null)
+                            for (int i = 0; i < Tables.Count; i++)
+                            {
+                                DataTable printTab = Tables[i];
+                                texstr = SetTableTex(texstr, printTab, i);
+                            }
+
+                    }
+
+                    doc = archive.GetEntry(texFile);
+                    using (StreamWriter writer = new StreamWriter(doc.Open()))
+                    {
+                        writer.Write(texstr);
+                    }
+
+
+                }
+            }
+            WebClient wc = new WebClient();
+            string uri = $"{MainObj.LaTeXCompiler}?main={RepName}";
+            byte[] res = wc.UploadFile(uri, FileName);
+            File.Delete(FileName);
+            return res;
+
+            /*
             string OutPath = $@"wwwroot\Reports\{Guid.NewGuid().ToString()}";
             string zpFile = $@"{OutPath}\proj.zip";
 
@@ -73,6 +116,7 @@ namespace netbu.Models
             string texFile = $@"{OutPath}\{RepName.Replace(".zip", ".tex")}";
             string pdfFile = $@"{OutPath}\{RepName.Replace(".zip", ".pdf")}";
             ZipFile.ExtractToDirectory(zpFile, OutPath);
+            System.IO.File.Delete(zpFile);
 
             string texstr = File.ReadAllText(texFile);
             texstr = ReplaceFieldTex(texstr, printRow);
@@ -85,7 +129,7 @@ namespace netbu.Models
                 }
 
             File.WriteAllText(texFile, texstr);
-
+            
             ProcessStartInfo pi = new ProcessStartInfo();
             pi.WorkingDirectory = OutPath;
             pi.FileName = "xelatex";
@@ -94,6 +138,8 @@ namespace netbu.Models
             byte[] res = File.ReadAllBytes(pdfFile);
             Directory.Delete(OutPath, true);
             return res;
+            */
+
 
         }
         public byte[] PrintDocx(String RepName, DataRow printRow, List<DataTable> Tables, Dictionary<string, byte[]> Images)
@@ -118,8 +164,8 @@ namespace netbu.Models
             if (dat.Rows.Count == 0)
                 return null;
             byte[] buf = (byte[])dat.Rows[0][0];
-            File.WriteAllBytes(FileName, buf);
 
+            File.WriteAllBytes(FileName, buf);
             using (FileStream zipToOpen = new FileStream(FileName, FileMode.Open))
             //using (MemoryStream zipToOpen = new MemoryStream(buf))
             {
@@ -190,17 +236,19 @@ namespace netbu.Models
         }
         public string esctex(string s)
         {
+            string md = "DE5BA24A-BCFC-4D5D-B92E-E283F9D39ABE";
             return s
-            .Replace("\\", "")
-            .Replace("^", "")
-            .Replace("~", "-")
+            .Replace("\\", $"{md}\\backslash{md}")
+            .Replace("~", $"{md}\\sim{md}")
             .Replace("_", "\\_")
             .Replace("%", "\\%")
             .Replace("&", "\\&")
             .Replace("$", "\\$")
             .Replace("{", "\\{")
             .Replace("}", "\\}")
-            .Replace("#", "\\#");
+            .Replace("#", "\\#")
+            .Replace("^", md + "\\hat{}" + md)
+            .Replace(md, "$");
         }
         public string ReplaceFieldTex(string ResFile, DataRow printRow)
         {
@@ -209,7 +257,7 @@ namespace netbu.Models
             for (int i = 0; i < PrintTab.Columns.Count; i++)
             {
 
-                string cname = PrintTab.Columns[i].ColumnName.Replace("_", "\\_");    
+                string cname = PrintTab.Columns[i].ColumnName.Replace("_", "\\_");
                 if (PrintTab.Columns[i].DataType == Type.GetType("System.DateTime"))
                 {
                     if (printRow[i] != DBNull.Value)

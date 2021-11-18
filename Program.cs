@@ -53,6 +53,7 @@ namespace netbu
             DBClient.CnStr = (isPostgres) ? AppConfig["cns"] : AppConfig["mscns"];
             //Для React
             MainObj.ConnectionString = DBClient.CnStr;
+            MainObj.LaTeXCompiler = AppConfig["latexcompiler"];
             
             
 

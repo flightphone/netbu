@@ -20,6 +20,7 @@
   "ldap_server":"84.201.148.147",
   "ldap_root":"dc=example,dc=org",
   "ldap_port":"389",
-  "domain": ""
+  "domain": "",
+  "latexcompiler" : "http://127.0.0.1:2000/Home/upload"
 
 }

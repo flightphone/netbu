@@ -98,9 +98,16 @@ namespace netbu.Controllers
             string FileName = MapH.Rows[0]["MH_ArrivalFlNumber"].ToString() + "_" + MapH.Rows[0]["MH_DepartFlNumber"].ToString();
             List<DataTable> atab = new List<DataTable>() { MapD };
             PrintDoc pd = new PrintDoc();
-            byte[] res = pd.PrintPdf(RH_Template, MapH.Rows[0], atab);
-            //Возвращаем pdf
-            return File(res, "application/octet-stream", FileName + ".pdf");
+            try
+            {
+                byte[] res = pd.PrintPdf(RH_Template, MapH.Rows[0], atab);
+                //Возвращаем pdf
+                return File(res, "application/octet-stream", FileName + ".pdf");
+            }
+            catch (Exception e)
+            {
+                return Content(e.Message);
+            }
 
 
 
