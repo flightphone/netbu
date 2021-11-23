@@ -81,7 +81,7 @@ namespace netbu.Controllers
             SqlDataAdapter da = new SqlDataAdapter("p_prnMap", cnstr);
             da.SelectCommand.CommandType = CommandType.StoredProcedure;
             da.SelectCommand.Parameters.AddWithValue("@FC_PK", FC_PK);
-            da.SelectCommand.Parameters.AddWithValue("@RH_Category", RH_Category);
+            da.SelectCommand.Parameters.AddWithValue("@RH_Category", "");
             da.SelectCommand.Parameters.AddWithValue("@MH_RH", _MapH.Rows[0]["MH_RH"]);
             DataTable[] par = { MapH, MapD };
             da.Fill(0, 0, par);

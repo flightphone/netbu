@@ -99,7 +99,8 @@ namespace netbu.Models
                 }
             }
             WebClient wc = new WebClient();
-            string uri = $"{MainObj.LaTeXCompiler}?main={RepName}";
+            //string uri = $"{MainObj.LaTeXCompiler}?main={RepName}";
+            string uri = $"{MainObj.LaTeXCompiler}/{RepName}";
             byte[] res = wc.UploadFile(uri, FileName);
             File.Delete(FileName);
             return res;
