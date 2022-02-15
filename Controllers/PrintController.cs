@@ -59,6 +59,53 @@ namespace netbu.Controllers
 
         }
 
+        public ActionResult PrintWO(int IdDeclare, DateTime DateStart, DateTime DateFinish, string AL_UTG)
+        {
+            try
+            {
+                string sql = "select * from t_rpDeclare(nolock) where IdDeclare = @IdDeclare";
+                var cnstr = MainObj.ConnectionString;
+                SqlDataAdapter da = new SqlDataAdapter(sql, cnstr);
+                da.SelectCommand.Parameters.AddWithValue("@IdDeclare", IdDeclare);
+                DataTable t_rp = new DataTable();
+                da.Fill(t_rp);
+                string[] SaveFieldList = t_rp.Rows[0]["SaveFieldList"].ToString()
+                        .Split(new String[] { "," }, StringSplitOptions.None);
+
+                string printProc = SaveFieldList[0];
+                string printTemplate = SaveFieldList[1];
+
+
+                DataTable head = new DataTable();
+                DataTable rows = new DataTable();
+
+                da = new SqlDataAdapter(printProc, MainObj.ConnectionString);
+                da.SelectCommand.CommandType = CommandType.StoredProcedure;
+                da.SelectCommand.CommandTimeout = 0;
+
+                da.SelectCommand.Parameters.AddWithValue("@DateStart", DateStart);
+                da.SelectCommand.Parameters.AddWithValue("@DateFinish", DateFinish.AddDays(1).AddSeconds(-1));
+                if (!string.IsNullOrEmpty(AL_UTG))
+                    da.SelectCommand.Parameters.AddWithValue("@AL_UTG", AL_UTG);
+
+                da.Fill(0, 0, new DataTable[] { head, rows });
+
+                string Template = $"{printTemplate}.zip";
+                string FileName = $"{printTemplate}.pdf";
+                List<DataTable> atab = new List<DataTable>() { rows };
+                PrintDoc pd = new PrintDoc();
+                byte[] res = pd.PrintPdf(Template, head.Rows[0], atab);
+                //Возвращаем pdf
+                return File(res, "application/octet-stream", FileName);
+            }
+            catch (Exception e)
+            {
+                return Content(e.Message);
+            }
+
+
+        }
+
         public ActionResult tgo_pdf(string id)
         {
 
