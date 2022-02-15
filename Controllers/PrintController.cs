@@ -59,7 +59,7 @@ namespace netbu.Controllers
 
         }
 
-        public ActionResult PrintWO(int IdDeclare, DateTime DateStart, DateTime DateFinish, string AL_UTG)
+        public ActionResult PrintRep(int IdDeclare, DateTime DateStart, DateTime DateFinish, string AL_UTG, string AP_IATA)
         {
             try
             {
@@ -87,6 +87,8 @@ namespace netbu.Controllers
                 da.SelectCommand.Parameters.AddWithValue("@DateFinish", DateFinish.AddDays(1).AddSeconds(-1));
                 if (!string.IsNullOrEmpty(AL_UTG))
                     da.SelectCommand.Parameters.AddWithValue("@AL_UTG", AL_UTG);
+                if (!string.IsNullOrEmpty(AP_IATA))
+                    da.SelectCommand.Parameters.AddWithValue("@AP_IATA", AP_IATA);
 
                 da.Fill(0, 0, new DataTable[] { head, rows });
 

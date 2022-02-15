@@ -259,6 +259,11 @@ namespace netbu.Models
             {
 
                 string cname = PrintTab.Columns[i].ColumnName.Replace("_", "\\_");
+                if (PrintTab.Columns[i].DataType == Type.GetType("System.Double")  && printRow[i] != DBNull.Value)
+                {
+                    ResFile = ResFile.Replace("[" + cname + "]", ((Double)printRow[i]).ToString("#,##0.00"));
+                }
+                else
                 if (PrintTab.Columns[i].DataType == Type.GetType("System.DateTime"))
                 {
                     if (printRow[i] != DBNull.Value)
