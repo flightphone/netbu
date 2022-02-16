@@ -150,15 +150,10 @@ namespace netbu.Models
             string OutPath = @"wwwroot\Reports\" + RepName;
             string document = OutPath + @"\word\document.xml";
             string ResWord;
-            //string ResWord = File.ReadAllText(document, Encoding.UTF8);
-
-
-
-
-            //ZipFile.CreateFromDirectory(OutPath, FileName);
-            //File.Copy(@"D:\uProjects\CheckList\RegulationPrint\bin\Reports\Map.docx", FileName);
+            
+            
             //Подгружаем файл из базы
-            string sql = $"select FileDat from ReportFile (nolock) where FileName = '{RepName}.docx'";
+            string sql = $"select FileDat from ReportFile (nolock) where FileName = '{RepName}'";
             SqlDataAdapter da = new SqlDataAdapter(sql, MainObj.ConnectionString);
             DataTable dat = new DataTable();
             da.Fill(dat);
@@ -214,26 +209,7 @@ namespace netbu.Models
             File.Delete(FileName);
             return res;
 
-            /* 
-            StreamWriter swr = new StreamWriter(document, false, Encoding.UTF8);
-            swr.Write(ResWord);
-            swr.Close();
-
-            //Картинки
-            if (Images!=null)
-                for (int i = 0; i < Images.Count; i++)
-                {
-                    String key = (String)Images.GetKey(i);
-                    Image img = (Image)Images[key];
-                    String imgFile = OutPath + @"\word\media\" + key + ".png";
-                    img.Save(imgFile, System.Drawing.Imaging.ImageFormat.Png);
-                }
-
-
-            //Запаковываем
-            pkZip(OutPath, FName);
-            return FName;
-            */
+            
         }
         public string esctex(string s)
         {
@@ -382,6 +358,9 @@ namespace netbu.Models
             {
                 StartInd = StepInd;
                 StepInd = ResFile.IndexOf(@"<w:tr ", StartInd + 1);
+                if (StepInd == -1)
+                    return ResFile;
+
             }
 
 
@@ -410,7 +389,7 @@ namespace netbu.Models
         {
             int ind = -1;
             int i = 0;
-            while (ind == -1 & i < printTable.Columns.Count)
+            while (ind == -1 && i < printTable.Columns.Count)
             {
                 String KeyField = "A" + printTable.Columns[i].ColumnName + "A";
                 ind = ResFile.IndexOf(KeyField);

@@ -59,7 +59,7 @@ namespace netbu.Controllers
 
         }
 
-        public ActionResult PrintRep(int IdDeclare, DateTime DateStart, DateTime DateFinish, string AL_UTG, string AP_IATA)
+        public ActionResult PrintRep(int IdDeclare, DateTime DateStart, DateTime DateFinish, string AL_UTG, string AP_IATA, string format)
         {
             try
             {
@@ -94,9 +94,23 @@ namespace netbu.Controllers
 
                 string Template = $"{printTemplate}.zip";
                 string FileName = $"{printTemplate}.pdf";
+
+                if (format == "docx")
+                {
+                    Template = $"{printTemplate}.docx";
+                    FileName = $"{printTemplate}.docx";
+                }
+
                 List<DataTable> atab = new List<DataTable>() { rows };
                 PrintDoc pd = new PrintDoc();
-                byte[] res = pd.PrintPdf(Template, head.Rows[0], atab);
+                byte[] res;
+                if (format == "docx")
+                {
+                    Dictionary<string, byte[]> Images = new Dictionary<string, byte[]>();
+                    res = pd.PrintDocx(Template, head.Rows[0], atab, Images);
+                }
+                else
+                    res = pd.PrintPdf(Template, head.Rows[0], atab);
                 //Возвращаем pdf
                 return File(res, "application/octet-stream", FileName);
             }
@@ -166,7 +180,7 @@ namespace netbu.Controllers
         {
 
             string FC_PK = id;
-            //"9f076395-ebb8-4ade-b65a-3c6571fb0805"
+            
             DataTable _MapH = new DataTable();
             string sql = "select * from v_MapH_strong where FC_PK = @FC_PK and RH_Category = @RH_Category";
             var cnstr = Program.AppConfig["mscns"];
@@ -196,7 +210,7 @@ namespace netbu.Controllers
                 return File(Encoding.UTF8.GetBytes("Не найден регламент."), "application/octet-stream", "Регламент не найден.txt");
             }
 
-            string RH_Template = MapH.Rows[0]["MH_Template"].ToString().ToLower().Replace(".docx", "");
+            string RH_Template = MapH.Rows[0]["MH_Template"].ToString();//.ToLower().Replace(".docx", "");
 
             /* Картинку пока не рисуем 
             string codeurl = "https://www.barcodesinc.com/generator/image.php?type=C128B&width=120&height=100&xres=1&font=3&code=" + MapH.Rows[0]["AD_NN"].ToString();
