@@ -98,49 +98,44 @@ namespace netbu.Models
 
                 }
             }
-            WebClient wc = new WebClient();
-            //string uri = $"{MainObj.LaTeXCompiler}?main={RepName}";
-            string uri = $"{MainObj.LaTeXCompiler}/{RepName}";
-            byte[] res = wc.UploadFile(uri, FileName);
-            File.Delete(FileName);
-            return res;
 
-            /*
-            string OutPath = $@"wwwroot\Reports\{Guid.NewGuid().ToString()}";
-            string zpFile = $@"{OutPath}\proj.zip";
+            if (!string.IsNullOrEmpty(MainObj.LaTeXCompiler))
+            {
+                WebClient wc = new WebClient();
+                string uri = $"{MainObj.LaTeXCompiler}/{RepName}";
+                byte[] res = wc.UploadFile(uri, FileName);
+                File.Delete(FileName);
+                return res;
+            }
+            else
+            {
+                RepName = Path.GetFileNameWithoutExtension(RepName);
+                byte[] bf = File.ReadAllBytes(FileName);
+                File.Delete(FileName);
 
+                string OutPath = Path.Combine("wwwroot", Guid.NewGuid().ToString());
+                string zpFile = Path.Combine(OutPath, "proj.zip");
 
-            Directory.CreateDirectory(OutPath);
-            File.WriteAllBytes(zpFile, buf);
-            FileInfo fi = new FileInfo(zpFile);
-            OutPath = fi.DirectoryName;
-            string texFile = $@"{OutPath}\{RepName.Replace(".zip", ".tex")}";
-            string pdfFile = $@"{OutPath}\{RepName.Replace(".zip", ".pdf")}";
-            ZipFile.ExtractToDirectory(zpFile, OutPath);
-            System.IO.File.Delete(zpFile);
+                Directory.CreateDirectory(OutPath);
+                System.IO.File.WriteAllBytes(zpFile, bf);
+                FileInfo fi = new FileInfo(zpFile);
+                OutPath = fi.DirectoryName;
+                ZipFile.ExtractToDirectory(zpFile, OutPath);
+                System.IO.File.Delete(zpFile);
 
-            string texstr = File.ReadAllText(texFile);
-            texstr = ReplaceFieldTex(texstr, printRow);
+                string texFile = Path.Combine(OutPath, RepName + ".tex");
+                string pdfFile = Path.Combine(OutPath, RepName + ".pdf");
+                string logFile = Path.Combine(OutPath, RepName + ".log");
 
-            if (Tables != null)
-                for (int i = 0; i < Tables.Count; i++)
-                {
-                    DataTable printTab = Tables[i];
-                    texstr = SetTableTex(texstr, printTab, i);
-                }
-
-            File.WriteAllText(texFile, texstr);
-            
-            ProcessStartInfo pi = new ProcessStartInfo();
-            pi.WorkingDirectory = OutPath;
-            pi.FileName = "xelatex";
-            pi.Arguments = $"-interaction nonstopmode {texFile}";
-            Process.Start(pi).WaitForExit();
-            byte[] res = File.ReadAllBytes(pdfFile);
-            Directory.Delete(OutPath, true);
-            return res;
-            */
-
+                ProcessStartInfo pi = new ProcessStartInfo();
+                pi.WorkingDirectory = OutPath;
+                pi.FileName = "xelatex";
+                pi.Arguments = $"-interaction nonstopmode -output-driver=\"xdvipdfmx -i dvipdfmx-unsafe.cfg -q -E\" {texFile}";
+                Process.Start(pi).WaitForExit();
+                byte[] res = System.IO.File.ReadAllBytes(pdfFile);
+                Directory.Delete(OutPath, true);
+                return res;
+            }
 
         }
         public byte[] PrintDocx(String RepName, DataRow printRow, List<DataTable> Tables, Dictionary<string, byte[]> Images)
@@ -150,8 +145,8 @@ namespace netbu.Models
             string OutPath = @"wwwroot\Reports\" + RepName;
             string document = OutPath + @"\word\document.xml";
             string ResWord;
-            
-            
+
+
             //Подгружаем файл из базы
             string sql = $"select FileDat from ReportFile (nolock) where FileName = '{RepName}'";
             SqlDataAdapter da = new SqlDataAdapter(sql, MainObj.ConnectionString);
@@ -209,7 +204,7 @@ namespace netbu.Models
             File.Delete(FileName);
             return res;
 
-            
+
         }
         public string esctex(string s)
         {
@@ -235,7 +230,7 @@ namespace netbu.Models
             {
 
                 string cname = PrintTab.Columns[i].ColumnName.Replace("_", "\\_");
-                if (PrintTab.Columns[i].DataType == Type.GetType("System.Double")  && printRow[i] != DBNull.Value)
+                if (PrintTab.Columns[i].DataType == Type.GetType("System.Double") && printRow[i] != DBNull.Value)
                 {
                     ResFile = ResFile.Replace("[" + cname + "]", ((Double)printRow[i]).ToString("#,##0.00"));
                 }
