@@ -4,24 +4,21 @@ using System.Text;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Hosting;
-using Newtonsoft.Json;
 using netbu.Models;
 using System.Data.SqlClient;
 using System.IO;
-using System.Net;
-using Microsoft.Extensions.Primitives;
-using System.Drawing;
-using System.Drawing.Imaging;
 using WpfBu.Models;
+using Microsoft.AspNetCore.Authorization;
 
 
 
 namespace netbu.Controllers
 {
+    //[Authorize]
     public class PrintController : Controller
     {
 
+        [AllowAnonymous]
         public JsonResult upload(List<IFormFile> files)
         {
             string res = "";
@@ -57,6 +54,18 @@ namespace netbu.Controllers
 
             return Json(new { error = res });
 
+        }
+
+        public ActionResult dnload(string RepName)
+        {
+            string sql = $"select FileDat from ReportFile (nolock) where FileName = '{RepName}'";
+            SqlDataAdapter da = new SqlDataAdapter(sql, MainObj.ConnectionString);
+            DataTable dat = new DataTable();
+            da.Fill(dat);
+            if (dat.Rows.Count == 0)
+                return Content("Файл не найден");
+            byte[] buf = (byte[])dat.Rows[0][0];
+            return File(buf, "application/octet-stream", RepName);
         }
 
         public ActionResult PrintRep(int IdDeclare, DateTime DateStart, DateTime DateFinish, string AL_UTG, string AP_IATA, string format)
@@ -95,6 +104,9 @@ namespace netbu.Controllers
                 string Template = $"{printTemplate}.zip";
                 string FileName = $"{printTemplate}.pdf";
 
+                if (format == "zip")
+                    FileName = $"{printTemplate}.zip";
+
                 if (format == "docx")
                 {
                     Template = $"{printTemplate}.docx";
@@ -110,7 +122,8 @@ namespace netbu.Controllers
                     res = pd.PrintDocx(Template, head.Rows[0], atab, Images);
                 }
                 else
-                    res = pd.PrintPdf(Template, head.Rows[0], atab);
+                    res = pd.PrintPdf(Template, head.Rows[0], atab, (format == "zip"));
+                
                 //Возвращаем pdf
                 return File(res, "application/octet-stream", FileName);
             }
@@ -180,7 +193,7 @@ namespace netbu.Controllers
         {
 
             string FC_PK = id;
-            
+
             DataTable _MapH = new DataTable();
             string sql = "select * from v_MapH_strong where FC_PK = @FC_PK and RH_Category = @RH_Category";
             var cnstr = Program.AppConfig["mscns"];

@@ -53,7 +53,7 @@ namespace netbu.Models
 
             return Res.ToString().Trim();
         }
-        public byte[] PrintPdf(String RepName, DataRow printRow, List<DataTable> Tables)
+        public byte[] PrintPdf(String RepName, DataRow printRow, List<DataTable> Tables, bool src = false)
         {
 
             string sql = $"select FileDat from ReportFile (nolock) where FileName = '{RepName}'";
@@ -99,6 +99,13 @@ namespace netbu.Models
                 }
             }
 
+            if (src)
+            {
+                byte[] res = File.ReadAllBytes(FileName);
+                File.Delete(FileName);
+                return res;
+            }
+
             if (!string.IsNullOrEmpty(MainObj.LaTeXCompiler))
             {
                 WebClient wc = new WebClient();
@@ -113,7 +120,7 @@ namespace netbu.Models
                 byte[] bf = File.ReadAllBytes(FileName);
                 File.Delete(FileName);
 
-                string OutPath = Path.Combine("wwwroot", Guid.NewGuid().ToString());
+                string OutPath = Path.Combine(@"wwwroot\Reports", Guid.NewGuid().ToString());
                 string zpFile = Path.Combine(OutPath, "proj.zip");
 
                 Directory.CreateDirectory(OutPath);
