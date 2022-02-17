@@ -104,6 +104,9 @@ namespace netbu.Controllers
                 string Template = $"{printTemplate}.zip";
                 string FileName = $"{printTemplate}.pdf";
 
+                if (MainObj.LaTeXCompiler == "zip" && format != "docx")
+                    format = "zip";
+
                 if (format == "zip")
                     FileName = $"{printTemplate}.zip";
 
@@ -123,7 +126,7 @@ namespace netbu.Controllers
                 }
                 else
                     res = pd.PrintPdf(Template, head.Rows[0], atab, (format == "zip"));
-                
+
                 //Возвращаем pdf
                 return File(res, "application/octet-stream", FileName);
             }
@@ -178,7 +181,7 @@ namespace netbu.Controllers
             {
                 byte[] res = pd.PrintPdf(RH_Template, MapH.Rows[0], atab);
                 //Возвращаем pdf
-                return File(res, "application/octet-stream", FileName + ".pdf");
+                return File(res, "application/octet-stream", FileName + ((MainObj.LaTeXCompiler == "zip") ? ".zip" : ".pdf"));
             }
             catch (Exception e)
             {

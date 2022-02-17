@@ -98,7 +98,7 @@ namespace netbu.Models
 
                 }
             }
-
+            src = (MainObj.LaTeXCompiler == "zip") ? true : src;
             if (src)
             {
                 byte[] res = File.ReadAllBytes(FileName);

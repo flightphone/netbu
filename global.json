@@ -21,7 +21,6 @@
   "ldap_root":"dc=example,dc=org",
   "ldap_port":"389",
   "domain": "",
-  "latexcompiler1" : "http://51.250.36.128:2000/upload",
   "latexcompiler" : ""
 
 }
