@@ -282,7 +282,8 @@ namespace netbu.Controllers
             return Json(new { error = res });
 
         }
-
+		
+        [AllowAnonymous]
         public IActionResult getphoto(string audtuser)
         {
             string sql = "select  top 1 image_bmp from dbo.cntEmployees (nolock) where AD_Name = @audtuser and isnull(image_bmp, '') <> ''";

@@ -26,12 +26,12 @@ namespace netbu.Controllers
             //ViewBag.id = id;
             //ViewBag.account = User.Identity.Name;
             //return View();
-            return Redirect("~/index.html");
+            return Redirect("~/index.html#" + id);
         }
 
         #region secret
         [Route("ustore/gettree")]
-        [Authorize]
+        //[Authorize]
         public JsonResult gettree()
         {
             try

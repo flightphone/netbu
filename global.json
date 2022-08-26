@@ -21,6 +21,10 @@
   "ldap_root":"dc=example,dc=org",
   "ldap_port":"389",
   "domain": "",
-  "latexcompiler" : ""
+  "latexcompiler" : "",
+  "sms_address" : "MTSM_Test",
+  "sms_login" : "gw_BKmMl2NAxSsE",
+  "sms_password" : "HsaIXrS4"
+  
 
 }
