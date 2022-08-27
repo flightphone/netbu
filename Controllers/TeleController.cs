@@ -124,10 +124,25 @@ namespace netbu.Controllers
                     }
                 }
                 string responseText = "";
-                HttpWebResponse httpResponse = (HttpWebResponse)httpRequest.GetResponse();
-                using (var r = new StreamReader(httpResponse.GetResponseStream()))
+                try
                 {
-                    responseText = r.ReadToEnd();
+                    HttpWebResponse httpResponse = (HttpWebResponse)httpRequest.GetResponse();
+                    using (var r = new StreamReader(httpResponse.GetResponseStream()))
+                    {
+                        responseText = r.ReadToEnd();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    sqlerr = "update uKnow..AM_messages set MG_error = @MG_error, MG_status = 3 where [MG_FC] = @FC_PK and isnull(MG_connect, '') <> '' and MG_Type = 'SMS'";
+                    cn = new SqlConnection(cnstr);
+                    cmd = new SqlCommand(sqlerr, cn);
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@FC_PK", fc_pk);
+                    cmd.Parameters.AddWithValue("@MG_error", ex.Message);
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+                    cn.Close();
                 }
 
                 //Статусы
@@ -144,15 +159,32 @@ namespace netbu.Controllers
                     }
                 }
                 responseText = "";
-                httpResponse = (HttpWebResponse)httpRequest.GetResponse();
-                using (var r = new StreamReader(httpResponse.GetResponseStream()))
+                try
                 {
-                    responseText = r.ReadToEnd();
+                    HttpWebResponse httpResponse = (HttpWebResponse)httpRequest.GetResponse();
+                    using (var r = new StreamReader(httpResponse.GetResponseStream()))
+                    {
+                        responseText = r.ReadToEnd();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    sqlerr = "update uKnow..AM_messages set MG_error = @MG_error, MG_status = 3 where [MG_FC] = @FC_PK and isnull(MG_connect, '') <> '' and MG_Type = 'SMS'";
+                    cn = new SqlConnection(cnstr);
+                    cmd = new SqlCommand(sqlerr, cn);
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@FC_PK", fc_pk);
+                    cmd.Parameters.AddWithValue("@MG_error", ex.Message);
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+                    cn.Close();
                 }
 
                 sms_info m_i = JsonConvert.DeserializeObject<sms_info>(responseText);
+                if (m_i.events_info == null)
+                    return;
                 var res2 = m_i.events_info.Select(ei0 => (new { message_id = ei0.events_info.Last<sms_event>().message_id, errors = ei0.events_info.Last<sms_event>().internal_errors }));
-                sqlerr = "update uKnow..AM_messages set MG_error = @MG_error where MG_PK = @MG_PK";
+                sqlerr = "update uKnow..AM_messages set MG_error = @MG_error, MG_status = 1 where MG_PK = @MG_PK";
                 cn = new SqlConnection(cnstr);
                 cn.Open();
                 cmd = new SqlCommand(sqlerr, cn);
@@ -171,9 +203,9 @@ namespace netbu.Controllers
                 cn.Close();
 
             }
-            catch 
+            catch
             {
-                
+
             }
 
         }
