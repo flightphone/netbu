@@ -19,7 +19,7 @@ namespace netbu.Models
             string responseText = "";
             try
             {
-                string teleurl = "http://services.utg.group/telegram/api/Channel/publish";
+                string teleurl = "https://services.utg.group/telegram/api/Channel/publish";
                 //string teleurl = "http://195.209.129.21/telegram/api/Channel/publish";
                 var httpRequest = (HttpWebRequest)WebRequest.Create(teleurl);
                 httpRequest.Method = "POST";

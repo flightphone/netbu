@@ -32,9 +32,7 @@ namespace netbu
             {
                 options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
             });
-            //Задача по таймеру    
-            //services.AddHostedService<TimedHostedService>();
-
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

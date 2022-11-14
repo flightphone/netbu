@@ -82,6 +82,6 @@ namespace netbu
         public static bool isPostgres { get; set; }
         public static bool FlagDadataUpdate = false;
 
-        public static bool isNodeStart = false;
+        
     }
 }
