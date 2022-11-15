@@ -22,6 +22,8 @@ namespace netbu.Models
                 string teleurl = "https://services.utg.group/telegram/api/Channel/publish";
                 //string teleurl = "http://195.209.129.21/telegram/api/Channel/publish";
                 var httpRequest = (HttpWebRequest)WebRequest.Create(teleurl);
+                httpRequest.Proxy = null;
+                httpRequest.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
                 httpRequest.Method = "POST";
                 httpRequest.ContentType = "application/json";
                 httpRequest.Headers.Add("UserToken", UserToken);

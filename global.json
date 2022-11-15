@@ -1,6 +1,6 @@
 {
   "sdk": {
-    "version": "2.1.402"
+    "version": "2.1.818"
   },
   "cns":"Host=localhost;Username=postgres;Password=aA12345678;Database=uflights",
   "mscns": "data source=localhost\\SQLEXPRESS8;User ID=sa;Password=aA12345678;database=uFlights",

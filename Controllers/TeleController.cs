@@ -18,6 +18,7 @@ namespace netbu.Controllers
     {
         public string test(string channelID, string UserToken, string content)
         {
+            //Tele/test?channelID=-1001299813271&UserToken=123&content=aaa
             dadataINN di = new dadataINN();
             return di.sendtele(channelID, UserToken, content);
         }
