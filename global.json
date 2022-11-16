@@ -21,7 +21,9 @@
   "ldap_root":"dc=example,dc=org",
   "ldap_port":"389",
   "domain": "",
-  "latexcompiler" : "",
+  "latexcompiler_local" : "D:\\Program Files\\MiKTeX\\miktex\\bin\\x64\\xelatex.exe",
+  "latexcompiler_web": "http://localhost:2000/upload",
+  "latexcompiler": "",
   "sms_address" : "MTSM_Test",
   "sms_login" : "gw_BKmMl2NAxSsE",
   "sms_password" : "HsaIXrS4"

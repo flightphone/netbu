@@ -106,7 +106,7 @@ namespace netbu.Models
                 return res;
             }
 
-            if (!string.IsNullOrEmpty(MainObj.LaTeXCompiler))
+            if (!string.IsNullOrEmpty(MainObj.LaTeXCompiler) && MainObj.LaTeXCompiler.Substring(0, 4).ToLower() == "http")
             {
                 WebClient wc = new WebClient();
                 string uri = $"{MainObj.LaTeXCompiler}/{RepName}";
@@ -137,7 +137,11 @@ namespace netbu.Models
                 ProcessStartInfo pi = new ProcessStartInfo();
                 pi.WorkingDirectory = OutPath;
                 pi.FileName = "xelatex";
+                if (!string.IsNullOrEmpty(MainObj.LaTeXCompiler))
+                    pi.FileName = MainObj.LaTeXCompiler;
+
                 pi.Arguments = $"-interaction nonstopmode -output-driver=\"xdvipdfmx -i dvipdfmx-unsafe.cfg -q -E\" {texFile}";
+                //pi.Arguments = $"-interaction nonstopmode  {texFile}";
                 Process.Start(pi).WaitForExit();
                 byte[] res = System.IO.File.ReadAllBytes(pdfFile);
                 Directory.Delete(OutPath, true);
