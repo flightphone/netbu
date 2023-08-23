@@ -19,8 +19,7 @@ namespace netbu.Models
             string responseText = "";
             try
             {
-                string teleurl = "https://services.utg.group/telegram/api/Channel/publish";
-                //string teleurl = "http://195.209.129.21/telegram/api/Channel/publish";
+                string teleurl = Program.AppConfig["teleurl"];
                 var httpRequest = (HttpWebRequest)WebRequest.Create(teleurl);
                 httpRequest.Proxy = null;
                 httpRequest.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;

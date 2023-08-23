@@ -26,7 +26,8 @@
   "latexcompiler": "",
   "sms_address" : "MTSM_Test",
   "sms_login" : "gw_BKmMl2NAxSsE",
-  "sms_password" : "HsaIXrS4"
+  "sms_password" : "HsaIXrS4",
+  "teleurl":"https://services"
   
 
 }
