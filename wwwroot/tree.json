@@ -1,0 +1,4504 @@
+[
+    {
+        "id": "81",
+        "text": "Карточки рейсов",
+        "children": null,
+        "iconCls": "tree-21",
+        "attributes": {
+            "link1": "RegulationPrint.FlightCardsList",
+            "params": "134"
+        },
+        "state": null
+    },
+    {
+        "id": "124_node",
+        "text": "Ошибки заполнения",
+        "children": [
+            {
+                "id": "124",
+                "text": "Грубые ошибки",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.ServiceReport",
+                    "params": "177"
+                },
+                "state": null
+            },
+            {
+                "id": "116",
+                "text": "Незаполненные услуги",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.notFullCards",
+                    "params": "168"
+                },
+                "state": null
+            },
+            {
+                "id": "126",
+                "text": "Отсутствие СЗВ",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.repSDM",
+                    "params": "182"
+                },
+                "state": null
+            },
+            {
+                "id": "135",
+                "text": "Отсутствие ТК",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.repSDM",
+                    "params": "187"
+                },
+                "state": null
+            },
+            {
+                "id": "754",
+                "text": "Отсутствие ККО",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.repSDM",
+                    "params": "1338"
+                },
+                "state": null
+            },
+            {
+                "id": "973",
+                "text": "Отсутствие \"Требование на заправку\"",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.repSDM",
+                    "params": "1602"
+                },
+                "state": null
+            },
+            {
+                "id": "978",
+                "text": "Отсутствие \"ПГВ\"",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.repSDM",
+                    "params": "1607"
+                },
+                "state": null
+            },
+            {
+                "id": "136",
+                "text": "Расхождение числа пасс. по СЗВ и FCMY",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.ServiceReport",
+                    "params": "188"
+                },
+                "state": null
+            },
+            {
+                "id": "144",
+                "text": "Несоответствие поля МВЛ-ВВЛ",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.repSDM",
+                    "params": "204"
+                },
+                "state": null
+            },
+            {
+                "id": "123",
+                "text": "Замечания к карточкам рейсов",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.repSDM",
+                    "params": "176"
+                },
+                "state": null
+            },
+            {
+                "id": "649",
+                "text": "Ошибки ПГВ",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.repSDM",
+                    "params": "1226"
+                },
+                "state": null
+            },
+            {
+                "id": "764",
+                "text": "Отчет по дубликатам ID рейсов",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.repSDM",
+                    "params": "1360"
+                },
+                "state": null
+            }
+        ],
+        "iconCls": null,
+        "attributes": {
+            "link1": "RegulationPrint.ServiceReport",
+            "params": "177"
+        },
+        "state": "closed"
+    },
+    {
+        "id": "350_node",
+        "text": "Заявки",
+        "children": [
+            {
+                "id": "350",
+                "text": "Заявки",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.WorkOrderList",
+                    "params": "1131"
+                },
+                "state": null
+            },
+            {
+                "id": "351",
+                "text": "Наряды",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.OrderList",
+                    "params": "1147"
+                },
+                "state": null
+            },
+            {
+                "id": "704",
+                "text": "Заявки(Доставка)",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.WorkOrderList",
+                    "params": "1284"
+                },
+                "state": null
+            },
+            {
+                "id": "984_node",
+                "text": "Отчёты",
+                "children": [
+                    {
+                        "id": "984",
+                        "text": "Общий реестр заявок",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1632"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "400",
+                        "text": "Буксировка",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1150"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "747",
+                        "text": "Буксировка АК (МАВ и Зарубежные АК)",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1330"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "748",
+                        "text": "Буксировка АК ВИППОРТ, ЦБА",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1331"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "615",
+                        "text": "Реестр по подогреву",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1185"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "644",
+                        "text": "Реестр по подогреву ЮТ",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.Reports.TowReportPOO",
+                            "params": "1219"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "769",
+                        "text": "Реестр по подогреву THY",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1370"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "618",
+                        "text": "Реестр по электропитанию (передвижной)",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1189"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "870",
+                        "text": "Реестр по электропитанию (стационарный)",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1478"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "619",
+                        "text": "Перевозка техников по перрону",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1190"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "624",
+                        "text": "Реестр по трапам",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1195"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "627",
+                        "text": "Реестр по воздушным запускам",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1199"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "632",
+                        "text": "Заправка азотом и кислородом",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1205"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "664",
+                        "text": "Реестр Автовышка",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1249"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "677_node",
+                        "text": "ССО",
+                        "children": [
+                            {
+                                "id": "677",
+                                "text": "Уборка",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.TowReport",
+                                    "params": "1263"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "678",
+                                "text": "Мойка наружная",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.TowReport",
+                                    "params": "1264"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "679",
+                                "text": "Мойка полная",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.TowReport",
+                                    "params": "1265"
+                                },
+                                "state": null
+                            }
+                        ],
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1263"
+                        },
+                        "state": "closed"
+                    },
+                    {
+                        "id": "680_node",
+                        "text": "I FLY",
+                        "children": [
+                            {
+                                "id": "680",
+                                "text": "Аптечка",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.TowReport",
+                                    "params": "1266"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "681",
+                                "text": "Экипировка",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.TowReport",
+                                    "params": "1267"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "682",
+                                "text": "Услуги грузчика",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.TowReport",
+                                    "params": "1268"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "877",
+                                "text": "Услуги грузчика (кол-во минут)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.TowReport",
+                                    "params": "1487"
+                                },
+                                "state": null
+                            }
+                        ],
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1266"
+                        },
+                        "state": "closed"
+                    },
+                    {
+                        "id": "691_node",
+                        "text": "Вода и санузлы",
+                        "children": [
+                            {
+                                "id": "691",
+                                "text": "Заправка санузлов ВС",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.TowReport",
+                                    "params": "1275"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "690",
+                                "text": "Слив и промывка санузлов ВС",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.TowReport",
+                                    "params": "1273"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "692",
+                                "text": "Обработка санузлов ВС",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.TowReport",
+                                    "params": "1274"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "693",
+                                "text": "Заправка водой ВС",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.TowReport",
+                                    "params": "1276"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "694",
+                                "text": "Слив воды из ВС",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.TowReport",
+                                    "params": "1277"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "695",
+                                "text": "Обслуживание системы водоснабжения ВС",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.TowReport",
+                                    "params": "1278"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "752",
+                                "text": "Заправка водой туалетов ТЗС",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.TowReport",
+                                    "params": "1336"
+                                },
+                                "state": null
+                            }
+                        ],
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1275"
+                        },
+                        "state": "closed"
+                    },
+                    {
+                        "id": "697",
+                        "text": "Подача на МС емкости для слива отстоя топлива (отработки масла) АК Ай Флай",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1280"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "742",
+                        "text": "Подача на МС емкости для слива отстоя топлива (отработки масла) (Все)",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1325"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "699",
+                        "text": "Предоставление СНО",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1282"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "710",
+                        "text": "Продувка водяной системы",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1290"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "722",
+                        "text": "Санитарный осмотр",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1302"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "737",
+                        "text": "Обеспечение заправки ВС",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1318"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "743",
+                        "text": "Дополнительная перегрузка-перемещение  багажа",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1326"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "749",
+                        "text": "Доставка экипажа",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReportAP",
+                            "params": "1332"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "758",
+                        "text": "Предоставление технической воды",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1346"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "759",
+                        "text": "Предоставление машины при буксировке ВС через ВПП",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1348"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "918",
+                        "text": "Предоставление машины для сопровождения через ВПП",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1546"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "760",
+                        "text": "Супервайзинг",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1347"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "768",
+                        "text": "ПОО",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1369"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "772",
+                        "text": "Минитягач",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1375"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "773",
+                        "text": "Контейнерный погрузчик",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1376"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "775",
+                        "text": "Предоставление водила",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1378"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "782",
+                        "text": "Предоставление транспортера",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1385"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "788",
+                        "text": "Предоставление багажной тележки",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1391"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "789",
+                        "text": "Предоставление контейнерной тележки",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1392"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "790",
+                        "text": "Охлаждение ВС (иностранные)",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1393"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "791",
+                        "text": "Охлаждение ВС (российские)",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1394"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "821",
+                        "text": "Доставка трансферных пассажиров",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1421"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "916_node",
+                        "text": "ЦБ",
+                        "children": [
+                            {
+                                "id": "916",
+                                "text": "Доставка экипажа",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.TowReportAP",
+                                    "params": "1544"
+                                },
+                                "state": null
+                            }
+                        ],
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReportAP",
+                            "params": "1544"
+                        },
+                        "state": "closed"
+                    },
+                    {
+                        "id": "969",
+                        "text": "Открытие дверей ВС",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1598"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "974",
+                        "text": "Приемка-выпуск",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1603"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "975",
+                        "text": "Доставка пассажиров эконом класса к-от ВС",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1604"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "976",
+                        "text": "Посадка и высадка пассажиров в-из ВС (трап)",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1605"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "977",
+                        "text": "Предоставление СНО для длительной стоянки ВС",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1606"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "985_node",
+                        "text": "ULD",
+                        "children": [
+                            {
+                                "id": "985",
+                                "text": "Аптечка Внуково-Карго",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.TowReport",
+                                    "params": "1616"
+                                },
+                                "state": null
+                            }
+                        ],
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.TowReport",
+                            "params": "1616"
+                        },
+                        "state": "closed"
+                    }
+                ],
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.TowReport",
+                    "params": "1632"
+                },
+                "state": "closed"
+            },
+            {
+                "id": "450_node",
+                "text": "Справочники",
+                "children": [
+                    {
+                        "id": "450",
+                        "text": "Типы ВС",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "Bureau.Finder",
+                            "params": "1142"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "451",
+                        "text": "Авиакомпании",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "Bureau.Finder",
+                            "params": "1128"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "452",
+                        "text": "Номера бортов",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "Bureau.Finder",
+                            "params": "1143"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "453",
+                        "text": "Аэропорты",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "Bureau.Finder",
+                            "params": "1129"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "454",
+                        "text": "Типы работ",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "Bureau.Finder",
+                            "params": "1133"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "455",
+                        "text": "Работы",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "Bureau.Finder",
+                            "params": "1135"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "456",
+                        "text": "Поставщики",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "Bureau.Finder",
+                            "params": "1138"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "457",
+                        "text": "Типы автомобилей",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "Bureau.Finder",
+                            "params": "1140"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "458",
+                        "text": "Трансферы",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "Bureau.Finder",
+                            "params": "1141"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "459",
+                        "text": "Заказчики",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "Bureau.Finder",
+                            "params": "1145"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "460",
+                        "text": "Офисы",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "Bureau.Finder",
+                            "params": "1146"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "461",
+                        "text": "ТипыТС",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.Refer.referEdit",
+                            "params": "1151"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "462",
+                        "text": "Транспортные средства",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.Refer.referEdit",
+                            "params": "1152"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "463",
+                        "text": "ТарифыТС",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.Refer.referAdd",
+                            "params": "1157"
+                        },
+                        "state": null
+                    }
+                ],
+                "iconCls": null,
+                "attributes": {
+                    "link1": "Bureau.Finder",
+                    "params": "1142"
+                },
+                "state": "closed"
+            }
+        ],
+        "iconCls": null,
+        "attributes": {
+            "link1": "RegulationPrint.WorkOrderList",
+            "params": "1131"
+        },
+        "state": "closed"
+    },
+    {
+        "id": "127_node",
+        "text": "Файлы СЗВ и Тех. карт",
+        "children": [
+            {
+                "id": "127",
+                "text": "Добавление файлов СЗВ и ТК",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.LoadSheetsAdd",
+                    "params": ""
+                },
+                "state": null
+            },
+            {
+                "id": "125",
+                "text": "Разбор страниц СЗВ и ТК",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.FileLSList",
+                    "params": "179"
+                },
+                "state": null
+            }
+        ],
+        "iconCls": null,
+        "attributes": {
+            "link1": "RegulationPrint.LoadSheetsAdd",
+            "params": ""
+        },
+        "state": "closed"
+    },
+    {
+        "id": "91_node",
+        "text": "Корректировка AODB",
+        "children": [
+            {
+                "id": "91",
+                "text": "Редактирование AODB",
+                "children": null,
+                "iconCls": "tree-22",
+                "attributes": {
+                    "link1": "RegulationPrint.AODBadd",
+                    "params": ""
+                },
+                "state": null
+            },
+            {
+                "id": "111",
+                "text": "Добавление рейса в AODB",
+                "children": null,
+                "iconCls": "tree-23",
+                "attributes": {
+                    "link1": "RegulationPrint.AODBOnlyAdd",
+                    "params": ""
+                },
+                "state": null
+            }
+        ],
+        "iconCls": "tree-22",
+        "attributes": {
+            "link1": "RegulationPrint.AODBadd",
+            "params": ""
+        },
+        "state": "closed"
+    },
+    {
+        "id": "115_node",
+        "text": "Управление ресурсами",
+        "children": [
+            {
+                "id": "115",
+                "text": "Назначение трапов",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.FlightBus",
+                    "params": "165"
+                },
+                "state": null
+            },
+            {
+                "id": "118",
+                "text": "История назначения трапов",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "Bureau.Finder",
+                    "params": "171"
+                },
+                "state": null
+            },
+            {
+                "id": "119",
+                "text": "Время занятости трапов",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "Bureau.Finder",
+                    "params": "172"
+                },
+                "state": null
+            }
+        ],
+        "iconCls": null,
+        "attributes": {
+            "link1": "RegulationPrint.FlightBus",
+            "params": "165"
+        },
+        "state": "closed"
+    },
+    {
+        "id": "112_node",
+        "text": "Периодические операции",
+        "children": [
+            {
+                "id": "112",
+                "text": "Закрытие карточек",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.CloseCards",
+                    "params": "0"
+                },
+                "state": null
+            },
+            {
+                "id": "113",
+                "text": "Установка статуса \"Проверен\"",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.CheckCards",
+                    "params": "1"
+                },
+                "state": null
+            },
+            {
+                "id": "707",
+                "text": "Установка статуса \"Проведен\"",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.TrunCurds",
+                    "params": "3"
+                },
+                "state": null
+            },
+            {
+                "id": "735",
+                "text": "Установка статуса \"Проверен\" из \"Проведен\"",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.CheckFromTurn",
+                    "params": "2"
+                },
+                "state": null
+            },
+            {
+                "id": "132",
+                "text": "Установка статуса \"План\" из статуса \"Закрыт\"",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.OpenCards",
+                    "params": "4"
+                },
+                "state": null
+            },
+            {
+                "id": "134",
+                "text": "Установка статуса \"Закрыт\" из статуса \"Проверен\"",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.OpenCardsFromCheck",
+                    "params": "5"
+                },
+                "state": null
+            },
+            {
+                "id": "88",
+                "text": "Обновление базы синонимов",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.SynonymsUpdate",
+                    "params": ""
+                },
+                "state": null
+            },
+            {
+                "id": "122",
+                "text": "Обновление сообщений об ошибках",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.UpdateprError",
+                    "params": ""
+                },
+                "state": null
+            },
+            {
+                "id": "141",
+                "text": "Экспорт в Омегу",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.UTAExport",
+                    "params": ""
+                },
+                "state": null
+            },
+            {
+                "id": "653",
+                "text": "Настройки экспорта в XML",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.LonSetting",
+                    "params": ""
+                },
+                "state": null
+            },
+            {
+                "id": "670",
+                "text": "Расчет финансового отчета",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.finCulc",
+                    "params": ""
+                },
+                "state": null
+            },
+            {
+                "id": "671",
+                "text": "Настройки экспорта файлов",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "Bureau.Finder",
+                    "params": "1257"
+                },
+                "state": null
+            },
+            {
+                "id": "702",
+                "text": "Сохранение файлов на диск",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "FLExport.FLE",
+                    "params": ""
+                },
+                "state": null
+            },
+            {
+                "id": "813",
+                "text": "Экспорт рейсов в WB-Гарантия",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.FlightExport.FlightExport",
+                    "params": ""
+                },
+                "state": null
+            },
+            {
+                "id": "823",
+                "text": "Выгрузка материалов ПОО АК \"Победа\"",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.FlightExport.POOExport",
+                    "params": ""
+                },
+                "state": null
+            }
+        ],
+        "iconCls": null,
+        "attributes": {
+            "link1": "RegulationPrint.CloseCards",
+            "params": "0"
+        },
+        "state": "closed"
+    },
+    {
+        "id": "74_node",
+        "text": "Справочники",
+        "children": [
+            {
+                "id": "74",
+                "text": "Регламенты Тех.Карты",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "Bureau.Finder",
+                    "params": "128"
+                },
+                "state": null
+            },
+            {
+                "id": "75",
+                "text": "Контрольные точки Тех.Карты",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "Bureau.Finder",
+                    "params": "129"
+                },
+                "state": null
+            },
+            {
+                "id": "83",
+                "text": "Аэропорты",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "Bureau.Finder",
+                    "params": "207"
+                },
+                "state": null
+            },
+            {
+                "id": "84",
+                "text": "Авиакомпании",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.US.USFinder",
+                    "params": "206"
+                },
+                "state": null
+            },
+            {
+                "id": "85",
+                "text": "ТипыВС",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.Refer.referEdit",
+                    "params": "209"
+                },
+                "state": null
+            },
+            {
+                "id": "86",
+                "text": "Номера самолётов",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.Refer.referEdit",
+                    "params": "208"
+                },
+                "state": null
+            },
+            {
+                "id": "89",
+                "text": "Типы услуг",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "Bureau.Finder",
+                    "params": "210"
+                },
+                "state": null
+            },
+            {
+                "id": "92",
+                "text": "Тарифы",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "Bureau.Finder",
+                    "params": "147"
+                },
+                "state": null
+            },
+            {
+                "id": "666",
+                "text": "Двойные Тарифы",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "Bureau.Finder",
+                    "params": "1252"
+                },
+                "state": null
+            },
+            {
+                "id": "93",
+                "text": "Авиакомпании и услуги",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.Refer.referAKService",
+                    "params": "1287"
+                },
+                "state": null
+            },
+            {
+                "id": "100",
+                "text": "Перроны",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "Bureau.Finder",
+                    "params": "157"
+                },
+                "state": null
+            },
+            {
+                "id": "101",
+                "text": "Места стоянок",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.Refer.referPosition",
+                    "params": "158"
+                },
+                "state": null
+            },
+            {
+                "id": "114",
+                "text": "Транспортные средства",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "Bureau.Finder",
+                    "params": "211"
+                },
+                "state": null
+            },
+            {
+                "id": "143",
+                "text": "Сотрудники",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.VW_EmployeesForUSsmart",
+                    "params": "193"
+                },
+                "state": null
+            },
+            {
+                "id": "631",
+                "text": "Курсы валют",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.CurRate",
+                    "params": "1204"
+                },
+                "state": null
+            },
+            {
+                "id": "988",
+                "text": "MTOW_Range",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "Bureau.Finder",
+                    "params": "1618"
+                },
+                "state": null
+            },
+            {
+                "id": "655",
+                "text": "Дополнительные тарифы",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.Refer.referExtTarif",
+                    "params": "1233"
+                },
+                "state": null
+            },
+            {
+                "id": "820",
+                "text": "Спец. тарифы",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "Bureau.Finder",
+                    "params": "1418"
+                },
+                "state": null
+            },
+            {
+                "id": "994",
+                "text": "Дополнительные тарифы(печать шаблона)",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.ServiceReport",
+                    "params": "1624"
+                },
+                "state": null
+            },
+            {
+                "id": "771",
+                "text": "Терминалы",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.US.USFinder",
+                    "params": "1372"
+                },
+                "state": null
+            },
+            {
+                "id": "668",
+                "text": "План счетов",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "Bureau.Finder",
+                    "params": "1255"
+                },
+                "state": null
+            },
+            {
+                "id": "909",
+                "text": "Услуги UTG",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.Refer.referEdit",
+                    "params": "142"
+                },
+                "state": null
+            },
+            {
+                "id": "991",
+                "text": "AirportTimezones",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "Bureau.Finder",
+                    "params": "1622"
+                },
+                "state": null
+            },
+            {
+                "id": "907_node",
+                "text": "Операторы",
+                "children": [
+                    {
+                        "id": "907",
+                        "text": "Операторы",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "Bureau.Finder",
+                            "params": "1530"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "908",
+                        "text": "Авиакомпании и операторы",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.US.USFinder",
+                            "params": "1531"
+                        },
+                        "state": null
+                    }
+                ],
+                "iconCls": null,
+                "attributes": {
+                    "link1": "Bureau.Finder",
+                    "params": "1530"
+                },
+                "state": "closed"
+            }
+        ],
+        "iconCls": null,
+        "attributes": {
+            "link1": "Bureau.Finder",
+            "params": "128"
+        },
+        "state": "closed"
+    },
+    {
+        "id": "94_node",
+        "text": "Отчеты",
+        "children": [
+            {
+                "id": "94_node",
+                "text": "Отчеты ВНК",
+                "children": [
+                    {
+                        "id": "94_node",
+                        "text": "Отчеты ОВР",
+                        "children": [
+                            {
+                                "id": "94_node",
+                                "text": "Бизнес-залы",
+                                "children": [
+                                    {
+                                        "id": "94",
+                                        "text": "БЗЛ(Рахманинов)",
+                                        "children": null,
+                                        "iconCls": null,
+                                        "attributes": {
+                                            "link1": "RegulationPrint.ServiceReport",
+                                            "params": "150"
+                                        },
+                                        "state": null
+                                    },
+                                    {
+                                        "id": "714",
+                                        "text": "БЗЛ(Чайковский)",
+                                        "children": null,
+                                        "iconCls": null,
+                                        "attributes": {
+                                            "link1": "RegulationPrint.ServiceReport",
+                                            "params": "1294"
+                                        },
+                                        "state": null
+                                    },
+                                    {
+                                        "id": "778",
+                                        "text": "БЗЛ(Чайковский)_12042017",
+                                        "children": null,
+                                        "iconCls": null,
+                                        "attributes": {
+                                            "link1": "RegulationPrint.ServiceReport",
+                                            "params": "1381"
+                                        },
+                                        "state": null
+                                    },
+                                    {
+                                        "id": "779",
+                                        "text": "БЗЛ(Рахманинов)_12042017",
+                                        "children": null,
+                                        "iconCls": null,
+                                        "attributes": {
+                                            "link1": "RegulationPrint.ServiceReport",
+                                            "params": "1382"
+                                        },
+                                        "state": null
+                                    },
+                                    {
+                                        "id": "117",
+                                        "text": "Сводка БЗ (Рахманинов)",
+                                        "children": null,
+                                        "iconCls": null,
+                                        "attributes": {
+                                            "link1": "RegulationPrint.ReestrBZ",
+                                            "params": "169"
+                                        },
+                                        "state": null
+                                    },
+                                    {
+                                        "id": "715",
+                                        "text": "Сводка БЗ (Чайковский)",
+                                        "children": null,
+                                        "iconCls": null,
+                                        "attributes": {
+                                            "link1": "RegulationPrint.ReestrBZ",
+                                            "params": "1295"
+                                        },
+                                        "state": null
+                                    },
+                                    {
+                                        "id": "786",
+                                        "text": "Несопровождаемые дети БЗЛ (Рахманинов)",
+                                        "children": null,
+                                        "iconCls": null,
+                                        "attributes": {
+                                            "link1": "RegulationPrint.ServiceReport",
+                                            "params": "1389"
+                                        },
+                                        "state": null
+                                    },
+                                    {
+                                        "id": "787",
+                                        "text": "Несопровождаемые дети БЗЛ (Чайковский)",
+                                        "children": null,
+                                        "iconCls": null,
+                                        "attributes": {
+                                            "link1": "RegulationPrint.ServiceReport",
+                                            "params": "1390"
+                                        },
+                                        "state": null
+                                    }
+                                ],
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "150"
+                                },
+                                "state": "closed"
+                            },
+                            {
+                                "id": "97",
+                                "text": "Доставка пасс бизн прилет",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "153"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "105",
+                                "text": "Доставка пасс бизн вылет",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "161"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "98",
+                                "text": "Дост пасс эконом_ЮТ_ЮР",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "154"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "110",
+                                "text": "Обсл пассажиров ЮТ_ЮР",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "162"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "121",
+                                "text": "Реестр представительских доходов",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ReestrCredit",
+                                    "params": "174"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "713",
+                                "text": "Представительские услуги (КЮ, B2, ЭК, I4)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1293"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "138",
+                                "text": "Иммигр контроль",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "189"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "140",
+                                "text": "Встреча-выпуск",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "191"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "621",
+                                "text": "Отчёт по воде и санузлам",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1192"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "744",
+                                "text": "Отчёт по воде и санузлам (с 01.07.2015г. с применением пакетов АК ЮТ)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1327"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "623",
+                                "text": "Отчет по трапам",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1194"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "626",
+                                "text": "Воздушный запуск",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1198"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "630",
+                                "text": "Стационарные источники электропитания",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1203"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "638",
+                                "text": "Обеспечение заправки ВС",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1211"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "665",
+                                "text": "Заправка топливом (ЮТ)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1250"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "675",
+                                "text": "Заправка топливом в баки ВС",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1261"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "745",
+                                "text": "Отчет для реестра требований на заправку",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1328"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "640",
+                                "text": "Противообледенительная обработка (ПОО)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1213"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "741",
+                                "text": "Противообледенительная обработка (ПОО) (01.10.2015)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1324"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "689",
+                                "text": "Противообледенительная обр. (контроль, UN, c 06.10.2014)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1272"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "650",
+                                "text": "Отчет по ПГВ",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1227"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "980",
+                                "text": "Отчет по ПГВ (2923)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1609"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "663",
+                                "text": "Несопровождаемые дети (ЮТ,ЮР, UN, R2)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1248"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "652",
+                                "text": "Декларирование припасов",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1229"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "656",
+                                "text": "Реестр по подогреву",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1243"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "657",
+                                "text": "Передвижной источник электропитания",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1244"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "777",
+                                "text": "Передвижной источник электропитания (ЮТ)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1380"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "676",
+                                "text": "Предполетная подготовка (I FLY)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1262"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "724",
+                                "text": "Пакеты ЮТ",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.repSDM",
+                                    "params": "1304"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "727",
+                                "text": "Пакеты ЮТ (Контроль)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.repSDM",
+                                    "params": "1307"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "776",
+                                "text": "Центровка",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1379"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "783",
+                                "text": "Дополнительное обслуживание пассажиров Перевозчика",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1386"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "795",
+                                "text": "Охлаждение ВС",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1399"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "818",
+                                "text": "Utair IATA XML",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.Reports.IATA_XML",
+                                    "params": ""
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "847",
+                                "text": "Кассовое обслуживание (VKO)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1456"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "931",
+                                "text": "Аптечка, обработка (ЮТ)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.repSDM",
+                                    "params": "1562"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "932",
+                                "text": "Аптечка, доставка (ЮТ)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.repSDM",
+                                    "params": "1561"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "948",
+                                "text": "Контроль загрузки (Россия)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.repSDM",
+                                    "params": "1577"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "999",
+                                "text": "Оформление требований на заправку ВС(РН аэро)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1631"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "1000",
+                                "text": "Управление процессом заправки ВС авиатопливо(Газпром)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1630"
+                                },
+                                "state": null
+                            }
+                        ],
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.ServiceReport",
+                            "params": "150"
+                        },
+                        "state": "closed"
+                    },
+                    {
+                        "id": "95_node",
+                        "text": "Неиспользуемые",
+                        "children": [
+                            {
+                                "id": "95",
+                                "text": "OVR_CheckIn",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "151"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "96",
+                                "text": "OVR_CheckinMVL",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "152"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "102",
+                                "text": "DC_Report_Bus",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "Bureau.Finder",
+                                    "params": "159"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "99",
+                                "text": "Супервайзинг_недейств",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "155"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "104",
+                                "text": "Супервайзинг_QU_недейств",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.repSDM",
+                                    "params": "160"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "129",
+                                "text": "Доставка пасс эконом_QU",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.repSDM",
+                                    "params": "183"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "130",
+                                "text": "Обслуживание пасс_QU",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.repSDM",
+                                    "params": "184"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "131",
+                                "text": "Обслуживание багажа_QU",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.repSDM",
+                                    "params": "186"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "139",
+                                "text": "Буксировка",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "190"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "642",
+                                "text": "Буксировка (с 19.11.2013)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1216"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "639",
+                                "text": "Отчет СНО Tu_AN",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1212"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "651",
+                                "text": "Несопровождаемые дети (только QN)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1228"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "142",
+                                "text": "Бортпитание",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.MealReport",
+                                    "params": "192"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "672",
+                                "text": "Экипировка",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1258"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "145",
+                                "text": "Рейсы Аэросвит",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.repSDM",
+                                    "params": "205"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "673",
+                                "text": "Уборка",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1259"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "633",
+                                "text": "Отчёт Регулярности",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.repSDM",
+                                    "params": "1206"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "674",
+                                "text": "Мойка",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1260"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "641",
+                                "text": "Отчёт Регулярности (ЮТ)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.repSDM",
+                                    "params": "1214"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "645",
+                                "text": "Отчет о задержанных рейсах ЮТ",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.Reports.repExt",
+                                    "params": "1220"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "705",
+                                "text": "Отчет о задержанных рейсах ORB",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.Reports.repExtR2",
+                                    "params": "1285"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "661",
+                                "text": "Отчет регулярности (ЮТ,UN)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.repSDM",
+                                    "params": "1246"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "728",
+                                "text": "Отчет регулярности (ЮТ,UN) с ППС",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.DateReport",
+                                    "params": "1308"
+                                },
+                                "state": null
+                            }
+                        ],
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.ServiceReport",
+                            "params": "151"
+                        },
+                        "state": "closed"
+                    },
+                    {
+                        "id": "120_node",
+                        "text": "Статистика",
+                        "children": [
+                            {
+                                "id": "120",
+                                "text": "Отправление АК \"Россия\" (ВНК)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.repSDM",
+                                    "params": "173"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "662",
+                                "text": "Статистический отчет (ВНК)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.repSDM",
+                                    "params": "1247"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "750",
+                                "text": "Полный стат. отчет ВНК",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.repSDM",
+                                    "params": "1333"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "893",
+                                "text": "Полный стат. отчет ВНК (ВВЛ)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.repSDM",
+                                    "params": "1508"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "894",
+                                "text": "Полный стат. отчет ВНК (МВЛ)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.repSDM",
+                                    "params": "1507"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "647",
+                                "text": "Коммерческая загрузка (ВНК)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.repSDM",
+                                    "params": "1223"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "719",
+                                "text": "Загрузка агентов",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1299"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "746",
+                                "text": "Отчет регулярности отправления рейсов",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.SOB.SOB_Regular",
+                                    "params": "1329"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "878",
+                                "text": "Отчет регулярности отправления рейсов(Победа)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.DateReport",
+                                    "params": "1489"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "751",
+                                "text": "Супервайзинг(ДР)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.repSDM",
+                                    "params": "1335"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "770",
+                                "text": "Отчет регулярности (22.02.2017)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.Reports.DateReport_22022017",
+                                    "params": "1371"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "755",
+                                "text": "Отчет диспетчера по посадке",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.DateReport",
+                                    "params": "1339"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "780",
+                                "text": "Источники электропитания",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1383"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "845",
+                                "text": "Буксировка(статистика)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1452"
+                                },
+                                "state": null
+                            }
+                        ],
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.repSDM",
+                            "params": "173"
+                        },
+                        "state": "closed"
+                    },
+                    {
+                        "id": "669_node",
+                        "text": "Special",
+                        "children": [
+                            {
+                                "id": "669",
+                                "text": "Финансовый отчет (итоги)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1256"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "667",
+                                "text": "Финансовый отчет (реестр)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1253"
+                                },
+                                "state": null
+                            }
+                        ],
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.ServiceReport",
+                            "params": "1256"
+                        },
+                        "state": "closed"
+                    },
+                    {
+                        "id": "941_node",
+                        "text": "UTV",
+                        "children": [
+                            {
+                                "id": "941",
+                                "text": "Отчет регулярности (22.02.2017)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.Reports.DateReport_22022017",
+                                    "params": "1571"
+                                },
+                                "state": null
+                            }
+                        ],
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.Reports.DateReport_22022017",
+                            "params": "1571"
+                        },
+                        "state": "closed"
+                    },
+                    {
+                        "id": "625_node",
+                        "text": "Суточный План",
+                        "children": [
+                            {
+                                "id": "625",
+                                "text": "Суточный план ДПК",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.DateReport",
+                                    "params": "1196"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "876",
+                                "text": "Прилет АК Победа",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.DateReport",
+                                    "params": "1486"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "774",
+                                "text": "Суточный план диспетчера ГЦ",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.DateReport",
+                                    "params": "1377"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "859",
+                                "text": "Авиакомпании для диспетчера ГЦ",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.US.USFinder",
+                                    "params": "1468"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "781",
+                                "text": "СЗВ Турецкие Авиалинии",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.DateReport",
+                                    "params": "1384"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "784",
+                                "text": "Суточный план УС",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.DateReport",
+                                    "params": "1387"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "792",
+                                "text": "Суточный план АК Россия(прилет)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.DateReport",
+                                    "params": "1395"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "807",
+                                "text": "Номера ВС в аэропорту",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.Reports.AirOnPort",
+                                    "params": "1406"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "828",
+                                "text": "Время стоянки ВС",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1429"
+                                },
+                                "state": null
+                            }
+                        ],
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.DateReport",
+                            "params": "1196"
+                        },
+                        "state": "closed"
+                    },
+                    {
+                        "id": "757_node",
+                        "text": "ЦУНО",
+                        "children": [
+                            {
+                                "id": "757",
+                                "text": "Агентское вознаграждение",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.repSDM",
+                                    "params": "1345"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "796",
+                                "text": "Экспорт $ЦУНО-NewOct-2015",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ExportCUNO",
+                                    "params": "cuno"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "798",
+                                "text": "Экспорт $TS_TSUNO_Services",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ExportCUNO",
+                                    "params": "serv"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "799",
+                                "text": "$ЦУНО-NewOct-2015",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.cunoTab",
+                                    "params": "1401"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "800",
+                                "text": "Итоги по пятидневкам",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "Bureau.Finder",
+                                    "params": "1402"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "801",
+                                "text": "p_ЦУНО_Add_To_ЦУНО_Рус",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.execProc",
+                                    "params": "[p_ЦУНО_Add_To_ЦУНО_Рус]"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "802",
+                                "text": "p_ЦУНО_Add_To_ЦУНО_Ино",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.execProc",
+                                    "params": "[p_ЦУНО_Add_To_ЦУНО_Ино]"
+                                },
+                                "state": null
+                            }
+                        ],
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.repSDM",
+                            "params": "1345"
+                        },
+                        "state": "closed"
+                    },
+                    {
+                        "id": "766_node",
+                        "text": "Процессы",
+                        "children": [
+                            {
+                                "id": "766",
+                                "text": "Доставка пассажиров эконом класса",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.repSDM",
+                                    "params": "1367"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "767",
+                                "text": "Буксировка ВС",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.repSDM",
+                                    "params": "1368"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "963",
+                                "text": "Продолжительность процессов RMS",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ParamReports.ParReports",
+                                    "params": "1594"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "835",
+                                "text": "Расхождения ПОО",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1441"
+                                },
+                                "state": null
+                            }
+                        ],
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.repSDM",
+                            "params": "1367"
+                        },
+                        "state": "closed"
+                    },
+                    {
+                        "id": "956_node",
+                        "text": "Межоператорские услуги",
+                        "children": [
+                            {
+                                "id": "956",
+                                "text": "Загрузка отчета VKO 5.18.22",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.Reports.ParseCSV",
+                                    "params": "p_vko_update_5_18_22"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "957",
+                                "text": "Загрузка отчета VKO 5.18.23",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.Reports.ParseCSV",
+                                    "params": "p_vko_update_5_18_23"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "958",
+                                "text": "Отчет VKO 5.18.22",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.MU.F518_22_23",
+                                    "params": "1586"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "959",
+                                "text": "Отчет VKO 5.18.23",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.MU.F518_22_23",
+                                    "params": "1587"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "960",
+                                "text": "Привязка услуг к BI",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "Bureau.Finder",
+                                    "params": "1588"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "962",
+                                "text": "VKO 22,23 (разница)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.repSDM",
+                                    "params": "1591"
+                                },
+                                "state": null
+                            }
+                        ],
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.Reports.ParseCSV",
+                            "params": "p_vko_update_5_18_22"
+                        },
+                        "state": "closed"
+                    }
+                ],
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.ServiceReport",
+                    "params": "150"
+                },
+                "state": "closed"
+            },
+            {
+                "id": "720_node",
+                "text": "Отчеты ДМД",
+                "children": [
+                    {
+                        "id": "720_node",
+                        "text": "Отчеты ОВР",
+                        "children": [
+                            {
+                                "id": "720_node",
+                                "text": "Бизнес-залы",
+                                "children": [
+                                    {
+                                        "id": "720",
+                                        "text": "БЗЛ(Шостакович)",
+                                        "children": null,
+                                        "iconCls": null,
+                                        "attributes": {
+                                            "link1": "RegulationPrint.ServiceReport",
+                                            "params": "1300"
+                                        },
+                                        "state": null
+                                    },
+                                    {
+                                        "id": "721",
+                                        "text": "Сводка БЗ (Шостакович)",
+                                        "children": null,
+                                        "iconCls": null,
+                                        "attributes": {
+                                            "link1": "RegulationPrint.ReestrBZ",
+                                            "params": "1301"
+                                        },
+                                        "state": null
+                                    }
+                                ],
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1300"
+                                },
+                                "state": "closed"
+                            },
+                            {
+                                "id": "765",
+                                "text": "Реестр по подогреву",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1366"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "730",
+                                "text": "Несопровождаемые дети (ДМД)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1310"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "723",
+                                "text": "Доставка экипажа (Домодедово)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1303"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "725",
+                                "text": "Представительские услуги",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1305"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "726",
+                                "text": "Декларирование припасов",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.repSDM",
+                                    "params": "1306"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "731",
+                                "text": "Коммерческая загрузка-ДМД",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1311"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "738",
+                                "text": "Содействие в таможенном оформление документов (OZ)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.repSDM",
+                                    "params": "1319"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "793",
+                                "text": "Отчет по регистрации АК РусЛайн (ВВЛ)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1396"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "794",
+                                "text": "Отчет по регистрации АК РусЛайн (МВЛ)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1397"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "797",
+                                "text": "Отчет по КО пассажиров в АП Домодедово",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1400"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "804",
+                                "text": "КО ДМД (Б2, 6В, УТ, I4, IO)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1403"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "805",
+                                "text": "КО ДМД (ИН,5Н)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1404"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "806",
+                                "text": "КО ДМД (РГ)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1405"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "830",
+                                "text": "Кассовое обслуживание (DME)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1431"
+                                },
+                                "state": null
+                            }
+                        ],
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.ServiceReport",
+                            "params": "1300"
+                        },
+                        "state": "closed"
+                    },
+                    {
+                        "id": "718_node",
+                        "text": "Статистика",
+                        "children": [
+                            {
+                                "id": "718",
+                                "text": "Отправление АК \"Россия\" (ДМД)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.repSDM",
+                                    "params": "1298"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "732",
+                                "text": "Отчёт Регулярности (ДМД)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.repSDM",
+                                    "params": "1312"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "733",
+                                "text": "Отчёт Регулярности КЮ (ДМД)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.repSDM",
+                                    "params": "1313"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "763",
+                                "text": "Отчет регулярности с ППС (ДМД)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.Reports.DateReport_22022017",
+                                    "params": "1485"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "919",
+                                "text": "Задержка вылета WZ (2 - 4 часа)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.repSDM",
+                                    "params": "1547"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "920",
+                                "text": "Задержка вылета WZ (более 4-х часов)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.repSDM",
+                                    "params": "1548"
+                                },
+                                "state": null
+                            }
+                        ],
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.repSDM",
+                            "params": "1298"
+                        },
+                        "state": "closed"
+                    },
+                    {
+                        "id": "729_node",
+                        "text": "UTG-Express",
+                        "children": [
+                            {
+                                "id": "729",
+                                "text": "Загрузка для Express (ДМД)",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.ServiceReport",
+                                    "params": "1309"
+                                },
+                                "state": null
+                            }
+                        ],
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.ServiceReport",
+                            "params": "1309"
+                        },
+                        "state": "closed"
+                    }
+                ],
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.ServiceReport",
+                    "params": "1300"
+                },
+                "state": "closed"
+            },
+            {
+                "id": "17_node",
+                "text": "Выгрузка",
+                "children": [
+                    {
+                        "id": "17",
+                        "text": "Общий реестр",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.ServiceReport",
+                            "params": "3"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "833",
+                        "text": "ЦУНО Россия",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.ServiceReport",
+                            "params": "1479"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "871",
+                        "text": "ЦУНО Иностранные",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.ServiceReport",
+                            "params": "1480"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "872",
+                        "text": "Прямые Россия",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.ServiceReport",
+                            "params": "1481"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "873",
+                        "text": "Прямые Иностранные",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.ServiceReport",
+                            "params": "1482"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "874",
+                        "text": "Ютэйр",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.repSDM",
+                            "params": "1483"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "875",
+                        "text": "Коды ЦУНО",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "Bureau.Finder",
+                            "params": "1484"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "683",
+                        "text": "Внеплановая выгрузка (ЦУНО)",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.Reports.repTSUNO",
+                            "params": "1269"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "933",
+                        "text": "Файл ЦУНО (USD), Оператор UTV",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.Reports.CunoFile",
+                            "params": "usd"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "924",
+                        "text": "Файл ЦУНО (RUR), Оператор UTV",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.Reports.CunoFile",
+                            "params": "rur"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "921",
+                        "text": "Рейсы по услуге",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.ParamReports.ParReports",
+                            "params": "1550"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "947",
+                        "text": "Реестр по услуге (VKO)",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.ParamReports.ParReports",
+                            "params": "1576"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "949",
+                        "text": "Реестр по услуге (DME)",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.ParamReports.ParReports",
+                            "params": "1579"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "981",
+                        "text": "Взвешивание багажа по прилету, перед выдачей",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.ServiceReport",
+                            "params": "1610"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "982",
+                        "text": "Доставка экипажа до отеля",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.ServiceReport",
+                            "params": "1611"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "1001",
+                        "text": "Подвод-отвод телескопического трапа к-от ВС",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.ServiceReport",
+                            "params": "1633"
+                        },
+                        "state": null
+                    }
+                ],
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.ServiceReport",
+                    "params": "3"
+                },
+                "state": "closed"
+            }
+        ],
+        "iconCls": null,
+        "attributes": {
+            "link1": "RegulationPrint.ServiceReport",
+            "params": "150"
+        },
+        "state": "closed"
+    },
+    {
+        "id": "607_node",
+        "text": "uKnow",
+        "children": [
+            {
+                "id": "607",
+                "text": "Журнал событий",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.Alarm.AM_journal",
+                    "params": "1170"
+                },
+                "state": null
+            },
+            {
+                "id": "601_node",
+                "text": "Справочники",
+                "children": [
+                    {
+                        "id": "601",
+                        "text": "Категории событий",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.Alarm.FinderTemplate",
+                            "params": "1160"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "602",
+                        "text": "События",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.Alarm.FinderTemplate",
+                            "params": "1162"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "603",
+                        "text": "Подписчики",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "Bureau.Finder",
+                            "params": "1164"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "604",
+                        "text": "Группы подписчиков",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "Bureau.Finder",
+                            "params": "1163"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "605",
+                        "text": "Группы и подписчики",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.Alarm.groupSubscribe",
+                            "params": ""
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "606",
+                        "text": "Подписки",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.Alarm.Subs",
+                            "params": ""
+                        },
+                        "state": null
+                    }
+                ],
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.Alarm.FinderTemplate",
+                    "params": "1160"
+                },
+                "state": "closed"
+            },
+            {
+                "id": "622",
+                "text": "Отчет по событиям",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.repSDM",
+                    "params": "1193"
+                },
+                "state": null
+            },
+            {
+                "id": "753",
+                "text": "Отчет по подписке",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "Bureau.Finder",
+                    "params": "1337"
+                },
+                "state": null
+            }
+        ],
+        "iconCls": null,
+        "attributes": {
+            "link1": "RegulationPrint.Alarm.AM_journal",
+            "params": "1170"
+        },
+        "state": "closed"
+    },
+    {
+        "id": "608_node",
+        "text": "Груз-багаж",
+        "children": [
+            {
+                "id": "608",
+                "text": "Вход-Выход",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.SOB.LogEdit",
+                    "params": "1175"
+                },
+                "state": null
+            },
+            {
+                "id": "609",
+                "text": "Периодические КТУ",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.SOB.SOB_DateKTU",
+                    "params": "1177"
+                },
+                "state": null
+            },
+            {
+                "id": "734",
+                "text": "Коэффициент квалификации",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.SOB.SOB_DateKTU",
+                    "params": "1315"
+                },
+                "state": null
+            },
+            {
+                "id": "620",
+                "text": "Качество работы СОБ",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.SOB.SOB_LuggageInfo",
+                    "params": "1191"
+                },
+                "state": null
+            },
+            {
+                "id": "696",
+                "text": "Коэфф к тарифам авиакомпаний (ВНК)",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.Refer.referPosition",
+                    "params": "1279"
+                },
+                "state": null
+            },
+            {
+                "id": "883",
+                "text": "Коэфф к тарифам авиакомпаний (ДМД)",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.Refer.referPosition",
+                    "params": "1497"
+                },
+                "state": null
+            },
+            {
+                "id": "756",
+                "text": "Должностные коэфф. СОБГП (ВНК)",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.Refer.referPosition",
+                    "params": "1340"
+                },
+                "state": null
+            },
+            {
+                "id": "880",
+                "text": "Должностные коэфф. СОБГП (ДМД)",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.Refer.referPosition",
+                    "params": "1492"
+                },
+                "state": null
+            },
+            {
+                "id": "762",
+                "text": "Вычеты за качество работы (ВНК)",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.Refer.referPosition",
+                    "params": "1352"
+                },
+                "state": null
+            },
+            {
+                "id": "882",
+                "text": "Вычеты за качество работы (ДМД)",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.Refer.referPosition",
+                    "params": "1496"
+                },
+                "state": null
+            },
+            {
+                "id": "761",
+                "text": "Сезонные коэффициенты (ВНК)",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.Refer.referPosition",
+                    "params": "1349"
+                },
+                "state": null
+            },
+            {
+                "id": "884",
+                "text": "Сезонные коэффициенты (ДМД)",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.Refer.referPosition",
+                    "params": "1499"
+                },
+                "state": null
+            },
+            {
+                "id": "610_node",
+                "text": "Отчёты",
+                "children": [
+                    {
+                        "id": "610",
+                        "text": "КТУ сотруднников на рейсах",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.SOB.SOB_FlightCards_KTU",
+                            "params": "1179"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "684",
+                        "text": "План - UN-wide",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.SOB.SOB_Reports",
+                            "params": "1271"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "612",
+                        "text": "План полётов",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.SOB.SOB_Reports",
+                            "params": "1180"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "703_node",
+                        "text": "Отчёты ДЦ",
+                        "children": [
+                            {
+                                "id": "703",
+                                "text": "План для диспетчера по ресурсам",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.SOB.SOB_Reports",
+                                    "params": "1283"
+                                },
+                                "state": null
+                            },
+                            {
+                                "id": "785",
+                                "text": "План диспетчера по автобусам",
+                                "children": null,
+                                "iconCls": null,
+                                "attributes": {
+                                    "link1": "RegulationPrint.SOB.SOB_Reports",
+                                    "params": "1388"
+                                },
+                                "state": null
+                            }
+                        ],
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.SOB.SOB_Reports",
+                            "params": "1283"
+                        },
+                        "state": "closed"
+                    },
+                    {
+                        "id": "709",
+                        "text": "Суточный план диспетчеров СОБ",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.SOB.SOB_Reports",
+                            "params": "1289"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "716",
+                        "text": "Суточный план ДР2",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.SOB.SOB_Reports",
+                            "params": "1296"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "717",
+                        "text": "Суточный план ДР1",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.SOB.SOB_Reports",
+                            "params": "1297"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "739",
+                        "text": "План для диспетчера по СД",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.SOB.SOB_ReportsAL",
+                            "params": "1320"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "613",
+                        "text": "Отчёт по сотрудникам (ВНК)",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.SOB.SOB_PayReports",
+                            "params": "1181"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "881",
+                        "text": "Отчёт по сотрудникам (ДМД)",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.SOB.SOB_PayReports",
+                            "params": "1494"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "896",
+                        "text": "Экспорт в oTable",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.execProc",
+                            "params": "p_SOB_export"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "614",
+                        "text": "Отчёт по рейсам",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.SOB.SOB_FactReports",
+                            "params": "1183"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "658",
+                        "text": "Коэффициент на рейс",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.repSDM",
+                            "params": "1245"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "698",
+                        "text": "Отчет по авиакомпаниям (СОБ-ВНК)",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.repSDM",
+                            "params": "1281"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "885",
+                        "text": "Отчет по авиакомпаниям (СОБ-ДМД)",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.repSDM",
+                            "params": "1500"
+                        },
+                        "state": null
+                    }
+                ],
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.SOB.SOB_FlightCards_KTU",
+                    "params": "1179"
+                },
+                "state": "closed"
+            }
+        ],
+        "iconCls": null,
+        "attributes": {
+            "link1": "RegulationPrint.SOB.LogEdit",
+            "params": "1175"
+        },
+        "state": "closed"
+    },
+    {
+        "id": "711",
+        "text": "Проблемы-сообщения",
+        "children": null,
+        "iconCls": "tree-46",
+        "attributes": {
+            "link1": "RegulationPrint.PR.ProblemList",
+            "params": "1291"
+        },
+        "state": null
+    },
+    {
+        "id": "736_node",
+        "text": "Смены",
+        "children": [
+            {
+                "id": "736",
+                "text": "Смены",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.Shifts.shShifts",
+                    "params": "1316"
+                },
+                "state": null
+            }
+        ],
+        "iconCls": null,
+        "attributes": {
+            "link1": "RegulationPrint.Shifts.shShifts",
+            "params": "1316"
+        },
+        "state": "closed"
+    },
+    {
+        "id": "812_node",
+        "text": "Противообледенительная обработка",
+        "children": [
+            {
+                "id": "812",
+                "text": "Заявки ПОО",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.uStoreRefer.referEdit",
+                    "params": "1411"
+                },
+                "state": null
+            },
+            {
+                "id": "863",
+                "text": "DeicerOrders",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.DN.DN_OrderList",
+                    "params": "1473"
+                },
+                "state": null
+            }
+        ],
+        "iconCls": null,
+        "attributes": {
+            "link1": "RegulationPrint.uStoreRefer.referEdit",
+            "params": "1411"
+        },
+        "state": "closed"
+    },
+    {
+        "id": "617_node",
+        "text": "Билеты",
+        "children": [
+            {
+                "id": "617",
+                "text": "Отчеты",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.TC.TC_REPORT_LIST",
+                    "params": "1188"
+                },
+                "state": null
+            },
+            {
+                "id": "616",
+                "text": "Транзакции",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.TC.TC_TRANSACTION_LIST",
+                    "params": "1186"
+                },
+                "state": null
+            }
+        ],
+        "iconCls": null,
+        "attributes": {
+            "link1": "RegulationPrint.TC.TC_REPORT_LIST",
+            "params": "1188"
+        },
+        "state": "closed"
+    },
+    {
+        "id": "839_node",
+        "text": "Договоры",
+        "children": [
+            {
+                "id": "839",
+                "text": "Договоры",
+                "children": null,
+                "iconCls": "tree-51",
+                "attributes": {
+                    "link1": "RegulationPrint.Dgs.DogovorList",
+                    "params": "1445"
+                },
+                "state": null
+            },
+            {
+                "id": "838",
+                "text": "Контрагенты",
+                "children": null,
+                "iconCls": "tree-52",
+                "attributes": {
+                    "link1": "RegulationPrint.Refer.referCntEdit",
+                    "params": "1444"
+                },
+                "state": null
+            },
+            {
+                "id": "837",
+                "text": "Категории",
+                "children": null,
+                "iconCls": "tree-49",
+                "attributes": {
+                    "link1": "RegulationPrint.Dgs.CntList",
+                    "params": "1443"
+                },
+                "state": null
+            },
+            {
+                "id": "848_node",
+                "text": "Отчеты",
+                "children": [
+                    {
+                        "id": "848",
+                        "text": "Контрагенты и договоры",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "Bureau.Finder",
+                            "params": "1454"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "855",
+                        "text": "Отчет по доступам",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "Bureau.Finder",
+                            "params": "1460"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "861",
+                        "text": "Договоры(Замечания)",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.Dgs.cntReport1",
+                            "params": "1445"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "862",
+                        "text": "Контрагенты(Замечания)",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.Dgs.cntReport1",
+                            "params": "1444"
+                        },
+                        "state": null
+                    }
+                ],
+                "iconCls": null,
+                "attributes": {
+                    "link1": "Bureau.Finder",
+                    "params": "1454"
+                },
+                "state": "closed"
+            },
+            {
+                "id": "858_node",
+                "text": "Управление",
+                "children": [
+                    {
+                        "id": "858",
+                        "text": "Пользователи",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.Dgs.CntList",
+                            "params": "1466"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "850",
+                        "text": "Группы",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "Bureau.Finder",
+                            "params": "1457"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "851",
+                        "text": "Права доступа",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.Dgs.groupSubs",
+                            "params": ""
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "856",
+                        "text": "Доступы(фильтры)",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "Bureau.Finder",
+                            "params": "1461"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "853",
+                        "text": "Загрузить(Timeboard)",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.execProc",
+                            "params": "p_cntloadTime"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "854",
+                        "text": "Загрузить(Dadata)",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.Refer.dadataINN",
+                            "params": "/DaData/update"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "836",
+                        "text": "БывшКураторы",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "RegulationPrint.Dgs.CntList",
+                            "params": "1442"
+                        },
+                        "state": null
+                    }
+                ],
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.Dgs.CntList",
+                    "params": "1466"
+                },
+                "state": "closed"
+            }
+        ],
+        "iconCls": "tree-51",
+        "attributes": {
+            "link1": "RegulationPrint.Dgs.DogovorList",
+            "params": "1445"
+        },
+        "state": "closed"
+    },
+    {
+        "id": "868_node",
+        "text": "ULD",
+        "children": [
+            {
+                "id": "868",
+                "text": "Средства пакетирования",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.Refer.referEdit",
+                    "params": "1477"
+                },
+                "state": null
+            }
+        ],
+        "iconCls": null,
+        "attributes": {
+            "link1": "RegulationPrint.Refer.referEdit",
+            "params": "1477"
+        },
+        "state": "closed"
+    },
+    {
+        "id": "19_node",
+        "text": "Администратор",
+        "children": [
+            {
+                "id": "19",
+                "text": "Пользователи",
+                "children": null,
+                "iconCls": "tree-9",
+                "attributes": {
+                    "link1": "Bureau.Finder",
+                    "params": "120"
+                },
+                "state": null
+            },
+            {
+                "id": "32",
+                "text": "Группы пользователей",
+                "children": null,
+                "iconCls": "tree-5",
+                "attributes": {
+                    "link1": "Bureau.Finder",
+                    "params": "121"
+                },
+                "state": null
+            },
+            {
+                "id": "803",
+                "text": "Обновление списка объектов",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.execProc",
+                    "params": "p_sysUpdateObject"
+                },
+                "state": null
+            },
+            {
+                "id": "20",
+                "text": "Права доступа",
+                "children": null,
+                "iconCls": "tree-2",
+                "attributes": {
+                    "link1": "Bureau.Access",
+                    "params": ""
+                },
+                "state": null
+            },
+            {
+                "id": "64",
+                "text": "Резервное копирование",
+                "children": null,
+                "iconCls": "tree-6",
+                "attributes": {
+                    "link1": "Bureau.BackBase",
+                    "params": ""
+                },
+                "state": null
+            },
+            {
+                "id": "29_node",
+                "text": "Настройки",
+                "children": [
+                    {
+                        "id": "29",
+                        "text": "Пункты меню",
+                        "children": null,
+                        "iconCls": "tree-3",
+                        "attributes": {
+                            "link1": "Bureau.Finder",
+                            "params": "10"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "71",
+                        "text": "Картинки",
+                        "children": null,
+                        "iconCls": "tree-7",
+                        "attributes": {
+                            "link1": "Bureau.Finder",
+                            "params": "126"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "30",
+                        "text": "Колонки таблиц",
+                        "children": null,
+                        "iconCls": "tree-4",
+                        "attributes": {
+                            "link1": "Bureau.Finder",
+                            "params": "75"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "72",
+                        "text": "Перечисления",
+                        "children": null,
+                        "iconCls": "tree-11",
+                        "attributes": {
+                            "link1": "Bureau.Finder",
+                            "params": "124"
+                        },
+                        "state": null
+                    },
+                    {
+                        "id": "87",
+                        "text": "Поля для заполнения из справочников",
+                        "children": null,
+                        "iconCls": null,
+                        "attributes": {
+                            "link1": "Bureau.Finder",
+                            "params": "143"
+                        },
+                        "state": null
+                    }
+                ],
+                "iconCls": "tree-3",
+                "attributes": {
+                    "link1": "Bureau.Finder",
+                    "params": "10"
+                },
+                "state": "closed"
+            },
+            {
+                "id": "628",
+                "text": "Матрица групп",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "Bureau.Finder",
+                    "params": "1200"
+                },
+                "state": null
+            },
+            {
+                "id": "629",
+                "text": "Матрица прав",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "Bureau.Finder",
+                    "params": "1201"
+                },
+                "state": null
+            },
+            {
+                "id": "961",
+                "text": "Закгрузка из CSV файла",
+                "children": null,
+                "iconCls": null,
+                "attributes": {
+                    "link1": "RegulationPrint.Reports.ParseCSV",
+                    "params": " "
+                },
+                "state": null
+            }
+        ],
+        "iconCls": "tree-9",
+        "attributes": {
+            "link1": "Bureau.Finder",
+            "params": "120"
+        },
+        "state": "closed"
+    }
+]

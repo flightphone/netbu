@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 
 namespace netbu.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class ReactController : Controller
     {
         public JsonResult exec(string EditProc, string SQLParams, string KeyF)
@@ -101,11 +101,15 @@ namespace netbu.Controllers
         public JsonResult FinderStart(string id, string mode, string page, string Fc, string TextParams, string SQLParams)
         {
             var F = new Finder();
-            F.Account = User.Identity.Name;
+            
+			/*
+			F.Account = User.Identity.Name;
             if (string.IsNullOrEmpty(F.Account))
-                F.Account = "malkin";
+				F.Account = "HP";
+			*/
+			F.Account = "HP";
 
-            F.nrows = 30;
+            F.nrows = 5000;
             if (!string.IsNullOrEmpty(mode))
                 F.Mode = mode;
             else

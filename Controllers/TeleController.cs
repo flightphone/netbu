@@ -16,11 +16,12 @@ namespace netbu.Controllers
 
     public class TeleController : Controller
     {
-        public string test(string channelID, string UserToken, string content)
+        public async Task<string> test(string channelID, string UserToken, string content)
         {
             //Tele/test?channelID=-1001299813271&UserToken=123&content=aaa
             dadataINN di = new dadataINN();
-            return di.sendtele(channelID, UserToken, content);
+            string res = await di.sendtele(channelID, UserToken, content);
+            return res;
         }
 
         public string send(string fc_pk)
@@ -29,7 +30,8 @@ namespace netbu.Controllers
             try
             {
                 Guid pk = Guid.Parse(fc_pk);
-                sendteleAsync(pk);
+                sendtele(pk);
+                //sendteleAsync(pk);
             }
             catch (Exception e)
             {
@@ -37,6 +39,7 @@ namespace netbu.Controllers
             }
             return res;
         }
+        /*
         private async void sendteleAsync(Guid fc_pk)
         {
 
@@ -45,19 +48,9 @@ namespace netbu.Controllers
         }
         private void sendall(Guid fc_pk)
         {
-            /*
-            try
-            {
-                sendsms(fc_pk);
-            }
-            catch
-            {
-
-            }
-            */
-            //29.08.2022
             sendtele(fc_pk);
         }
+        */
         private void sendsms(Guid fc_pk)
         {
 
@@ -201,7 +194,7 @@ namespace netbu.Controllers
 
         }
 
-        private void sendtele(Guid fc_pk)
+        private async void sendtele(Guid fc_pk)
         {
 
             string cnstr = Program.AppConfig["mscns"];
@@ -226,7 +219,7 @@ namespace netbu.Controllers
                 string UserToken = rw["UserToken"].ToString();
                 string content = rw["MG_text"].ToString();
                 Guid PK = (Guid)rw["FC_PK"];
-                string err = di.sendtele(channelID, UserToken, content);
+                string err = await di.sendtele(channelID, UserToken, content);
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@fc_pk", PK);
                 cmd.Parameters.AddWithValue("@servmessage", err);

@@ -3,7 +3,7 @@
     "version": "2.1.818"
   },
   "cns":"Host=localhost;Username=postgres;Password=aA12345678;Database=uflights",
-  "mscns": "data source=localhost\\SQLEXPRESS8;User ID=sa;Password=aA12345678;database=uFlights",
+  "mscns": "data source=localhost\\SQLEXPRESS;User ID=sa;Password=aA12345678;database=uFlights",
   "isP": "tsql",
   "dadataurl": "https://suggestions.dadata.ru/suggestions/api/4_1/rs/findById/party",
   "olddadataurl": "https://guard.dadata.ru/suggestions/api/4_1/rs/findById/party",
@@ -27,7 +27,7 @@
   "sms_address" : "MTSM_Test",
   "sms_login" : "gw_BKmMl2NAxSsE",
   "sms_password" : "HsaIXrS4",
-  "teleurl":"https://services"
+  "teleurl":"https://threemodels-5417b.web.app/index_sph3.html"
   
 
 }

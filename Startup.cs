@@ -67,7 +67,9 @@ namespace netbu
                     });
                });
             
-            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+            app.UseCors(
+			builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()
+			);
             //app.UseDefaultFiles ();
             app.UseStaticFiles();
 

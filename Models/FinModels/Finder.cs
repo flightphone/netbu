@@ -201,7 +201,11 @@ namespace WpfBu.Models
 
             if (nrows == 0)
                 nrows = 30;
-            pagination = (nrows >= 30);
+			
+			//nrows = 5000;
+			
+            //pagination = (nrows >= 30);
+			pagination = false;
 
             if (!string.IsNullOrEmpty(not_page))
             {
@@ -231,10 +235,15 @@ namespace WpfBu.Models
 
             if (Fcols == null)
                 CreateColumns(paramvalue);
+			if (Mode == "empty")			
+				MainTab = new List<Dictionary<string, object>>();
+			else
+			{
             if (Mode != "csv")
                 UpdateTab();
             if (Mode == "new")
                 CreateEditor();
+			}
         }
 
         #region startinit

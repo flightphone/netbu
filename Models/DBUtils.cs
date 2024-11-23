@@ -8,21 +8,86 @@ using Newtonsoft.Json;
 using System.Net;
 using System.IO;
 using suggestionscsharp;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+
 
 namespace netbu.Models
 {
 
     class dadataINN
     {
-        public string sendtele(string channelID, string UserToken, string content)
+        public async Task<string>  sendtele(string channelID, string UserToken, string content)
         {
             string responseText = "";
             try
             {
                 string teleurl = Program.AppConfig["teleurl"];
+                responseText = await tele_new(teleurl, UserToken, channelID, content);
+                //responseText = await Task.Run<string>(()=>tele_curl(teleurl, UserToken, channelID, content));
+                //responseText = await Task.Run<string>(()=>tele_old(teleurl, UserToken, channelID, content));
+            }
+            catch (Exception e)
+            {
+                responseText = e.Message;
+            }
+            return responseText;
+        }
+        public string tele_curl(string teleurl, string UserToken, string channelID, string content)
+        {
+                
+                System.Diagnostics.Process process = new System.Diagnostics.Process();
+                string message = JsonConvert.SerializeObject( new { channelID = channelID, content = content });
+                string arg = $@"-X POST ""{teleurl}"" -H ""accept: application/json"" -H ""Content-Type: application/json"" -d ""{message}"" -H ""UserToken:{UserToken}""";
+                
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.RedirectStandardError = true;
+                process.StartInfo.FileName = @"C:\curl\bin\curl.exe";
+                process.StartInfo.Arguments = arg;
+                process.StartInfo.CreateNoWindow = true;
+                process.Start();
+                string responseText = process.StandardOutput.ReadToEnd();
+                //responseText += process.StandardError.ReadToEnd();
+                return responseText;
+        }                
+
+        public async Task<string> tele_new(string teleurl, string UserToken, string channelID, string content)
+        {
+                string responseText = "";
+                HttpClientHandler handler = new HttpClientHandler();
+                handler.Proxy = null;
+                //handler.ClientCertificateOptions = ClientCertificateOption.Manual;
+                handler.SslProtocols = System.Security.Authentication.SslProtocols.Tls11; //протокол
+                handler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { 
+                    return true; 
+                };
+                // Create an HttpClient object
+                HttpClient client = new HttpClient(handler);
+                var httpRequestMessage = new HttpRequestMessage
+                {
+                    Method = HttpMethod.Post,
+                    RequestUri = new Uri(teleurl),
+                    Headers = {{ "UserToken", "34534" }, {"User-Agent", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36"}},
+                    Content = new StringContent(JsonConvert.SerializeObject( new { channelID = channelID, content = content }),
+                    Encoding.UTF8,
+                    "application/json"
+                    )
+                };
+                var response = client.SendAsync(httpRequestMessage).Result;
+                responseText = await response.Content.ReadAsStringAsync();
+                return responseText;
+        }
+
+        public string tele_old(string teleurl, string UserToken, string channelID, string content)
+        {
+                string responseText = "";
                 var httpRequest = (HttpWebRequest)WebRequest.Create(teleurl);
                 httpRequest.Proxy = null;
-                httpRequest.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
+                httpRequest.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => {
+                  return  true;
+                };
                 httpRequest.Method = "POST";
                 httpRequest.ContentType = "application/json";
                 httpRequest.Headers.Add("UserToken", UserToken);
@@ -40,12 +105,7 @@ namespace netbu.Models
                 {
                     responseText = r.ReadToEnd();
                 }
-            }
-            catch (Exception e)
-            {
-                responseText = e.Message;
-            }
-            return responseText;
+                return responseText;
         }
 
 
@@ -93,7 +153,7 @@ namespace netbu.Models
             {
                 return null;
             }
-            
+
         }
 
         public static int FileAccess(string Account, string dogid)

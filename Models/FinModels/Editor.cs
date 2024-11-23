@@ -52,9 +52,10 @@ namespace WpfBu.Models
                         {
                             jr.fields.Add(rw["srcfield"].ToString(), rw["dstfield"].ToString());
                         }
-
+						/*
                         fc = new Finder();
                         fc.OKFun = true;
+						//fc.Mode = "empty";
                         if (ClassName == "Bureau.Finder")
                             fc.nrows = 30;
                         else
@@ -64,6 +65,7 @@ namespace WpfBu.Models
                         fc.TextParams = ReferFinder.TextParams;
                         fc.start(jr.IdDeclare);
                         jr.FindConrol = fc;
+						*/
 
                     }
 
